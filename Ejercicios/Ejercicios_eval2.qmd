@@ -1,0 +1,330 @@
+---
+title: "Ejercicios Evaluación 2"
+subtitle: "datos vectoriales y raster con {sf} y {terra}"
+author: "Dr. Francisco Zambrano"
+format: 
+  html:
+    number-sections: true
+    table-of-contents: true
+execute: 
+  cache: false
+lang: es
+editor: visual
+---
+
+# Datos
+
+En el campus virtual en la sección `Actividades -> Ejercicios -> Datos ejercicios evaluación 2`, se encuentran los siguientes set de datos:
+
+1. `distritos_censales_los_andes.zip`: archivo comprimido con datos de la ubicación de los distritos censales en la provincia de `Los Andes` utilizados en el censo agropecuario 2007. El archivo contiene la capa shapefile, debe descomprimirlo para poder utilizarlo.
+
+2. `estaciones_los_andes.zip`: archivo comprimido con datos de la ubicación de las estaciones climáticas que se encuentran en la provincia de `Los Andes`. El archivo contiene la capa shapefile, debe descomprimirlo para poder utilizarlo.
+
+3. `Sentinel2_los_andes.tif`: archivo en formato `GeoTiff` correspondiente a una imágen satelital Sentinel-2 para la provincia de los Andes.
+
+# Ejercicios
+
+## Datos geospaciales
+
+1. ¿A que tipo de datos geoespaciales corresponden cada uno de los datos?
+
+- `distritos_censales_los_andes.shp:`
+- `estaciones_los_andes.shp:`
+- `Sentinel2_los_andes.tif:`
+
+2. ¿En qué formato están almacenados los datos geoespaciales?
+
+- `distritos_censales_los_andes.shp:`
+- `estaciones_los_andes.shp:`
+- `Sentinel2_los_andes.tif:`
+
+3. ¿Utilizando R qué paquete y función utilizaría para cargar en el computador cada uno de los archivos?
+
+- `distritos_censales_los_andes.shp:`
+- `estaciones_los_andes.shp:`
+- `Sentinel2_los_andes.tif:`
+
+## Sistemas de Referencia de Coordenadas
+
+4. En R ¿qué función/comando utiliza para saber el Sistema de Referencia de Coordenadas (SRC) de los datos geoespaciales?
+
+- `distritos_censales_los_andes.shp:`
+- `estaciones_los_andes.shp:`
+- `Sentinel2_los_andes.tif:`
+
+5. Describa los SRC de los datos geospaciales anteriores, respecto a tipo de coordenadas (geográficas o proyectadas), datum, huso si corresponde y código EPSG.
+
+- `distritos_censales_los_andes.shp:`
+- `estaciones_los_andes.shp:`
+- `Sentinel2_los_andes.tif:`
+
+6. Si tiene que eleguir transformar el SRC de 1) raster a un vectorial o 2) vectorial a raster. ¿Cuál opción eleguiría y por qué?
+
+7. Respecto a los datos geospaciales
+
+- `distritos_censales_los_andes.shp:`
+- `estaciones_los_andes.shp:`
+- `Sentinel2_los_andes.tif:`
+
+Utilizando `R`, transforme los SRC de forma que todas las capas queden con el mismo SRC. Tome en consideración su respuesta a la pregunta anterior.
+
+## Datos vectoriales con {sf}
+
+8. ¿Qué diferencia existe en R entre los dos objetos siguientes `coord1` y `coord2`?
+
+```{r}
+#| eval: false
+coord1 <- data.frame(lat = -36.73,-37.56,-35.45,
+                     lon = -72.56,-72.98,-71.78) 
+library(sf)
+coord2 <- st_as_sf(coord1,coords = c('lon','lat'))
+```
+
+9. ¿A qué hace referencia el nombre del paquete {sf}?
+
+10. ¿Cómo está compuesto la clase de datos `sf`? Haga una descripción lo más detallada posible.
+
+11. ¿Qué tipo de datos geospaciales se pueden trabajar con el paquete {sf}?
+
+12. Describa la información que se despliega respecto al dato geospacial leido econ R en el siguiente código.
+
+```{r}
+library(sf)
+nc <- st_read(system.file("shape/nc.shp", package="sf"))
+```
+
+13. ¿Quá hace la siguiente linea de código y a qué clase de objeto corresponde el resultado?
+
+```{r}
+nc_geom <- st_geometry(nc)
+```
+
+14. ¿Como puedo acceder a las geometrias 1 y 10 del objeto `nc`?
+
+15. Convierta en un objeto multipoint la matriz siguiente, considerando que la primera columna corresponde a longitud y la segunda a latitud.
+
+```{r}
+set.seed(321)
+m <- matrix(rnorm(10)*100,ncol=2)
+```
+
+16. Convierta en un polígono la matriz anterior. ¿Qué tipo de objeto se obtiene?
+
+17. Convierta el objeto anterior en `simple feature list-column` (sfc) con la función `sfc`.
+
+18. Guarde el objeto anterior en un archivo de tipo `shapefile` con el nombre `poligono.shp`.
+
+## Operaciones geométricas con {sf}
+
+19. Cargue el siguiente archivo y asígnelo al objeto `dist` en R
+
+- `distritos_censales_los_andes.shp:`
+
+- Indique cuantas variables tiene.
+- Indique cuantas geometrías tiene
+- ¿Qué tipo de geometrias son?
+- Indique cuantas filas tiene
+
+```{r}
+#| echo: false
+dist <- read_sf('data/distritos_censales_los_andes.shp')
+```
+
+20. Haga un mapa que muestre la geometria de `dist`.
+
+```{r}
+#| echo: false
+plot(st_geometry(dist))
+```
+
+21. Haga un mapa que meustre con diferentes colores los distritos. 
+```{r}
+#| echo: false
+plot(dist['nom_dis'])
+```
+
+22. Haga dos simplificación del objeto `dist` con tolerancias de 2.000m y 10.000m.
+
+```{r}
+#| echo: false
+plot(st_simplify(dist,dTolerance = 500)$geometry)
+plot(st_simplify(dist,dTolerance = 2000)$geometry)
+```
+23. Obtenga los centroides del objeto `dist` y haga un mapa en donde se muestren los distritos y sus centroides.
+
+```{r}
+#| echo: false
+#| warning: false
+centr <- st_centroid(dist)
+plot(dist$geometry)
+plot(centr$geometry, add = TRUE,col='red')
+```
+
+24. Cargue el siguiente archivo y asígnelo al objeto `estns` en R.
+
+- `estaciones_los_andes.shp:`
+
+- Indique cuantas variables tiene.
+- Indique cuantas geometrías tiene
+- ¿Qué tipo de geometrias son?
+- Indique cuantas filas tiene
+
+```{r}
+#| echo: false
+estns <- read_sf('data/estaciones_los_andes.shp')
+```
+
+25. Haga un mapa en el que se muestre los distritos censales y las estaciones climáticas.
+
+```{r}
+#| echo: false
+estns <- st_transform(estns,st_crs(dist))
+plot(st_geometry(dist))
+
+plot(st_geometry(estns),add = TRUE,col='red')
+```     
+
+26. Cree buffer de 2.000 metros alrededor de las estaciones. Haga un mapa con los distritos, estaciones y los buffers.
+
+```{r}
+#| echo: false
+plot(st_geometry(dist))
+buff <- st_buffer(estns,2000)
+plot(buff$geometry,col='red',add = TRUE)
+plot(estns$geometry,col='blue',pch='+', add = TRUE)
+```     
+
+27. Haga la intersección entre los buffers y los distritos censales.
+
+```{r}
+#| echo: false
+
+inter <- st_intersection(dist,buff)
+plot(inter$geometry)
+```
+28. Disuelva los distritos censales de la provincia de los Andes
+
+```{r}
+#| echo: false
+borde_los_andes <- st_union(dist)
+plot(borde_los_andes)
+```
+
+## Datos raster con {terra}
+
+29. Cree un raster `x` que tenga 20 columnas y 20 filas. Asignele los valores ncell(x):1.
+
+30. Cambie la extensión para que la resolución del raster sea de 5000m x 5000m.
+
+31. Cargue el archivo siguiente y asignelo al objeto `s2` en `R`.
+
+- `Sentinel2_los_andes.tif`
+
+`Nota:` El archivo `Sentinel2_los_andes.tif` corresponde a una imágen satelital que tiene cuatro capas, la primera capa corresponde a la región de longitud de onda del azul, la segunda al verde, la tercera al rojo y la cuarta al infrarojo cercano.
+
+```{r}
+#| echo: false
+#| message: false
+library(terra)
+
+s2 <- rast('data/Sentinel2_los_andes.tif')
+```
+
+32. Utilizando funciones en R indique:
+
+- número de filas
+- número de columnas
+- número de capas
+- extensión
+- sistema de referencia de coordenadas
+
+33. Utilice la función `plot` para ver un mapa de la imagen `Sentinel2`.
+
+```{r}
+#| echo: false
+plot(s2)
+```
+
+34. Utilice la función `plotRGB` para ver una composición de color `RGB` de la imagen Sentinel2. Recuerde que las tres primeras tres capas corresponden a los canales B, G, R.
+
+```{r}
+#| echo: false
+plotRGB(s2,r=3,g=2,b=1)
+```
+
+35. Utilizando operaciones algebraicas raster realicé el cálculo de `NDVI`:
+
+$$NVDI =  \frac{NIR-RED}{NIR+RED}$$
+Las bandas de la imagen `Sentinel2` corresponden a:
+
+Capa | Banda | Región |
+-----|-------|--------|
+1    | B02   | BLUE   |
+2    | B03   | GREEN  |
+3    | B04   | RED    |
+4    | B08   | NIR    |
+
+```{r}
+#| echo: false
+
+ndvi <- (s2[[4]]-s2[[3]])/(s2[[4]]+s2[[3]])
+plot(ndvi)
+```
+
+36. Convierta los valores de NDVI < 0 en `NA`
+
+```{r}
+#| echo: false
+
+ndvi[ndvi < 0] <- NA
+
+plot(ndvi)
+```
+
+37. Utilice la función `ext` para crear una extensión sobre el área centro-oeste de la imagen, dónde hay una mayor actividad agrícola.
+
+```{r}
+#| echo: false
+ext <- ext(c(334520,360000,6355000,6385000))
+plot(ndvi)
+plot(ext,add=TRUE)
+```
+
+38. Utilice la extensión creada para cortar el NDVI.
+
+```{r}
+#| echo: false
+ndvi_c <- crop(ndvi,ext)
+plot(ndvi_c)
+```
+
+39. Cambie la resolución del NDVI cortado de 10m a 100m. Utilice la función `aggregate`
+
+```{r}
+#| echo: false
+plot(aggregate(ndvi_c,10))
+```
+
+40. Utilice la capa vectorial de los distritos censales para seleccionar la comuna de Los Andes, disuelva los distritos para quedar con los bordes de la comuna. Utilice esta comuna oara cortar (`crop`) la imagen Sentinel2.
+
+```{r}
+#| echo: false
+
+com_la <- dist[dist$nom_com == 'Los Andes',]
+s2_la <- crop(s2,com_la)
+plot(s2_la)
+```
+
+41. Realice una mascara utilizando la comuna de Los Andes sobre la imagen Sentinel2.
+
+```{r}
+#| echo: false
+
+com_la <- dist[dist$nom_com == 'Los Andes',]
+s2_la_m <- mask(s2,com_la)
+plot(s2_la_m)
+```
+
+42. Elimine los valores NA (espacio en blanco) que se encuentra alrededor de la imagen.
+
+

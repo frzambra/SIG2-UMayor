@@ -1,0 +1,118 @@
+---
+title: "Evaluación 1 talleres"
+subtitle: "Uso Avanzado de SIG"
+author: "Dr. Francisco Zambrano"
+lang: "es"
+execute:
+  echo: true
+  eval: true
+format:
+  html:
+    number-sections: true
+    number-depth: 3
+    smooth-scroll: true
+    code-fold: show
+    toc: true
+    html-math-method: katex
+    self-contained: true
+---
+
+## Datos
+
+En el campus virtual en la sección `evaluaciones/evaluacion 1 talleres`, se encuentran los siguientes set de datos:
+
+- `metadata_estaciones_agrometAPI.csv`: archivo que contiene información de ubicación, nombre, insitución, etc; para 417 estaciones de la red [agromet](https://www.agromet.cl). 
+
+- `archivos_csv_por_estacion.zip`: archivo comprimido que contiene 49 archivos en formato delimitado por comma (csv) con datos climáticos correspondientes a 49 estaciones en Chile.
+
+## Ejercicios
+
+Escriba un script en R que permita realizar lo siguiente:
+
+1. (2pt) Cargue en R el archivo `metadata_estaciones_agrometAPI.csv` y asignelo al objeto `data_info`.
+
+```{r}
+data_info <- read.csv2('data/metadata_estaciones_agrometAPI.csv')
+```
+
+2. (2pt) Cuál es el nombre de las columnas de `data_info`
+
+```{r}
+names(data_info)
+```
+
+3. (2pt) Seleccione de `data_info` la estación que se le asigno en el campus virtual. Indique el nombre, comuna, región, latitud y longitud de la estación.
+
+```{r}
+id_estacion <- 50 #codigo estacion asignada
+
+data_info[data_info$ema == id_estacion,c('nombre_ema','comuna','region','latitud','longitud')]
+
+```
+
+
+4. (2pt) Cargar en R el archivo '.csv' correspondiente a los datos climáticos y asignelo al objeto `data`. Debe elegir el archivo correspondiente al código de la estación de acuerdo a lo que se indica en el campus virtual `Evaluaciones/Evaluación 1 talleres`. Nota: Para los siguientes ejercicios debe seguir trabajando con estos datos.
+
+```{r}
+
+data <- read.csv2('data/archivos_csv_por_estacion/50.csv')
+```
+
+
+5. (2pt) Genere un resumen de la estructura de datos del objeto `data`, en el que se debe poder identificar la clase de objeto, la cantidad de variables y observaciones; y la clase de objeto de cada variable.
+
+```{r}
+str(data)
+```
+
+
+6. (2pt) Haga un resumen estadístico de todas las variables que contiene `data`.
+
+```{r}
+summary(data)
+```
+
+
+7. (3pt) Indique entre que rango de fechas se encuentran las observaciones del objeto `data`.
+
+```{r}
+range(data$fecha_hora)
+```
+
+8. (4pt) Cree un objeto `data_temp` en el que se guarde un subconjunto de el objeto `data` que contenga las variables de `fecha_hora`,`temp_promedio_aire`, `temp_minima`, `temp_maxima`.
+
+```{r}
+data_temp <- data[,c('fecha_hora','temp_promedio_aire','temp_minima','temp_maxima')]
+```
+
+
+9. (4pt) Cree un objeto `data_temp_enero` en el que se guarde un subconjunto del objeto `data_temp`, que debe contener todas las observaciones del mes de enero 2021.
+
+```{r}
+data_temp_enero <- data_temp[1:742,]
+range(data_temp_enero$fecha_hora)
+```
+
+10. (2pt) Cuál es la temperatura promedio, máxima y mínima del mes de enero 2021.
+
+```{r}
+#temperatura promedio
+mean(data_temp_enero$temp_promedio_aire,na.rm = TRUE)
+
+#temeratura máxima
+min(data_temp_enero$temp_minima,na.rm = TRUE)
+
+#temperatura mínima
+max(data_temp_enero$temp_maxima,na.rm = TRUE)
+```
+
+11. (5pt) Cree una matriz de correlación entre las variables de temperatura del objeto `data_temp`. No considere los valores NA en el cálculo.
+
+```{r}
+cor(data_temp[,2:4],use = 'complete.obs')
+```
+
+
+
+
+

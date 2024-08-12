@@ -1,0 +1,676 @@
+---
+title: "Manipulación de datos en R"
+author: "Dr. Francisco Zambrano"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSE1017|2-2023"
+    theme: default
+    echo: true
+---
+
+## Contenidos
+
+1) Indexado
+2) Algebra
+3) Read and write files
+4) Exploración de datos
+
+# 1. Indexación {background-color='lightblue'}
+
+## Vector 
+
+
+* Paréntesis cuadrado `[` para indexación  
+
+* Parnétesis redondo `(` para llamar una función
+
+::: columns
+::: {.column widt="50%"}
+```{r}
+a <- 5:12
+a
+#primer elemento
+a[1] #<<
+# los elementos 3, 4 y 5
+3:5
+
+```
+:::
+::: {.column widt="50%"}
+```{r}
+a[3:5] #<<
+#elementos 3, 5, 8
+a[c(3, 5, 8)]
+# que pasa enm ete caso
+a[c(3, 8, 12)]
+```
+:::
+:::
+
+## Vector: reciclado
+
+```{r}
+a <- rep(NA,10)
+a
+a[1:10] <- c(1,2)
+a
+```
+
+## Matrix
+
+Obtener un valor [#fila,#columna]
+
+
+```{r}
+m <- matrix(1:9, nrow=3, ncol=3, byrow=TRUE)
+colnames(m) <- c('a', 'b', 'c')
+m
+```
+
+::: columns
+::: {.column widt="50%"}
+```{r}
+m[2,2]
+```
+:::
+
+::: {.column widt="50%"}
+```{r}
+m[1,3]
+```
+:::
+:::
+
+## Matrix
+
+Varios valores
+
+::: columns
+::: {.column widt="50%"}
+```{r}
+m
+#toda una columna o fila
+m[,2] #columna
+m[3,] #fila
+```
+:::
+
+::: {.column widt="50%"}
+```{r}
+# dos filas, dos columnas
+m[1:2,1:2]
+```
+
+```{r}
+# dos filas, dos columnas
+m[1:2,2:3]
+```
+:::
+:::
+
+## Matrix
+
+::: columns
+::: {.column widt="50%"}
+Por nombre de columna
+```{r}
+m[, 'b']
+m[, c('a', 'c')]
+```
+
+Por un solo valor
+
+```{r}
+m[, 'b']
+m[, c('a', 'c')]
+```
+:::
+
+::: {.column widt="50%"}
+
+__Importante notar__
+```{r}
+m[,2] 
+m[,2,drop=FALSE]
+```
+:::
+:::
+
+## List
+
+Notar la diferencia entre usar `[` y `[[` 
+
+```{r}
+m <- matrix(1:9, nrow=3, ncol=3, byrow=TRUE)
+colnames(m) <- c('a', 'b', 'c')
+e <- list(list(1:3), c('a', 'b', 'c', 'd'), m)
+e
+```
+
+## List
+
+```{r}
+e[2] #devuelve una lista
+e[[2]] #devuelve un vector
+```
+
+## Data.frame
+
+Por índice numérico
+
+::: columns
+::: {.column widt="50%"}
+```{r}
+d <- data.frame(m)
+class(d)
+d
+d[,2]
+```
+:::
+
+::: {.column widt="50%"}
+```{r}
+d[2] #la segunda columna
+```
+:::
+:::
+
+## Data.frame
+
+Por nombre de columna
+
+::: columns
+::: {.column widt="50%"}
+No mantienen la estructura
+
+```{r}
+d[,'b']
+d$b
+d[['b']]
+```
+:::
+
+::: {.column widt="50%"}
+En este caso se mantiene la estructura de `data.frame`
+```{r}
+d['b']
+d[,'b', drop = FALSE]
+```
+:::
+:::
+
+## Técnicas de indexación con `which`, `%in%` y `match`
+
+```{r}
+x <- 10:20
+x
+x > 15
+i <- which(x > 15)
+i
+x[i]
+```
+
+## Técnicas de indexación con `which`, `%in%` y `match`
+
+¿Cómo saber si los valor de un vector `j` están en un vector `x`?
+
+```{r}
+x <- 10:20
+x
+j <- c(7,9,11,13)
+j
+j %in% x
+
+```
+
+## Técnicas de indexación con `which`, `%in%` y `match`
+
+```{r}
+which(j %in% x)
+```
+
+Otra función importante es `match`
+
+```{r}
+match(j, x)
+```
+
+No es lo mismo `match(j, x)` que `match(x, j)`
+
+```{r}
+match(x, j)
+```
+
+# 2 Algebra
+
+## Vector
+
+La multiplicación es elemento a elemento
+
+```{r}
+a <- 1:5
+b <- 6:10
+a
+b
+a*b
+```
+
+## Vector
+
+La multiplicación `vector` por `escalar`
+
+```{r}
+a*5
+```
+
+¿Qué pasa en este caso?
+
+```{r}
+a+c(1,0)
+```
+
+## Vector
+
+¿Por qué no pasa lo mismo acá?
+
+```{r}
+1:10 + c(1,0)
+```
+
+## Comparaciones lógicas
+
+Para igualdad: `==`  
+
+```{r}
+a
+a == 2
+a < 4
+```
+
+## Comparaciones lógicas
+
+::: columns
+::: {.column widt="50%"}
+y : `&`  
+
+
+```{r}
+a
+a >= 3 & b < 8
+```
+:::
+
+::: {.column widt="50%"}
+o : `|`
+
+```{r}
+b
+a > 3 & b <= 8
+```
+:::
+:::
+
+## Comparaciones lógicas
+
+Not : !
+
+```{r}
+!TRUE
+a > 3
+!(a > 3)
+```
+
+## Algunas funciones
+
+```{r}
+sqrt(9)
+a
+sqrt(a)
+exp(a)
+```
+
+## Algunas funciones
+
+::: columns
+::: {.column widt="50%"}
+```{r}
+min(a)
+max(a)
+range(a)
+sum(a)
+```
+:::
+
+::: {.column widt="50%"}
+```{r}
+mean(a)
+median(a)
+prod(a)
+sd(a)
+```
+:::
+:::
+
+## Números aleatorios
+
+```{r}
+set.seed(123) #<<
+runif(10) # dsitribución uniforme
+rnorm(10, mean=4, sd=1) #distribución normal
+```
+
+## Números aleatorios
+
+```{r}
+runif(10) # dsitribución uniforme
+rnorm(10, mean=4, sd=1) #distribución normal
+```
+
+## Números aleatorios
+
+```{r}
+set.seed(123) #<<
+runif(10) # distribución uniforme
+rnorm(10, mean=4, sd=1) #distribución normal
+```
+
+## Matrices
+
+::: columns
+::: {.column widt="50%"}
+```{r}
+m <- matrix(1:6, ncol=3, nrow=2, byrow=TRUE)
+m
+m * 1:2
+m * m
+```
+:::
+
+::: {.column widt="50%"}
+```{r}
+#multiplación de matrices
+m %*% t(m)
+```
+:::
+:::
+
+# 3 Leer y guardar archivos
+
+## Delimitadores
+
+Delimitadores para ruta debe ser `/` o `\\`
+
+```{r error=TRUE}
+f <- "C:\projects\research\data\obs.csv"
+```
+
+```{r}
+txt <- "Este es un ejemplo:\nUna nueva linea!\nOtra más...\n"
+message(txt)
+```
+
+```{r}
+f1 <- "/home/francisco/Documentos/data.csv"
+f2 <- "\\home\\francisco\\Documentos\\data.csv"
+file.exists(f1) #<<
+```
+
+## Funciones para cargar y guardar
+
+```{r}
+head(iris)
+
+write.table(iris,'data.csv',row.names = FALSE) 
+write.csv(iris,'data.csv',row.names = FALSE) #sep ; dec ,
+write.csv2(iris,'data.csv',row.names = FALSE) #sep , dec .
+
+file.exists('data.csv')
+```
+
+## Funciones para cargar y guardar
+
+
+```{r}
+data <- read.csv2('data.csv') 
+head(data)
+readLines('data.csv')
+```
+
+## Funciones para cargar y guardar
+
+```{r}
+webpage <- readLines("https://psl.noaa.gov/enso/mei/data/meiv2.data", warn=FALSE)
+webpage
+```
+
+## Otras funciones
+
+```{r}
+getwd() #cual es el directorio actual
+file.path(getwd(),'files') # concatena texto para crear un path
+list.files()  # lista los archivos
+```
+
+# 4 Exploración de datos
+
+## Summary y Table
+
+```{r}
+head(iris)
+str(iris)
+```
+
+## Summary y Table
+
+```{r}
+summary(iris)
+unique(iris$Species)
+```
+
+## Summary y Table
+
+```{r}
+table(iris$Species)
+table(iris$Species,cut(iris$Petal.Length,4))
+```
+
+## Quantile, range, mean
+
+```{r}
+quantile(iris$Sepal.Length)
+range(iris$Sepal.Length)
+mean(iris$Sepal.Length)
+```
+
+## Quantile, range, mean
+
+Si tienen `NA`
+
+```{r error = TRUE}
+quantile(c(iris$Sepal.Length,NA))
+range(c(iris$Sepal.Length,NA))
+mean(c(iris$Sepal.Length,NA))
+```
+
+## Quantile, range, mean
+
+Si tienen `NA`
+
+```{r error = TRUE}
+quantile(c(iris$Sepal.Length,NA),na.rm = TRUE)
+range(c(iris$Sepal.Length,NA),na.rm = TRUE)
+mean(c(iris$Sepal.Length,NA),na.rm = TRUE)
+```
+
+
+## Gráficos (base)
+
+```{r eval=FALSE}
+par(mfrow=c(2,2))
+plot(iris$Sepal.Length, iris$Sepal.Width)
+boxplot(iris[, c('Sepal.Length', 'Sepal.Width')])
+plot(sort(iris$Sepal.Length))
+hist(iris$Sepal.Width)
+```
+
+## Gráficos (base)
+
+```{r echo=FALSE,fig.width=10}
+par(mfrow=c(2,2))
+plot(iris$Sepal.Length, iris$Sepal.Width)
+boxplot(iris[, c('Sepal.Length', 'Sepal.Width')])
+plot(sort(iris$Sepal.Length))
+hist(iris$Sepal.Width)
+```
+
+<!-- # 5 Funciones -->
+
+<!-- ## Para ver el contenido de una función -->
+
+<!-- ```{r error=TRUE} -->
+<!-- nrow -->
+<!-- dim -->
+<!-- nrow() -->
+<!-- args(nrow) -->
+<!-- ``` -->
+
+<!-- ## Ayuda  -->
+
+<!-- Ayuda sobre una función y ejemplos de uso -->
+
+<!-- ```{r eval = FALSE} -->
+<!-- help('sum') -->
+<!-- ?summary -->
+<!-- ?`[` -->
+<!-- ``` -->
+
+<!-- ## Crear -->
+
+<!-- ```{r} -->
+<!-- f <- function() { -->
+<!--     return('Hola mundo') -->
+<!-- } -->
+<!-- f() #<< -->
+<!-- f <- function(name) { -->
+<!--     x <- paste('Hola', name) -->
+<!--     return(x) -->
+<!-- } -->
+<!-- f('Francisco') #<< -->
+<!-- ``` -->
+
+<!-- ## Crear -->
+
+<!-- Así también funciona, si no se explicita `return` R devuelve el último valor evaluado. -->
+
+<!-- ```{r} -->
+<!-- f <- function(name) { -->
+<!--     paste('Hola', name) -->
+<!-- } -->
+
+<!-- f('Javier') #<< -->
+
+<!-- sumsquare <- function(a, b) { -->
+<!--     d <- a + b -->
+<!--     dd <- d * d -->
+<!--     return(dd) -->
+<!-- } -->
+
+<!-- sumsquare(a = 1, b= 4) -->
+<!-- ``` -->
+
+<!-- # 6 Estructuras de control -->
+
+<!-- ## Estructuras comunes son: -->
+
+<!-- - `if`, `else`: evaluar una condici;on -->
+
+<!-- - `for`: ejecuta un bucle -->
+
+<!-- - `while`: ejecuta un bucle  _while_ una condición es verdadera -->
+
+<!-- - `repeat`: ejecuta un buncle infinito -->
+
+<!-- - `break`: sale de la ejecucción de un bucle -->
+
+<!-- - `next`: se salta una iteración en el bucle -->
+
+<!-- - `return`: sale de una función -->
+
+<!-- La mayoría de las estructuras de control se utilizan para escribir funciones. -->
+
+<!-- --- -->
+
+<!-- ## Estructura de control: `if` -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- if(<condition>) { -->
+<!--         ## do something -->
+<!-- } else { -->
+<!--         ## do something else -->
+<!-- } -->
+<!-- if(<condition1>) { -->
+<!--         ## do something -->
+<!-- } else if(<condition2>)  { -->
+<!--         ## do something different -->
+<!-- } else { -->
+<!--         ## do something different -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ## if -->
+
+<!-- Esta es una estructura `if/else` valida. -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- if(x > 3) { -->
+<!--         y <- 10 -->
+<!-- } else { -->
+<!--         y <- 0 -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- Está será valida -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- y <- if(x > 3) { -->
+<!--         10 -->
+<!-- } else {  -->
+<!--         0 -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ## for -->
+
+<!-- `for` bucle toma una variable iterativa que le asigna su valor de un vector. Los bucles `for` son más comunmente usados para iterar entre los elementos de un objeto (list, vector, etc.) -->
+
+<!-- ```{r eval = FALSE} -->
+<!-- for(i in 1:10) { -->
+<!--         print(i) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- Este bucle toma la variable `i` y en cada iteración el bucle cambia su valor a 1, 2, 3, ..., 10, y luego termina. -->
+
+<!-- ## for -->
+
+<!-- Estos dos bucles tienen el mismo comportamiento. -->
+
+<!-- ```{r eval = FALSE} -->
+<!-- x <- c("a", "b", "c", "d") -->
+<!-- for(i in 1:4) { -->
+<!--         print(x[i]) -->
+<!-- } -->
+<!-- for(i in seq_along(x)) { -->
+<!--         print(x[i]) -->
+<!-- } -->
+<!-- for(letter in x) { -->
+<!--         print(letter) -->
+<!-- } -->
+<!-- for(i in 1:4) print(x[i]) -->
+<!-- ``` -->

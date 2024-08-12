@@ -1,0 +1,293 @@
+---
+title: "Taller 3 (IMSE1017)"
+subtitle: "Datos vectoriales con {sf}"
+author: 'Dr. Francisco Zambrano'
+format: 
+  html:
+    number-sections: false
+    echo: true
+    eval: true
+    table-of-contents: true
+lang: es
+editor: visual
+---
+
+## Descripción
+
+En las primeras clases de la asignatura se ha empezado a trabajar con el software R, partiendo por conocer la sintaxis, la IDE RStudio, las estructuras y tipos de datos. En el primer taller trabajó con datos que vienen incluidos en los paquetes base de R como `mtcars`, aplicando funciones que permitan identificar los tipos de objetos y su estructura, además de realizar proceso de indexación para diferentes tipos de objetos (ej, data.frame, matrix, listas). En el segundo taller, trabajo con datos climáticos en donde tuvo que importar los datos, realizar diferentes tipos de indexaciones, algunas operaciones matemáticas, y exportar los datos a un archivo.
+
+## Objetivo del taller
+
+Trabajar con datos vectoriales y raster en R con los paquetes {sf} y {terra}
+
+## Paquetes R
+
+Hasta el momento hemos trabajado con los paquetes que vienen inculidos en R base. Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos. Los paquetes con los que trabajaremos con `{sf}` y `{terra}`, los que permiten trabajar con datos espaciales vectoriales y rasters.
+
+Para instalar los paquetes debe realizar lo siguiente:
+
+```{r}
+#| echo: true
+#| eval: false
+
+# instala los paquetes
+install.packages(c('sf','terra'))
+
+# carga los paqutes en el entorno de R y permite utilizar 
+# las funciones adicionales que contienen
+
+library(sf)
+library(terra)
+```
+
+## Data
+
+En el campus virtual, en la sección `Actividades -> Talleres -> Taller3` se encuentran archivos de tipo vectorial y raster con los que se trabajará.
+
+## ¿Qué debe entregar?
+
+Debeŕa utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller3_grupo_{número_grupo}.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Talleres -> Taller3`
+
+## Fecha de entrega
+
+Viernes 21 de octubre hasta las 8:00am
+
+## Ejercicios
+
+### Ejercicio 1 (10pts)
+
+Cree un objeto `sfg` de tipo punto de dos, tres y cuatro dimensiones. Utilicé las coordenadas de latitud -36.25 y longitud -72.65 una elevación de 200 metros y una direccción de 90°. Revise la estructura del objeto creado utilizando la función `str`
+
+```{r}
+library(sf)
+st_point(c(-36.25,-72.65,200,90))
+```
+
+### Ejercicio 2 (30 pts)
+
+```{r}
+#| echo: true
+#| eval: true
+set.seed(123)
+df <- data.frame(longitud = runif(10,-74,-70),latitud = runif(10,-50,-14))
+df
+```
+
+Utilice las coordenadas anteriores para crear los siguientes tipos de objetos `sfg`:\
+- `MULTIPOINT`\
+- `LINESTRING`\
+- `MULTILINESTRING`\
+- `POLYGON`\
+- `MULTIPOLYGON`\
+- `GEOMETRY COLLECTION`
+
+```{r}
+# transforma data.frame en matrix
+dfm <- as.matrix(df)
+
+# multipoint
+
+mpt <- st_multipoint(dfm)
+
+# linestring
+ls <- st_linestring(dfm)
+
+# multilinestring
+mls <- st_multilinestring(
+  list(dfm[1:5,]),dfm[6:10,])
+
+# polygon
+p <- st_polygon(
+  list(
+    rbind(dfm,dfm[1,]))
+  )
+
+# multipolygon
+mp <- st_multipolygon(
+  list(
+    list(
+      rbind(dfm[1:5,],dfm[1,])),
+    list(
+      rbind(dfm[6:10,],dfm[6,])
+      )
+    )
+  )
+
+# geometry collection
+gc <- st_geometrycollection(list(mpt,ls,mls,p,mp))
+```
+
+### Ejercicio 3 (30pts)
+
+Utilice las función `st_sfc` para convertir los objetos `sfg` en tipo `sfc`, luego utilice la función `st_sf` para crear un objeto `sf`.
+
+```{r}
+mpt_sfc <- st_sfc(mpt)
+ls_sfc <- st_sfc(ls)
+mls_sfc <- st_sfc(mls)
+p_sfc <- st_sfc(p)
+mp_sfc <- st_sfc(mp)
+gc_sfc <- st_sfc(gc)
+
+st_sf(c(mpt_sfc,ls_sfc,mls_sfc,p_sfc,mp_sfc,gc_sfc))
+```
+
+### Ejercicio 4 (40pts)
+
+Con las coordenadas del ejercicio 2 cree un objeto de tipo punto `sfg` para cada fila. Convierta todos los puntos en un objeto `sfc` y luego en un `sf`. Agregue una columna como atributo con los nombres "Pocoyan", "Pichasca", "Chiguayante", "Paillaco", "Canela", "Estación Experimental Austral", "Recoleta", "El Romeral", "San Jorge Los Niches" y "Catemu".
+
+```{r}
+data_sf <- st_as_sf(df,coords = c('longitud','latitud'),crs = 4326)
+data_sf$nombre <- c("Pocoyan", "Pichasca", "Chiguayante", "Paillaco", "Canela", "Estación Experimental Austral", "Recoleta", "El Romeral", "San Jorge Los Niches","Catemu")
+data_sf
+```
+
+### Ejercicio 5 (40 pts)
+
+Cargue la el set de datos de ejemplo de Carolina del Norte que viene como archivo de tipo vectorial (nc) incluido con el paquete `{sf}`. Realice lo siguiente:\
+- Indique el Sistema de Referencia de Coordenadas\
+- Indique el tipo de geometria que tiene almacenada\
+- Extraiga la list-colum correspondiente a las geometrias\
+- Extraiga el data.frame (sin la geometria)\
+- Cuantas columnas tiene la tabla de atributos\
+- Cuántas entidades espaciales tiene la capa vectorial.\
+- Cree un mapa en el que se pueda apreciar la variación respecto a la columnas 'NAME'\
+- Extraiga cinco entidades espaciales y haga un mapa de cada una
+
+```{r}
+#| echo: true
+#| eval: false
+# ruta donde está almacenado el archvio
+archivo <- system.file("shape/nc.shp", package="sf")
+
+# cargar en archvio y asignarlo al objeto nc en R
+nc <- st_read(archivo)
+
+#Sistema de referencia de coordenadas
+st_crs(nc)
+
+# tipo de geometria
+# la list-column(sfc) contiene 100 multipoligonos
+st_geometry(nc)
+
+#extraer el data.frame sin la geometría
+
+df <- st_drop_geometry(nc)
+
+#columnas en la tabla de atributos
+ncol(df)
+
+#entidades espaciales
+nrow(df)
+
+#mapa con variación con respecto a NAME
+plot(nc$geometry, col = as.factor(nc$NAME))
+
+# mapa de cinco entidades espaciales
+
+par(mfrow=c(2,3))
+plot(nc$geometry[1])
+plot(nc$geometry[2])
+plot(nc$geometry[3])
+plot(nc$geometry[4])
+plot(nc$geometry[5])
+
+```
+
+### Ejercicio 6 (100 pts)
+
+Cargue los set de datos vectoriales que se encuentran en el campus virtual: division_comunal, estaciones_chile y canales nacional. Realice lo siguiente:\
+- Indique el Sistema de Referencia de Coordenadas\
+- Indique el tipo de geometria que tiene almacenada\
+- Extraiga la list-colum correspondiente a las geometrias\
+- Extraiga el data.frame (sin la geometria)\
+- Cuantas columnas tiene la tabla de atributos\
+- Cuántas entidades espaciales tiene la capa vectorial.\
+- Cree un mapa en el que se pueda apreciar la variación respecto a una columna categórica y numérica.\
+- Extraiga cinco entidades espaciales y haga un mapa de cada una\
+- Indique el codigo EPSG de cada una de las capas vectoriales (canales, estaciones, comunas)\
+- Transforme el sistema de referencia de coordenadas de las tres capas vectoriales a datum WGS84 coordenadas geográficas.
+
+```{r}
+#| eval: false
+#cargar las capas vectoriales
+canales <- read_sf('../data/canales_nacional_final/canales_nacional_final.shp')
+estaciones <- read_sf('../data/estaciones_chile/estaciones_chile.shp')
+comunas <- read_sf('../data/division_comunal/division_comunal.shp')
+
+# sistema de referencias de coordenadas
+st_crs(canales)
+st_crs(estaciones)
+st_crs(comunas)
+
+#tipo de geometria
+unique(st_geometry_type(canales))
+unique(st_geometry_type(estaciones))
+unique(st_geometry_type(comunas))
+
+# extraiga el data.frame
+
+df_canales <- st_drop_geometry(canales)
+df_estaciones <- st_drop_geometry(estaciones)
+df_comunas <- st_drop_geometry(comunas)
+
+#columnas de la tabla de atributos
+ncol(df_canales)
+ncol(df_estaciones)
+ncol(df_comunas)
+
+#entidades espaciales
+nrow(df_canales)
+nrow(df_estaciones)
+nrow(df_comunas)
+
+#otra forma
+length(st_geometry(canales))
+length(st_geometry(estaciones))
+length(st_geometry(comunas))
+
+#mapa variación variable categorica
+
+plot(canales$geometry,col = as.factor(canales$nomcan))
+plot(comunas$geometry,col = as.factor(comunas$NOM_COM))
+plot(estaciones$geometry,col = as.factor(estaciones$estacion))
+
+#mapa variación variable continua
+
+plot(comunas$geometry,col = comunas$DIS_ELEC)
+plot(estaciones$geometry,col = estaciones$altitud)
+
+#mapa de cinco entidades espaciales
+
+s <- sample(nrow(canales),5)
+plot(st_geometry(canales)[s])
+
+s <- sample(nrow(estaciones),5)
+plot(st_geometry(estaciones)[s])
+
+s <- sample(nrow(comunas),5)
+plot(st_geometry(comunas)[s])
+
+# codigo epsg de
+st_crs(estaciones)$epsg
+st_crs(canales)$epsg
+st_crs(comunas)$epsg
+
+# transforma SRC a EPSG:4326
+
+canales <- st_transform(canales,4326)
+comunas <- st_transform(comunas,4326)
+
+```

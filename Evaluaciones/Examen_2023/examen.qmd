@@ -1,0 +1,122 @@
+---
+title: "Examen"
+subtitle: "SIG Avanzado (IMSE1017)"
+author: "Francisco Zambrano"
+date: "2023/12/15"
+lang: es
+execute:
+  warning: false
+  message: false
+  echo: true
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 1
+    dpi: 200
+format: 
+  html:
+    toc: true
+    number-sections: true
+editor: source
+---
+
+# Datos
+
+Los datos que utilizará para la evaluación son los siguientes:
+
+  - Seis archivos `lai_2021-01-{dia}.tif`: Datos de indice de área foliar (LAI por la siglas en ingles) estimado en 6 días del mes de enero del año 2021.
+  - `distritos_censales.gpkg`: distritos censales en la zona centro de Chile.
+  
+Los archivos los debe descargar desde el link [https://drive.google.com/drive/folders/1nNkvNfiUZY5TPZgZA0Fh-YdtaJhi30-E?usp=sharing](https://drive.google.com/drive/folders/1nNkvNfiUZY5TPZgZA0Fh-YdtaJhi30-E?usp=sharing)
+
+# Ejercicios
+
+1. (10pts) Cargue la capa correspondiente a los distritos censales y asignelo al objeto `dis_cens`.
+
+```{r}
+library(sf)
+dis_cens <- read_sf('../../data/examen/distritos_censales.gpkg')
+```
+2. (30pts) Calcule los centroides para cada uno de los distritos censales. Haga un plot en donde se puedan visualizar los distritos censales y sus centroides.
+
+```{r}
+library(tmap)
+centr <- st_centroid(dis_cens)
+
+plot(dis_cens$geom)
+plot(centr$geom,add=TRUE)
+```
+3. (30pts) Para cada uno de los centroides cree buffers de 2km. Haga un plot de la geometría de los buffers.
+
+```{r}
+buff <- st_buffer(centr,2000)
+plot(buff$geom)
+```
+
+4. (30pts) De los buffer creados en la pregunta anterior, seleccione el buffer que tiene como nombre `Los Tricahues`. Asígnelo al objeto `buffer_los_tricahues`.
+
+```{r}
+buffer_los_tricahues <- buff[buff$nom_dis == "Los Tricahues",]
+```
+
+5. (20pts) Cargue los archivos correspondientes a los LAI de las seis fechas, en R en un sólo objeto. Cambie el nombre de cada capa (layer) por la fecha correspondiente. Haga un plot.
+
+```{r}
+library(terra)
+files <- list.files('../../data/examen',pattern = 'tif$',full.names = TRUE)
+
+lai <- rast(files)
+
+names(lai) <- c('2021-01-03','2021-01-08','2021-01-13','2021-01-18','2021-01-23','2021-01-28')
+plot(lai)
+```
+
+6. (20pts) Calcule el promedio de LAI para las seis fechas. Asigne el resultado a `lai_promedio`. No considere los valores no disponibles (NA) en el promedio. Haga un plot del resultado.
+
+```{r}
+lai_promedio <- mean(lai,na.rm = TRUE)
+plot(lai_promedio)
+```
+
+7. (20pts) Transforme el sistema de referencia de coordenadas del objeto `lai_promedio` a coordenadas geográficas, datum WGS84. Asignelo al objeto `lai_promedio_geo`.
+
+```{r}
+lai_promedio_geo <- project(lai_promedio,"EPSG:4326")
+```
+
+8. (20pts) Utilice el buffer del distrito "Los Tricahues" de la pregunta 4, para cortar el `lai_promedio` ajustado a los límites del buffer de `Los Tricahues`.
+
+```{r}
+lai_promedio_af <- crop(lai_promedio_geo, buffer_los_tricahues)
+lai_promedio_af <- mask(lai_promedio_af, buffer_los_tricahues)
+
+plot(lai_promedio_af)
+```
+
+9. (30pts) Cree una mascara con los valores de `lai_promedio` de la pregunta anterior, en el que los pixeles con valores de LAI < 3 se hagan `NA`. Haga un plot del raster resultante. Ajuste el resultado de forma que se eliminen los valores NA que se encuentran en los bordes.
+
+```{r}
+lai9 <- lai_promedio_af
+
+lai9[lai9 < 3] <- NA
+lai9 <- trim(lai9)
+plot(lai9)
+```
+
+10. (40pts) Cree un mapa dinámico utilizando `{tmap}` en el que se visualize el LAI promedio para el buffer del centroide en `Los Tricahues`, además de los bordes del distrito Los Tricahues.
+
+```{r}
+
+dis_lt <- dis_cens[dis_cens$nom_dis == "Los Tricahues",]
+
+tmap_mode('view')
+tm_shape(dis_lt) +
+  tm_borders()+
+  tm_shape(lai_promedio_af) +
+  tm_raster(style ='cont', palette = viridis::inferno(20),title = 'LAI') 
+```
+
+
+
+
+

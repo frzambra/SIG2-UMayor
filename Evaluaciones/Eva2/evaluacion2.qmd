@@ -1,0 +1,273 @@
+---
+title: "Evaluación 2"
+subtitle: "SIG Avanzado (IMSE1017)"
+author: "Dr. Francisco Zambrano"
+format: 
+  html:
+    lang: es
+    toc: true
+    number-sections: true
+editor: visual
+---
+
+# Primera parte
+
+1.  Describa el tipo de objeto "sf". Para que tipo de datos geoespaciales se utiliza y que clase de objetos lo componen.\
+    **R:** El tipo de objeto `sf` se utiliza para representar en R los datos espaciales de tipo `simple feature`, que corresponden a datos vectoriales. Están compuestos de un `data.frame` y un objeto `sfc` que corresponde a la `list-column` que almacena las geometrías espaciales. Cada geometría individual corresponde a un objeto `sfg`.
+
+2.  ¿Para que tipo de datos geospaciales se utilizan los objetos "spatRaster"?\
+    **R:** Para datos de tipo `raster`.
+
+3.  Enumere los tipos de geometias que se pueden trabajar con el paquete {sf}.\
+    **R:**
+
+-   POINT
+-   LINESTRING
+-   POLYGON
+-   MULTIPOINT
+-   MULTILINESTRING
+-   MULTIPOLYGON
+-   GEOMETRY COLLECTION
+
+4.  Describa la diferencia entre un tipo de sistema de referencia de coordenadas proyectado y no proyectado. De un ejemplo de cada uno.\
+    **R:** Un sistema de referencia de coordenadas (SRC) proyectado es en el que la forma esférica/elipsoidal de la tierra se proyecta en un plano, a diferencia del no proyectado en el que la superficie de la tierra se considera como una elipsoide. Ejemplo de SRC no proyectado es el que tiene coordenadas geográficas y datum WGS84 (EPSG:4326). Un ejemplo de uno proyectado es el que tiene coordenadas UTM datum WGS84 y Huso 19 Sur (EPSG:32719).
+
+5.  Nombre cuatro paquetes de R para análisis de datos geoespaciales.\
+    **R:** {sf}, {terra}, {tmap}, {sp}
+
+6.  ¿Qué paquete de R es más reciente?\
+    **R:** {terra} y {sf}
+
+7.  ¿Cuántas dimensiones puede tener un punto en {sf}? De un ejemplo.\
+    **R:** Puede tener hasta cuatro dimensiones. Un ejemplo el punto de ubicación de una intersección de dos calles se puede definir por latitud, longitud, elevación y dirección (XYZM).
+
+8.  De acuerdo a lo definido por {sf}, en un sfg ( geometría simple feature) que tipo de objetos de R nativos nos sirven para definir las siguientes geometrías:
+
+**R:**\
+- Punto: un vector - Linea, Polígono: una matriz - Multipoligono: una lista
+
+9.  De un ejemplo en R de como crear un objeto "sfg" de tipo punto, para un punto que tiene las coordenadas -36.7 y -72.5.
+
+```{r}
+library(sf)
+st_point(c(-36.7,-72.5))
+```
+
+10. De un ejemplo de como crear un objeto "sfg" de tipo multipoint, con los puntos P1 (-34.9, -72.6) y P2(-34.5, -76.4)
+
+```{r}
+st_multipoint(matrix(c(-34.9, -72.6, -34.5, -76.4),ncol = 2))
+```
+
+11. Al crear un objeto raster con el paquete {terra} y el siguiente código:
+
+```{r}
+library(terra)
+x <- rast()
+```
+
+¿Qué caractéristicas tiene x en cuanto a extensión y sistema de referencia de coordenadas?
+
+```{r}
+(x <- rast())
+```
+
+12. ¿Cuál es el código EPSG para el sistema de referencias de coordenadas en coordenadas geográficas y datum WGS84?\
+    **R:** EPSG:4326
+
+13. ¿Que ventaja tiene realizar la simplificación de una geometria vectorial? Mencioné al menos una.\
+    **R:** Disminuye la complejidad del objeto y por ende disminuye el espacio de memoria que ocupa en disco.
+
+14. ¿Si cambio la resolución/extensión de un raster con {terra} se eliminan los datos? ¿Por qué?\
+    **R:** si cambio la resolución se eliminan los datos ya que cambia la cantidad de pixeles que tiene. Si cambio la extensión, no se eliminan ya que se mantiene la cantidad de pixeles.
+
+15. ¿Si cambio el número de columnas/filas de un raster con {terra} se eliminan los valores? ¿Por qué?\
+    **R:** Idem a la anterior
+
+16. Que valores tendra el siguiente raster creado con {terra} en cada celda. Escriba los número en filas y columnas segun corresponda.
+
+```{r}
+x <- rast(ncol=2,nrow=2)
+values(x) <- 1:4 
+plot(x)
+text(x)
+```
+
+17. Qué resultado tendrá la siguiente operación "aggregate" en R con {terra}
+
+```{r}
+x <- rast(ncol=2,nrow=2)
+values(x) <- c(1,1,1,1)
+plot(x)
+text(x)
+y <- aggregate(x,2) 
+plot(y)
+```
+
+18. Si tiene que elegir transformar el SRC de 1) raster a un vectorial o 2) vectorial a raster. ¿Cuál opción elegiría y por qué?\
+    **R:** elegiría transformar de un vectorial a un raster, ya que al hacer la transformación de un raster conlleva que se pierda información.
+
+# Segunda parte
+
+I. Cree un script en R y súbalo acá. El script debe permitir resolver lo siguiente:
+
+1.  (10 pts) Cargar en R el archivo "Cuencas_BNA.shp" y asignarlo al objeto "cuencas".
+
+```{r}
+library(sf)
+cuencas <- read_sf('../../data/cuencas_Chile/Cuencas_BNA.shp')
+```
+
+2.  (10 pts) Cargar en R el archvio "estaciones_chile.shp" y asignarlo al objeto "estaciones"
+
+```{r}
+estaciones <- read_sf('../../data/estaciones_chile/estaciones_chile.shp')
+```
+
+3.  (10 pts) Cargar en R el archvio "CHELSA_pr_v2.1_20190101.tif" y asignarlo al objeto "prec" (precipitación acumulada mensual enero 2019).
+
+```{r}
+library(terra)
+prec <- rast('../../data/CHELSA_pr_v2.1_20190101.tif')
+```
+
+4.  (10 pts) Cargar en R el archvio "CHELSA_tas_v2.1_20190101.tif" y asignarlo al objeto "temp" (temperatura promedio mensual enero 2019).
+
+```{r}
+temp <- rast('../../data/CHELSA_tas_v2.1_20190101.tif')
+```
+
+5.  (30 pts) Obtenga la cantidad de geometrias, cantidad de variables (y sus nombres) y sistema de referencia de coordenadas de los objetos vectoriales anteriores.
+
+```{r}
+
+#cantidad de geometrias
+length(st_geometry(cuencas))
+length(st_geometry(estaciones))
+
+# cantidad de variables
+# menos uno por que la columna geometria no cuenta como variable
+ncol(cuencas) - 1
+ncol(estaciones) - 1
+
+# nombres de las variables
+names(cuencas)
+names(estaciones)
+
+# sistema de referencia de coordenadas
+st_crs(cuencas)
+st_crs(estaciones)
+
+# codigo epsg
+st_crs(cuencas)$epsg
+st_crs(estaciones)$epsg
+```
+
+6.  (30 pts) Obtenga la resolución, número de columnas, número de filas, sistema de referencia de coordenadas de los objetos raster anteriores.
+
+```{r}
+#resolución
+res(prec)
+res(temp)
+
+#número de filas
+nrow(prec)
+nrow(temp)
+
+#Sistema de referencia de coordenadas
+
+crs(prec)
+crs(temp)
+```
+
+II.- Para la siguiente parte debe trabajar con la cuenca asignada por el profesor.
+
+1.  (40 pts) Haga un "crop" y "mask" de los datos raster para la cuenca asignada. Elimine las filas o columnas con NAs en los bordes del raster si es necesario.
+
+```{r}
+cuenca_limari <- cuencas[cuencas$NOM_CUEN == "Rio Limari",]
+
+#transforma SRC de vectorial a raster
+cuenca_limari <- st_transform(cuenca_limari,st_crs(prec))
+
+# hace el crop, mask y trim
+prec_limari <- crop(prec,cuenca_limari)
+prec_limari <- mask(prec_limari,cuenca_limari)
+plot(prec_limari)
+
+# hace el crop, mask y trim
+temp_limari <- crop(temp,cuenca_limari)
+temp_limari <- mask(temp_limari,cuenca_limari)
+plot(temp_limari)
+```
+
+2.  (30 pts) Seleccione las estaciones climáticas que se encuentran en la cuenca asignada. Asigne el resultado a "estaciones_cuenca".
+
+```{r}
+# cambio SRC de estaciones a la del raster de precipitación
+estaciones <- st_transform(estaciones,st_crs(prec))
+estaciones_cuenca <- st_intersection(estaciones,cuenca_limari)
+```
+
+3.  (20 pts) Haga un mapa en el que se muestre el raster de precipitación cortado con la ubicación de la estaciones.
+
+```{r}
+plot(prec_limari)
+plot(estaciones_cuenca,add = TRUE,col = 'red')
+```
+
+4.  (20 pts) Haga un mapa en el que se muestre el raster de temperatura cortado con la ubicación de la estaciones.
+
+```{r}
+plot(temp_limari)
+plot(estaciones_cuenca,add = TRUE,col = 'red')
+```
+
+5.  (30 pts) Una los dos raster en un raster multicapa en donde la primera capa sea precipitación y la segunda temperatura; asígnelo al objeto "prec_temp".
+
+```{r}
+prec_temp <- c(prec_limari,temp_limari)
+names(prec_temp) <- c('precipitacion','temperatura')
+plot(prec_temp)
+```
+
+6.  (50 pts) Extraiga los valores de precipitación y temperatura en la ubicación de las estaciones. El resultado asignelo al objeto "prec_temp_ex".
+
+```{r}
+prec_temp_ex <- extract(prec_temp,estaciones_cuenca)
+```
+
+7.  (40 pts) Cree buffers de 1000m para la estaciones que se encuentran en la cuenca, asignelo al objeto "buffer_estaciones".
+
+```{r}
+buffer_estaciones <- st_buffer(estaciones_cuenca,1000)
+plot(buffer_estaciones$geometry)
+```
+
+8.  (20 pts) Guarde el raster cortado y enmascarado con el nombre "precipitacion_temperatura_cuenca\_{nombre_cuenca}.tif"
+
+```{r}
+#| eval: false
+writeRaster(prec_temp,'../../data/precipitacion_temperatura_cuenca_limari.tif')
+```
+
+9.  (20pts) Guarde la cuenca seleccionada como "cuenca\_{nombre_cuenca}.shp"
+
+```{r}
+#| eval: false
+write_sf(cuenca_limari,'../../data/cuenca_limari.shp')
+```
+
+10. (20 pts) Guarde las estaciones seleccionadas como "estaciones_cuenca\_{nombre_cuenca}.shp"
+
+```{r}
+#| eval: false
+write_sf(estaciones_cuenca,'estaciones_cuenca_limari.shp')
+```
+
+11. (20 pts) Guarde el buffer de las estaciones como "buffer_estaciones_cuenca\_{nombre_cuenca}.shp"
+
+```{r}
+#| eval: false
+write_sf(buffer_estaciones,'../../data/buffer_estaciones_cuenca_limari.shp')
+```

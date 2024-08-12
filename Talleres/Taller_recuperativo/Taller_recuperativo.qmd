@@ -1,0 +1,217 @@
+---
+title: "Taller Recuperativo (IMSE1017)"
+subtitle: "Uso de R como SIG"
+author: 'Dr. Francisco Zambrano'
+format: 
+  html:
+    number-sections: true
+    echo: true
+    eval: true
+    table-of-contents: true
+lang: es
+editor: visual
+---
+
+## Descripción
+
+En las primeras clases de la asignatura se ha empezado a trabajar con el software R, partiendo por conocer la sintaxis, la IDE RStudio, las estructuras y tipos de datos. En el primer taller trabajó con datos que vienen incluidos en los paquetes base de R como `mtcars`, aplicando funciones que permitan identificar los tipos de objetos y su estructura, además de realizar proceso de indexación para diferentes tipos de objetos (ej, data.frame, matrix, listas). En el segundo taller, trabajó con datos climáticos en donde tuvo que importar los datos, realizar diferentes tipos de indexaciones, algunas operaciones matemáticas, y exportar los datos a un archivo. En el tercer taller comenzó a familiarizarce con datos vectoriales utilizando `{sf}`. Luego, el el taller número cuatro utilizó las operaciones geométricas con datos vectoriales y `{sf}`. Después, en el taller 5 trabajo con datos raster y vectoriales utilizando `{terra}` y `{sf}` Finalmente en el taller 6, creo mapas estáticos y dinámicos utilizando `{tmap}`
+
+## Objetivo del taller
+
+Utilizar R como herramienta de Sistema de Información Geográficas (SIG).
+
+## Paquetes R
+
+Los paquetes con los que trabajaremos este taller so `{terra}`, `{sf}` y `{tmap}` los que nos permitirán trabajar con datos raster, vectoriales y crear mapas. 
+
+Para instalar los paquetes debe realizar lo siguiente:
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+# instala los paquetes
+install.packages(c('sf','terra','tmap'))
+
+# carga los paqutes en el entorno de R y permite utilizar 
+# las funciones adicionales que contienen
+
+library(sf)
+library(terra)
+library(tmap)
+```
+
+## Data
+
+Trabajará con los datos vectoriales utilizados en la evaluación 2 correspondientes a `cuencas` y `estaciones`.
+
+## ¿Qué debe entregar?
+
+Debeŕa utilizar RStudio para crear un script, el cual permitira generar los mapas indicados. Debe utilizar los comentarios (`#`) para hacer una descripción e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller_recuperativo.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Talleres -> Taller_recuperativo`
+
+## Fecha de entrega
+
+Viernes 2 de diciembre hasta las 13:00am
+
+<!-- ## Data.frame y matrices -->
+
+<!-- ### Trabajar con el `data.frame` `mtcars`: -->
+
+<!-- 1)  muestre sólo las columnas `cyl`, `vs`, y `am.` -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false -->
+
+<!-- #| eval: false -->
+
+<!-- mtcars[c('cyl','vs','am')] -->
+
+<!-- mtcars[c(2,8,9)] -->
+
+<!-- ``` -->
+
+<!-- 2)  muestre los valores de `disp`, `hp`, y `mpg` para la 3er y 6° fila (ej., Datsun 710 y Valiant) -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false -->
+
+<!-- mtcars[c(3,6),c('disp','hp','mpg')] -->
+
+<!-- mtcars[c(3,6),c(3,4,1)] -->
+
+<!-- ``` -->
+
+<!-- 3)  cambiar el valor de `wt` de la 2da fila a `NA` -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false -->
+
+<!-- mtcars[2,'wt'] <- NA -->
+
+<!-- head(mtcars) -->
+
+<!-- mtcars[5:20,c('wt','disp')] <- NA -->
+
+<!-- mtcars -->
+
+<!-- ``` -->
+
+<!-- ### Para los siguientes ejercicios deberá trabajar con la siguiente matriz: -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: true -->
+
+<!-- #| eval: true -->
+
+<!-- numbers <- 1:40 -->
+
+<!-- matriz_prueba <- matrix(numbers, nrow = 4) -->
+
+<!-- rownames(matriz_prueba) <- letters[1:4] -->
+
+<!-- colnames(matriz_prueba) <- LETTERS[1:10] -->
+
+<!-- matriz_prueba -->
+
+<!-- ``` -->
+
+<!-- 1) Escriba dos formas de codigo en una linea para obtener la siguiente matriz: -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false -->
+
+<!-- #| eval: true -->
+
+<!-- matriz_prueba[,c("B","C","D","E")] -->
+
+<!-- ``` -->
+
+<!-- 2) Escriba con una linea de codigo cómo obtener la siguiente matriz: -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false -->
+
+<!-- #| eval: true -->
+
+<!-- matriz_prueba[,"A",drop = FALSE] -->
+
+<!-- ``` -->
+
+<!-- 3) Escriba una forma conveniente de obtener la siguiente matriz. -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: true -->
+
+<!-- #| eval: true -->
+
+<!-- matriz_prueba[,-c(2,6)] -->
+
+<!-- ``` -->
+
+## Datos raster y vectoriales
+
+Cargue los set de datos vectoriales y raster que se encuentran en el campus virtual:
+
+-   catfrut_valparaiso.gpkg: capa de la delimitación de los huertos frutales de la región de Valparaiso de acuerdo al catastro frutícola del año 2020.
+-   chl_2022169_ET_500m.tif: estimación de la evapotrasnpiración real en Chile.
+
+### Datos vectorial
+
+Utilizando funciones de `{sf}`:
+
+1)  extraig ael Sistema de Referencia de Coordenadas de cada una de las capas.
+2)  extraiga el codigo EPSG de cada una de las capas vectoriales (canales, estaciones, comunas)
+3)  extraiga el tipo de geometria que tiene almacenada la capa vectorial.\
+4)  extraiga la list-colum correspondiente a las geometrias\
+5)  extraiga el data.frame (sin la geometria)\
+6)  extraiga el número de columnas tiene la tabla de atributos\
+7)  extraiga el número de entidades espaciales tiene la capa vectorial.\
+8)  Cree un mapa con `plot` donde se pueda ver la variación respecto al tipo de especie fruticola.
+
+### Datos raster
+
+Utilizando funciones de `{terra}`:
+
+1)  extraiga la resolucíon espacial,
+2)  extraiga la cantidad de pixeles/celdas,
+3)  extraiga cantidad de columnas y filas
+4)  extraiga el sistema de referencia de coordenadas (SRC).
+5)  corte y enmascare el raster para la región de Valpariso.
+6)  cree un mapa con `plot` para visualizar la variación de ET en la región de Valparaiso.
+
+## Visualización de mapa con `{tmap}`
+
+### Cree un mapa que tenga las siguientes características.
+
+1)  muestre con variación de colores las diferentes especies frutícolas de la región de Valpariso (vectorial).
+2)  muestre los limites comunales de la región de Valparaiso
+3)  muestre la variación del índice ET (raster) de forma continua con una escala de colores `RdYlGn`
+4)  tenga una flecha norte que no interfiera con los demas elementos del mapa
+5)  tenga una grilla en coordenadas UTM
+6)  no muestre la leyenda de las especies fruticolas
+7)  muestre la leyenda de la variación del índice ET
+8)  tenga un título "Especies frutícolas Región de Valparaiso"
+
+### Guardar/exportar el mapa
+
+1)  Exporte el mapa como estatico en un archivo de imagen `.png`
+2)  Exporte el mapa como interactivo en un archivo `.html`

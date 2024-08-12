@@ -1,0 +1,64 @@
+---
+title: "Introducción a R"
+author: "Dr. Francisco Zambrano"
+date: "2024-08-12"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: ""
+    theme: default
+    code-fold: true
+    code-summary: "Código"
+---
+
+## 1 Motivación {background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: incremental
+
+- Es quizas el más poderoso ambiente computacional para análisis de datos.
+
+- Con `R` puedes:  
+  - leer y guardar archivos,
+  - manipular y resumir datos
+  - correr modelos y test estadísticos
+  - crear elegantes gráficos
+  - y mucho, mucho más
+
+- Las funcionalidades se amplian gracias a miles de paquetes (plug-ins)
+
+- Consejos:  
+  - Cuando tengas duda, pruébalo! (Norman Matloff's)
+  - Estas aprendiendo un lenguaje, tendras que dedicar mucho tiempo para alcanzar un buen nivel en R, pero vale la pena.
+
+:::
+
+## 1 Motivación {background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: incremental
+¿Por qué utilizar `R`?
+
+- `R` en su nucleo, es un lenguaje de programación `orientada a objetos` de alto nivel, lenguaje de programación funcional `(Wickham, 2014)`, y fue especialmente diseñado como una interfaz intercativa a otros softwares (Chambers 2016).
+
+- `R` es una herramienta potente que ha tenido un alto crecimiento, en particular para el análisis espacial.
+
+- Revolución de datos (ej., datos satelitales). 
+
+- `R` para entender el mundo 
+
+- `R` es un ambiente y lenguaje de código abierto y multiplataforma para computacion estadística y gráficos.
+
+- Por todas las ventajas que tiene para análisis de datos (includios espaciales) e investigación reproducible.
+:::
+
+
+## 2. Ranking popularidad `R` {background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: false
+knitr::include_url({"https://pypl.github.io/PYPL.html?country=DE"})
+```

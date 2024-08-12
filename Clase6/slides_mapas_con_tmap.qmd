@@ -1,0 +1,500 @@
+---
+title: "Creación de mapas con {tmap}"
+author: "Dr. Francisco Zambrano"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSE1017|2-2023"
+    theme: default
+    echo: true
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 1
+    dpi: 200
+
+---
+
+```{r setup, include=FALSE}
+library(spData)
+library(spDataLarge)
+library(basemaps)
+library(raster)
+set_defaults(map_service = "mapbox", map_type = "satellite",
+             map_token = 'pk.eyJ1IjoiZnJ6YW1icmEiLCJhIjoiY2tqdmw5Z3QxMDZyZjJydG54M2RobWMyeSJ9.rl8_KzhiKaV0wgsLL2Y1WQ')
+
+nz <- spData::nz
+nz_height <- spData::nz_height
+world <- spData::world
+#elev <- spData::elev
+#grain <- spData::grain
+nz_elev <- raster(system.file("raster/nz_elev.tif", package = "spDataLarge"))
+urban_agglomerations <- spData::urban_agglomerations
+```
+
+## Contenidos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+::: {.incremental}
+
+1. ¿Qué es {tmap}?
+2. Un primer mapa básico
+3. Arreglos de mapas
+4. Estéticas del mapa
+5. Configuración de color
+6. Diseño del mapa
+7. Mapas interactivos
+
+:::
+
+# 1. ¿Qué es {tmap}? {background-color="lightblue"}
+
+## 1. ¿Qué es {tmap}? {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Un paquete para `tematic maps`, que permite crear mapas atractivos con mínimo codigo.
+
+- Tiene la ventaja de crear mapas estáticos y interactivos con el mismo código.
+
+- Permite utilizar una amplia gamma de datos espaciales (ej, {raster}, {terra} y {sf})
+
+## 1. ¿Qué es {tmap}? {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+
+- El flujo básico de creación es primero utilizar la función `tm_shape` para indicar la data de entrada y luego un elemento de la capa que da el diseño.
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%"}
+library(tmap)
+library(sf)
+library(spData)
+
+tm_shape(nz) +
+  tm_fill() 
+```
+
+# 2. Un primer mapa {background-color="orange"}
+
+## 2. Un primer mapa {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%"}
+tm_shape(nz) +
+  tm_borders() 
+```
+
+## 2. Un primer mapa {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%",fig.height=2.5}
+tm_shape(nz) +
+  tm_fill() +
+  tm_borders() 
+```
+
+# 3. Arreglos de mapas {tmap} {background-color="lightgreen"}
+
+## 3. Arreglos de mapas {tmap} {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%",fig.height=2.5}
+map_nz <- tm_shape(nz) + 
+  tm_polygons()
+
+class(map_nz)
+```
+
+## 3. Arreglos de mapas {tmap} {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Podemos mezclar varios objetos y de diferente tipo.
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%",fig.height=2.5}
+library(spDataLarge)
+map_nz1 <- map_nz +
+  tm_shape(nz_elev) + 
+  tm_raster(alpha = 0.7)
+
+```
+
+## 3. Arreglos de mapas {tmap} {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Podemos mezclar varios objetos y de diferente tipo.
+
+```{r echo=TRUE}
+nz_water <- st_union(nz)
+nz_water <- st_buffer(nz_water,22200) 
+nz_water <- st_cast(nz_water,to = "LINESTRING")
+
+map_nz2 = map_nz1 +
+  tm_shape(nz_water) + 
+  tm_lines()
+
+map_nz3 = map_nz2 +
+  tm_shape(nz_height) + tm_dots()
+```
+
+## 3. Arreglos de mapas {tmap} {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Podemos mezclar varios objetos y de diferente tipo.
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%",fig.height=4}
+tmap_arrange(map_nz1, map_nz2, map_nz3)
+```
+
+# 4. Aesthetics {background-color="grey"}
+
+## 4. Aesthetics {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- `Grammar of graphics` se enfoca en la estética (Aesthetics).
+
+- Hasta ahora hemos visto las estéticas por defecto de {tmap}.
+
+- Nosostros podemos varias la estética de los mapas en {tmap}
+
+- Hay dos principales tipos de aesthetics:}
+  - Los que cambian con los datos.
+  - Los que son constantes.
+  
+- `{tmap}` acepta como argumento de estética una variable  (basada en una columna) o un valor constante.
+
+- Las estéticas más comunmente usadas son para color de relleno y de borde, son color, transparencia, ancho de linea, que se setean con `col`, `alpha`, `lwd` y `lty`.
+
+## 4. Aesthetics {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,out.width = "100%",fig.height=2.5}
+ma1 = tm_shape(nz) + tm_fill(col = "red")
+ma2 = tm_shape(nz) + tm_fill(col = "red", alpha = 0.3)
+ma3 = tm_shape(nz) + tm_borders(col = "blue")
+ma4 = tm_shape(nz) + tm_borders(lwd = 3)
+ma5 = tm_shape(nz) + tm_borders(lty = 2)
+ma6 = tm_shape(nz) + tm_fill(col = "red", alpha = 0.3) +
+  tm_borders(col = "blue", lwd = 3, lty = 2)
+tmap_arrange(ma1, ma2, ma3, ma4, ma5, ma6)
+```
+
+## 4. Aesthetics {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+¡Esto puede ser confuso!
+
+- Como en base R los argumentos pueden tener valor que varien (una variable).
+
+- Pero a diferencia de base R, `{tmap}` no acepta vectores numéricos como argumento.
+
+Esto funciona
+
+```{r,echo=TRUE,message=FALSE,out.width="100%"}
+plot(st_geometry(nz), col = nz$Land_area)  # funciona
+```
+
+## 4. Aesthetics {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Pero esto NO
+
+```{r eval=FALSE}
+tm_shape(nz) + tm_fill(col = nz$Land_area) # no funciona
+```
+
+- En cambio, `col` (y otras estéticas que pueden variar, como `lwd` para líneas y `size` para capas de puntos) requiere una cadena de caracteres que nombre un atributo asociado con la geometría que se trazará.
+
+```{r echo=TRUE}
+head(nz)
+```
+
+## 4. Aesthetics {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area")
+```
+
+## 4. Aesthetics {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Podemos cambiar el título de la leyenda
+
+```{r,echo=TRUE,message=FALSE,fig.height=5}
+legend_title = expression("Area (km"^2*")")
+tm_shape(nz) +
+  tm_fill(col = "Land_area", title = legend_title) + 
+  tm_borders()
+```
+
+# 5. Configuración del color {background-color="orange"}
+
+## 5. Configuración del color {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Como defino la leyenda de colores no es algo trivial. Muchos problemas de interpretación de resultados se generan por una mala visualización.
+
+- La configuración predeterminada de `{tmap}` usa `pretty` `breaks`.
+
+Los argumentos:  
+- `breaks` permite manualmente ajustar los `breaks`  
+- `n` define el numéro de bin en el cual la variable es categorizada  
+- `palette` define el esquema de colores  
+
+## 5. Configuración del color {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,out.width='100%',fig.height=4}
+mcol1 <- tm_shape(nz) + tm_polygons(col = "Median_income")
+breaks = c(0, 3, 4, 5) * 10000
+mcol2 <- tm_shape(nz) + tm_polygons(col = "Median_income", breaks = breaks)
+mcol3 <- tm_shape(nz) + tm_polygons(col = "Median_income", n = 10)
+mcol4 <- tm_shape(nz) + tm_polygons(col = "Median_income", palette = "BuGn")
+tmap_arrange(mcol1,mcol2,mcol3,mcol4,nrow = 1)
+```
+
+## 5. Configuración del color {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Podemos modificar la escala de colores con el argumento `breaks`
+
+- Además de poder cambiar los `breaks` de forma manual `{tmap}` permite usar algorítmos para definir la escala.
+
+Los seis más utilizados algorítmos son:   
+- `style = "pretty"`, la configuración predeterminada, redondea los `breaks` en números enteros cuando sea posible y los espacia uniformemente;    
+- `style = "equal"` divide los valores de entrada en contenedores de igual rango y es apropiado para variables con una distribución uniforme ;    
+- `style = "quantile"` asegura que el mismo número de observaciones caiga en cada categoría ;   
+- `style = "jenks"` identifica grupos de valores similares en los datos y maximiza las diferencias entre categorías;    
+- `style = "cont"` (y "order") presentan una gran cantidad de colores sobre campos de color continuos y son particularmente adecuados para rásteres continuos ("order" puede ayudar a visualizar distribuciones sesgadas);    
+- `style = "cat"` fue diseñado para representar valores categóricos y asegura que cada categoría reciba un color único.   
+
+## 5. Configuración del color {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,out.width='100%',fig.height=4}
+mcol5 <- tm_shape(nz) + 
+  tm_polygons(col = "Median_income", style="pretty")
+mcol6 <- tm_shape(nz) + 
+  tm_polygons(col = "Median_income", style="equal")
+mcol7 <- tm_shape(nz) + 
+  tm_polygons(col = "Median_income", style="quantile")
+mcol8 <- tm_shape(nz) + 
+  tm_polygons(col = "Median_income", style="jenks")
+mcol9 <- tm_shape(nz_elev) + 
+  tm_raster(col = "elevation", style="cont")
+mcol10 <- tm_shape(nz) + 
+  tm_polygons(col = "Island", style="cat")
+```
+
+## 5. Configuración del color {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=6}
+tmap_arrange(mcol5,mcol6,mcol7,mcol8,mcol9,mcol10,ncol=3)
+```
+
+## 5. Configuración del color {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+¿Qué paleta de color usar?
+
+- se puede modificar cambiar el argumento `palette`
+
+- Una ayuda para seleccionar paleta `tmaptools::palette_explorer()`
+
+- con el signo `-` antes del nombre de la paleta la invierte.
+
+- Hey tres grupos de paletas:
+  - `categorical`: variables categóricas ej., landcover
+  - `sequencial`: variable continuas, sigue un gradiente, por ejemplo de claro a oscuro
+  - `diverging`: variable continua, une dos paletas `sequencial`
+
+# 6. Map layout (Diseño) {background-color="darkgreen"}
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- El diseño del mapa se refiere a la combinación de todos los elementos del mapa en un mapa armónico
+
+- Flecha norte y escala
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=4}
+map_nz + 
+  tm_compass(type = "8star", position = c("left", "top")) +
+  tm_scale_bar(breaks = c(0, 100, 200), text.size = 1)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+El argumento `tm_layout` permite ajustar varios aspectos de diseño (`?tm_layout`).
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=4}
+mnz1 <- map_nz + tm_layout(title = "New Zealand")
+mnz2 <- map_nz + tm_layout(scale = 5)
+mnz3 <-map_nz + tm_layout(bg.color = "lightblue")
+mnz4 <-map_nz + tm_layout(frame = FALSE)
+tmap_arrange(mnz1,mnz2,mnz3,mnz4)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Algunos argumentos
+
+- Ancho del marco (`frame.lwd`) y la opción para permitir doble linea (`frame.double.line`)
+- Configuración de los margenes `outer.margin` y `inner.margin`
+- Configuración del tipo de letra `fontface` y `fontfamily`
+- Leyenda `legend.show` (mostra o no la leyenda) `legend.only` (omitir el mapa) y `legend.outside` (poner la leyenda fuera del mapa), `legend.position` para ubicar la leyenda en un posición dada
+- Color por defecto de la capas aesthetic (`aes.color`), atributos del mapa como el marco (`attr.color`)
+- Control del color `sepia.intensity` (que tan amarillo el mapa luce) y saturación (a color-grayscale)
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Ancho del marco `frame.lwd`
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders() +
+  tm_layout(frame.lwd=5)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Margen interior `inner.margins`
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders() +
+  tm_layout(inner.margins = 0.2)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+No incluir la legenda `legend.show`
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders() +
+  tm_layout(legend.show = FALSE)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Posición de la leyenda `legend.position`
+ 
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders() +
+  tm_layout(legend.position = c("right","bottom"))
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Efecto sepia `sepia.intensity`
+ 
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders() +
+  tm_layout(sepia.intensity = .5)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Efecto saturación `saturation`
+ 
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders() +
+  tm_layout(saturation = .2)
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Color por defecto `attr.color`
+ 
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders(col='red') +
+  tm_layout(attr.color = 'red')
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Tambien `{tmap}` tiene algunos estilos predefinidos que modifican el diseño completo del mapa con la función `tm_style`.
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders(col='red') +
+  tm_style('bw')
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Tambien `{tmap}` tiene algunos estilos predefinidos que modifican el diseño completo del mapa con la función `tm_style`.
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders(col='red') +
+  tm_style('classic')
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Tambien `{tmap}` tiene algunos estilos predefinidos que modifican el diseño completo del mapa con la función `tm_style`.
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders(col='red') +
+  tm_style('cobalt')
+```
+
+## 6. Map layout (Diseño) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- Tambien `{tmap}` tiene algunos estilos predefinidos que modifican el diseño completo del mapa con la función `tm_style`.
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tm_shape(nz) + 
+  tm_fill(col = "Land_area") + 
+  tm_borders(col='red') +
+  tm_style('col_blind')
+```
+
+# 7. Mapas interactivos {background-color="brown"}
+
+## 7. Mapas interactivos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- El lanzamiento del paquete `{leaflet}` en 2015 revolucionó la creación de mapas interactivos en `R`.
+
+- De `{leaflet}` derivaron otros paquetes `{leaflet.extras}`, `{mapview}` y `{tmap}`
+
+- Una característica especial de `{tmap}` es que permite crear mapas estáticos e interactivos usando el mismo código.
+
+- Los mapas pueden verse de forma interactiva en cualquier momento configurando `{tmap}` en modo `view` 
+  - `tmap_mode("view")`.
+
+## 7. Mapas interactivos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tmap_mode("view")
+tm_shape(nz) + 
+  tm_polygons()
+```
+
+## 7. Mapas interactivos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Podemos especificar el mapa base con `tm_basemap`
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+tmap_mode("view")
+tm_shape(nz) + 
+  tm_polygons() + 
+  tm_basemap(server = "OpenTopoMap")
+```
+
+## 7. Mapas interactivos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+También funciona con `facets`
+
+```{r,echo=TRUE,message=FALSE,fig.width=12,fig.height=5}
+world_coffee <-  merge(world, coffee_data, by = "name_long")
+facets = c("coffee_production_2016", "coffee_production_2017")
+tm_shape(world_coffee) + 
+  tm_polygons(facets) + 
+  tm_facets(nrow = 1, sync = TRUE)
+```
+
+## 7. Mapas interactivos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/3457131/78889069-479c5480-7a63-11ea-9d76-e8a0acc55c3f.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+para volver a modo `tmap` estático `tmap_mode("plot")`

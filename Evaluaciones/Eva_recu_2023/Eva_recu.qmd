@@ -1,0 +1,169 @@
+---
+title: "Evaluación Recuperativa"
+author: "Francisco Zambrano"
+date: "`r Sys.Date()`"
+format: html
+lang: es
+execute:
+  echo: true
+  eval: true
+editor: source
+---
+
+## Datos
+
+Para la evaluación debe trabajar con los siguientes datos geoespaciales.
+
+  - `Cuencas_BNA:` Corresponden a las cuencas hidrográficas que se encuentran en Chile.
+  - `Estaciones Chile:` red de estaciones climáticas en Chile.
+  - `CHELSA_pr_v2.1_20190101.tif:` precipitación acumulada mensual para el mes de enero del año 2019 en Chile. 
+  - `CHELSA_tas_v2.1_20190101.tif:` temperatura promedio mensual para el mes de enero del año 2019 en Chile.
+  
+Los datos los debe descargar desde [acá](https://drive.google.com/file/d/1Xhf_1FFfTnrLRe31zlOsumP2BFlb-l08/view?usp=sharing)
+
+## Cree un script en R que permita resolver lo siguiente:
+
+1.  (10 pts) Cargar en R el archivo "Cuencas_BNA.shp" y asignarlo al objeto "cuencas".
+
+```{r}
+library(sf)
+cuencas <- read_sf('../../data/cuencas_Chile/Cuencas_BNA.shp')
+```
+
+2.  (10 pts) Cargar en R el archvio "estaciones_chile.shp" y asignarlo al objeto "estaciones"
+
+```{r}
+estaciones <- read_sf('../../data/estaciones_chile/estaciones_chile.shp')
+```
+
+3.  (10 pts) Cargar en R el archvio "CHELSA_pr_v2.1_20190101.tif" y asignarlo al objeto "prec" (precipitación acumulada mensual enero 2019).
+
+```{r}
+library(terra)
+prec <- rast('../../data/CHELSA_pr_v2.1_20190101.tif')
+```
+
+4.  (10 pts) Cargar en R el archvio "CHELSA_tas_v2.1_20190101.tif" y asignarlo al objeto "temp" (temperatura promedio mensual enero 2019).
+
+```{r}
+temp <- rast('../../data/CHELSA_tas_v2.1_20190101.tif')
+```
+
+5.  (30 pts) Obtenga la cantidad de geometrias, cantidad de variables (y sus nombres) y sistema de referencia de coordenadas de los objetos vectoriales anteriores.
+
+```{r}
+
+#cantidad de geometrias
+length(st_geometry(cuencas))
+length(st_geometry(estaciones))
+
+# cantidad de variables
+# menos uno por que la columna geometria no cuenta como variable
+ncol(cuencas) - 1
+ncol(estaciones) - 1
+
+# nombres de las variables
+names(cuencas)
+names(estaciones)
+
+# sistema de referencia de coordenadas
+st_crs(cuencas)
+st_crs(estaciones)
+
+# codigo epsg
+st_crs(cuencas)$epsg
+st_crs(estaciones)$epsg
+```
+
+6.  (30 pts) Obtenga la resolución, número de columnas, número de filas, sistema de referencia de coordenadas de los objetos raster anteriores.
+
+```{r}
+#resolución
+res(prec)
+res(temp)
+
+#número de filas
+nrow(prec)
+nrow(temp)
+
+#Sistema de referencia de coordenadas
+
+crs(prec)
+crs(temp)
+```
+
+7.  (40 pts) Haga un "crop" y "mask" de los datos raster para la cuenca del `Río Maipo`. Elimine las filas o columnas con NAs en los bordes del raster si es necesario.
+
+```{r}
+cuenca_maipo <- cuencas[cuencas$NOM_CUEN == "Rio Maipo",]
+
+#transforma SRC de vectorial a raster
+cuenca_maipo <- st_transform(cuenca_maipo,st_crs(prec))
+
+# hace el crop, mask y trim
+prec_maipo <- crop(prec,cuenca_maipo)
+prec_maipo <- mask(prec_maipo,cuenca_maipo)
+plot(prec_maipo)
+
+# hace el crop, mask y trim
+temp_maipo <- crop(temp,cuenca_maipo)
+temp_maipo <- mask(temp_maipo,cuenca_maipo)
+plot(temp_maipo)
+```
+
+8.  (30 pts) Seleccione las estaciones climáticas que se encuentran en la cuenca asignada. Asigne el resultado a "estaciones_cuenca".
+
+```{r}
+# cambio SRC de estaciones a la del raster de precipitación
+estaciones <- st_transform(estaciones,st_crs(prec))
+estaciones_cuenca <- st_intersection(estaciones,cuenca_maipo)
+```
+
+9.  (30 pts) Una los dos raster en un raster multicapa en donde la primera capa sea precipitación y la segunda temperatura; asígnelo al objeto "prec_temp".
+
+```{r}
+prec_temp <- c(prec_maipo,temp_maipo)
+names(prec_temp) <- c('precipitacion','temperatura')
+plot(prec_temp)
+```
+
+10.  (50 pts) Extraiga los valores de precipitación y temperatura en la ubicación de las estaciones. El resultado asignelo al objeto "prec_temp_ex".
+
+```{r}
+prec_temp_ex <- extract(prec_temp,estaciones_cuenca)
+```
+
+11.  (40 pts) Cree buffers de 1000m para la estaciones que se encuentran en la cuenca, asignelo al objeto "buffer_estaciones".
+
+```{r}
+buffer_estaciones <- st_buffer(estaciones_cuenca,1000)
+plot(buffer_estaciones$geometry)
+```
+
+12.  (20 pts) Guarde el raster cortado y enmascarado con el nombre "precipitacion_temperatura_cuenca\_{nombre_cuenca}.tif"
+
+```{r}
+#| eval: false
+writeRaster(prec_temp,'../../data/precipitacion_temperatura_cuenca_limari.tif')
+```
+
+13.  (20pts) Guarde la cuenca seleccionada como "cuenca\_{nombre_cuenca}.shp"
+
+```{r}
+#| eval: false
+write_sf(cuenca_limari,'../../data/cuenca_limari.shp')
+```
+
+14. (20 pts) Guarde las estaciones seleccionadas como "estaciones_cuenca\_{nombre_cuenca}.shp"
+
+```{r}
+#| eval: false
+write_sf(estaciones_cuenca,'estaciones_cuenca_limari.shp')
+```
+
+15. (20 pts) Guarde el buffer de las estaciones como "buffer_estaciones_cuenca\_{nombre_cuenca}.shp"
+
+```{r}
+#| eval: false
+write_sf(buffer_estaciones,'../../data/buffer_estaciones_cuenca_limari.shp')
+```

@@ -1,0 +1,336 @@
+---
+title: "Examen"
+subtitle: "SIG Avanzado (IMSE1017)"
+author: "Dr. Francisco Zambrano"
+format: 
+  html:
+    lang: es
+    toc: true
+    number-sections: true
+execute: 
+  echo: true
+  eval: true
+editor: visual
+---
+
+# Primera parte
+
+1.- (20pts) Indique tres motivos por que utilizar el lenguaje `R` para analizar datos geoespaciales.
+
+```{r}
+# **R:** 
+# - R es un lenguaje de código abierto y multiplataforma. 
+# - Por que ha tenido un alto crecimiento en cuanto al análisis de datos geoespaciales. 
+# - Por las ventajas que tiene para análisis de datos.
+```
+
+2.  (20pts) ¿Para qué sirve la libreria `GDAL`?
+
+```{r}
+# **R:**  
+# Para manejar datos vectoriales y raster.
+```
+
+3.  (20pts) Indique que paquetes de R utiliza para trabajar con datos vectoriales y raster. (20pts)
+
+```{r}
+# **R:** 
+# para datos vectoriales usamos `{sf}` y para datos raster `{terra}`
+```
+
+4.  (20pts) Escriba un vector de tipo cáracter que contenga cinco elementos, cada uno debe corresponden a un día de la semana de lunes a viernes. Asigne el vector creado al objeto `dias`.
+
+```{r}
+dias <- c('lunes','martes','miercoles','jueves','viernes')
+```
+
+5.  (20pts) Considere el siguiente vector
+
+```{r}
+#| echo: true
+v <- c(1,8,5,3)
+```
+
+Que debe devolver la siguiente operación
+
+```{r}
+#| echo: true
+r <- v > 5
+r
+```
+
+¿Qué tipo de vector es `r`?\
+¿Qué valores tiene r?
+
+```{r}
+class(r)
+r
+```
+
+6.  (20pts) Considere las siguientes operaciones en `R`:
+
+```{r}
+#| echo: true
+x <- c(1, 'a', 5)
+class(x)
+```
+
+¿Explique por qué la clase obtenida es de tipo `character`?
+
+```{r}
+# **R:**  
+# Por la jerarquía de coerción los valores numéricos se convierten a tipo 
+# caracter.
+```
+
+7.  (20pts) Cree un vector numérico con los números de 1 a 100.
+
+```{r}
+1:100
+```
+
+8.  Considere la siguiente matriz para realizar operaciones de indexación.
+
+```{r}
+#| echo: true
+m <- matrix(1:20,ncol=4)
+```
+
+-   (10pts) Indique como puede extraer la segunda columna en R
+
+```{r}
+m[,2]
+```
+
+-   (10pts) Indique como puede extraer la tercera fila en R
+
+```{r}
+m[3,]
+```
+
+-   (10pts) Indique como puede extraer los valores 7, 12, 8 y 13 en R
+
+```{r}
+m[2:3,2:3]
+```
+
+9.  Describa las principales características de las estructuras de dato tipo `data.frame`.
+
+```{r}
+# **R:**
+# - Es uno de los objetos más destacados, nace del mundo de software de análisis estadístico.  
+# - Cada columna corresponde a una variable y cada fila a una observación.  
+# - Puede almacenar columnas con diferentes tipos de datos
+```
+
+10. Considere el siguiente `data.frame`
+
+```{r}
+#| echo: true
+df <- iris[sample(1:150,20),]
+```
+
+-   (20pts) Cómo puede filtrar mediante indexación las filas que la `Species` corresponde a `setosa`.
+
+```{r}
+df[df$Species == 'setosa',]
+```
+
+-   (20pts) ¿Cómo puedo obtener los nombres de las columnas del `data.frame` `df`?
+
+```{r}
+names(df)
+```
+
+-   (20pts) Indique dos maneras de extraer la columna `Petal.Length` y asignela al objeto `pl`.
+
+```{r}
+pl <- df$Petal.length
+pl <- df['Petal.Length']
+```
+
+11. (40pts) Explique por qué necesitamos los paquetes `{sf}` y `{terra}` en R para trabajar con datos espaciales. ¿Cuál es la ventaja de usarlos?
+
+```{r}
+# **R:** En R base no existen estructuras de datos para manejar datos geoespaciales. Necesitamos {terra} y {sf} ya que estos paquetes proporcionan las clases de objetos que nos permiten trabajar de forma adecuada con datos raster y vetcoriales.
+```
+
+12. (30pts) Explique cuál es la diferencia entre los dos set de datos siguientes:
+
+```{r}
+#| echo: true
+#| message: false
+datos1 <- data.frame(lon = c(-116.8, -114.2, -112.9, -111.9, -114.2, -115.4, -117.7),
+           lat = c(41.3, 42.9, 42.4, 39.8, 37.6, 38.3, 37.6))
+datos1
+
+library(sf)
+datos2 <- st_as_sf(datos1,coords = c('lon','lat'))
+datos2
+```
+
+```{r}
+# **R:** El primero es un `data.frame` y el segundo es un objeto de tipo `sf`.
+```
+
+13. Respecto al objeto datos creados en el siguiente script.
+
+```{r}
+#| echo: true
+#| message: false
+datos <- data.frame(lon = c(-116.8, -114.2, -112.9, -111.9, -114.2, -115.4, -117.7),
+           lat = c(41.3, 42.9, 42.4, 39.8, 37.6, 38.3, 37.6))
+
+library(sf)
+datos <- st_as_sf(datos1,coords = c('lon','lat'))
+```
+
+-   (20pts) ¿Qué clase de objeto es `datos$geometry`?
+
+```{r}
+class(datos$geometry)
+```
+
+-   (20pts) ¿Qué clase de objeto es `datos$geometry[1]`?
+
+```{r}
+class(datos$geometry[1])
+```
+
+-   (20pts) Explique cuál es la diferencia entre las dos clases de objeto anteriores.
+
+```{r}
+# **R:** El primero es un objeto de clase `sfc` un list-column con todas las geometrias, el segundo es un objeto de tipo `sfg` que contiene la geometria individual.
+```
+
+14. (20pts) La clase `spatRaster` a qué paquete de R corresponde.
+
+```{r}
+# **R:** a `{terra}`
+```
+
+15. Considere el siguiente objeto `spatRaster`.
+
+```{r}
+#| echo: true
+library(terra)
+r <- rast(ncol=4,nrow=4,crs="EPSG:4326")
+```
+
+-   (20pts) ¿Qué valores tiene el objeto `r`?
+
+```{r}
+r
+```
+
+-   (20pts) ¿Cuál es el sistema de referencia de coordenadas del objeto r?
+
+```{r}
+st_crs(r)$epsg
+```
+
+-   (20pts) ¿Cómo puedo cambiar/asignar los valores del 1 al 16 a `r`?
+
+```{r}
+values(r) <- 1:16
+```
+
+16. (30pts) ¿Qué valores tiene en cada celda el siguiente raster?
+
+```{r}
+#| echo: true
+r <- rast(ncol=3,nrow=3)
+values(r) <- 9:1
+plot(r);text(r)
+```
+
+17. (20pts) ¿Qué consecuencias tiene la operación `c(r,r,r,r)` con el raster?
+
+```{r}
+#| echo: true
+r <- rast(ncol=3,nrow=3)
+values(r) <- 1:9
+
+r2 <- c(r,r,r,r)
+```
+
+```{r}
+# **R:** Crea un raster multicapa, en este caso con cuatro capas.
+```
+
+# Segunda parte
+
+En el archivo `data_estaciones.csv` tiene información sobre las coordenadas de ubicación de las estaciones climáticas que existen en Chile.
+
+1.  (20pts) Lea el archivo en R y asígnelo al objeto `df_estaciones`.
+
+```{r}
+df_estaciones <- read.csv2('../data/data_estaciones.csv') 
+```
+
+2.  (40pts) Convierta el objeto `df_estaciones` (data.frame) en un objeto `sf` y asígnele las coordendas geográficas datum wgs84. Asignelo al objeto `sf_estaciones`.
+
+```{r}
+sf_estaciones <- st_as_sf(df_estaciones,coords = c('longitud','latitud'),crs =4326)
+```
+
+3.  (40pts) Utilice el archivo `Cuencas_BNA` y seleccione las estaciones que se encuentran en la cuenca del río Imperial.
+
+```{r}
+cuencas <- read_sf('../data/cuencas_Chile')
+
+cuencas <- st_transform(cuencas,st_crs(sf_estaciones))
+cuenca_imperial <- cuencas[cuencas$NOM_CUEN == 'Rio Imperial',]
+estas_imperial <- st_intersection(sf_estaciones,cuenca_imperial)
+```
+
+4.- (40pts) Utilice el paquete {elevatr} para descargar datos de elevación para la cuenca del río Imperial. Asignelo al objeto `dem_imperial`.
+
+```{r}
+library(elevatr)
+dem_imperial <- get_elev_raster(cuenca_imperial,z = 9)
+plot(dem_imperial)
+```
+
+5.  (100 pts) Extraiga el valor de elevación del dem en los puntos de la estaciones. Compare los valores de elevación del dem con los que tiene el archivo `data_estaciones.csv`. Haga un gráfico que muestre las elevaciones del dem y las elevaciones del archivo.
+
+```{r}
+elev_dem <- extract(dem_imperial,estas_imperial)
+df_elev <- cbind(elev_dem,estas_imperial)
+plot(df_elev$elev_dem,df_elev$altitud,type ='p')
+```
+
+6.  (100pts) Cree un mapa de sombras (hillshade) para la cuenca del río Imperial.
+
+```{r}
+dem_imperial <- rast(dem_imperial)
+dem_imperial <- mask(dem_imperial,cuenca_imperial)
+dem_imperial <- trim(dem_imperial)
+slope = terrain(dem_imperial, v='slope',unit = 'radians')
+aspect = terrain(dem_imperial, v='aspect',unit = 'radians')
+hill = shade(slope, aspect)
+plot(hill)
+```
+
+7.  (100pts) Cree un mapa estático con `{tmap}` del mapa de sombras (hillshade). Debe contener los siguientes elementos:
+
+-   Flecha norte
+-   Grilla en coordendas geográficas.
+-   Leyenda para la elevación
+-   Bordes de la cuenca del río Imperial
+
+```{r}
+library(tmap)
+mapa <- tm_shape(hill) +
+  tm_raster(style = 'cont',palette = grey(0:100/100),legend.show = FALSE) +
+  tm_shape(dem_imperial) +
+  tm_raster(title= 'Elevación (m)', style ='cont',palette = rev(topo.colors(20)),alpha = .4) +
+  tm_shape(cuenca_imperial) +
+  tm_borders(lwd=2) +
+  tm_shape(estas_imperial) +
+  tm_dots(col='altitud',size=1)+
+  tm_grid(lwd = .4,alpha = .6) +
+  tm_compass(position = c('right','top'))
+
+mapa
+```

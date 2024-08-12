@@ -1,0 +1,329 @@
+---
+title: "Taller 1: Ejercicios R base"
+subtitle: "Uso Avanzado de Sistemas de Información Geográfica"
+institute: "Escuela de Ingeniería en Medio Ambiente, Universidad Mayor"
+author: "Dr. Francisco Zambrano"
+date: "2023-08-25"
+lang: "es"
+execute:
+  echo: true
+  eval: true
+format:
+  html:
+    number-sections: true
+    number-depth: 3
+    smooth-scroll: true
+    code-fold: show
+    toc: true
+    html-math-method: katex
+    self-contained: true
+---
+
+## Lo básico
+
+1. Escriba un programa en R para crear una secuencia de números del 20 al 50 y encuentre la media de los números del 20 al 60 y la suma de los números del 51 al 91.
+
+```{r}
+seq(20,50)
+mean(20:60)
+sum(51:91)
+```
+
+2. Escriba un programa en R para crear una curva de campana de una distribución normal aleatoria
+
+```{r}
+n <- rnorm(10000, 500, 100)
+hist(n)
+```
+
+3. Escriba un programa R para crear una lista de elementos usando vectores, matrices y funciones. Imprime el contenido de la lista.
+
+```{r}
+l = list(
+  c(1, 2, 2, 5, 7, 12),  
+  month.abb,
+  matrix(c(3, -8, 1, -3), nrow = 2),
+  asin
+)
+l
+```
+
+4. Escriba un programa en R para crear una matriz de 5 x 4, una matriz de 3 x 3 con etiquetas y rellene la matriz por filas y una matriz de 2 x 2 con etiquetas y rellene la matriz por columnas.
+
+```{r}
+m1 <- matrix(1:20, nrow=5, ncol=4)
+m1
+cells <- c(1,3,5,7,8,9,11,12,14)
+rnames <- c("Row1", "Row2", "Row3")
+cnames <- c("Col1", "Col2", "Col3")
+m2 <- matrix(cells, nrow=3, ncol=3, byrow=TRUE, dimnames=list(rnames, cnames))
+m2
+m3 <- matrix(cells, nrow=3, ncol=3, byrow=FALSE, dimnames=list(rnames, cnames))
+m3
+```
+
+5. Escriba un programa R para crear un `data.frame` que contenga detalles (genero, edad, rut, dirección, profesión) de 5 empleados y muestre un resumen de los datos.
+
+```{r}
+empleados <- data.frame(Nombre=c("Joaquin","Josefina","Israel", "Esteban","Claudio"),
+                      Genero = c("M","F","M","M","M"),
+                      Edad = c(23,22,25,26,32),
+                      Designation=c("CEO","CTO","Ejecutivo","CEO","Data Scientist"),
+                      SSN = c("123-34-2346","123-44-779","556-24-433","123-98-987","679-77-576")
+                      )
+summary(empleados)
+```
+
+
+## Vectores
+
+1. Escriba un programa en R para crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 6.
+
+```{r}
+x <- vector("numeric", 5)
+x
+c <- vector("complex", 5)
+c
+l <- vector("logical", 5)
+l
+chr <- vector("character", 5)
+chr
+```
+
+2. Escriba un programa en R para sumar dos vectores de tipo entero y longitud 3.
+
+```{r}
+x <- c(10, 20, 30)
+y <- c(20, 10, 40)
+x
+y
+z = x + y
+z
+```
+
+4. Escriba un programa en R para encontrar la suma, la media y el producto de un vector.
+
+```{r}
+x <- c(10, 20, 30)
+sum(x)
+mean(x)
+prod(x)
+```
+
+7. Escriba un programa R para encontrar la suma, la media y el producto de un vector, ignore elementos como NA o NaN.
+
+```{r}
+x <- rnorm(10)
+x[sample(1:10,2)] <- NA
+x
+#una forma
+mean(x,na.rm = TRUE)
+sum(x,na.rm  =TRUE)
+prod(x,na.rm = TRUE)
+
+#2da forma utilizando na.omit, que omite los NA de un vector o data.frame
+
+x <- na.omit(x)
+mean(x)
+sum(x)
+prod(x)
+```
+
+8. Escriba un programa en R para ordenar un Vector en orden ascendente y descendente.
+
+```{r}
+x
+sort(x)
+sort(x,decreasing = TRUE)
+```
+
+9. Escriba un programa R para probar si un vector dado contiene un elemento específico.
+
+```{r}
+x <- 1:10
+
+5 %in% x
+```
+
+10. Escriba un programa R para encontrar el segundo valor más alto en un vector dado.
+
+```{r}
+x <- round(rnorm(10)*10)
+sort(x,decreasing = TRUE)[2]
+```
+
+
+11. Escriba un programa en R para encontrar el enésimo valor más alto en un vector dado.
+
+```{r}
+n <- 5 #n esimo
+sort(x,decreasing = TRUE)[n]
+```
+
+12. Escriba un programa en R para convertir la(s) columna(s) dada(s) de un `data.frame` en un vector.
+
+```{r}
+v1 <- iris$Sepal.Length
+v2 <- iris$Sepal.Width
+v3 <- iris$Species
+```
+
+13. Escriba un programa R para encontrar los elementos de un vector dado que no están en otro vector dado.
+
+```{r}
+v1 <- 1:5
+v2 <- 3:7
+v1;v2
+
+#los elementos de v1 que no estan en v2
+v1[!(v1 %in% v2)]
+
+#los elementos de v2 que no estan en v1
+v2[!(v2 %in% v1)]
+
+```
+
+14. Escriba un programa en R para invertir el orden del vector dado.
+
+```{r}
+x <- 1:10
+rev(x)
+```
+
+15. Escriba un programa en R para crear un vector y encuentre la longitud y la dimensión del vector.
+
+```{r}
+x <- 1:10
+length(x)
+dim(x)
+```
+
+16. Escriba un programa R para probar si el valor del elemento de un vector dado es mayor que 10 o no. Devuelve `TRUE` o `FALSE`.
+
+```{r}
+v <- 5:14
+v[8]
+v[8] > 10
+```
+
+17. Escriba un programa en R para sumar 3 a cada elemento en un vector dado. Imprime el vector original y el nuevo.
+
+```{r}
+v <- 1:5
+v + 3
+```
+
+18. Escriba un programa en R para crear un vector usando el operador : y la función seq().
+
+```{r}
+v1 <- 1:10
+v1
+v2 <- seq(1,10,2)
+v2
+```
+
+## Factors
+
+1. Escriba un programa R para encontrar los niveles de factor de un vector dado.
+
+```{r}
+levels(iris$Species)
+```
+
+2. Escriba un programa R para cambiar el primer nivel de un factor con otro nivel de un factor dado.
+
+```{r}
+letras <- factor(sample(letters[1:5],40,replace = TRUE))
+
+levels(iris$Species)[1] <- levels(letras)[1]
+levels(iris$Species)
+```
+
+3. Escriba un programa en R para crear un factor ordenado a partir de datos que consisten en los nombres de los meses.
+
+```{r}
+f <- factor(month.name, levels = month.name)
+f
+```
+
+
+4. Escriba un programa R para extraer los cinco niveles de factor creados a partir de una muestra aleatoria de las `letters` (parte de la distribución base R).
+
+```{r}
+letras <- factor(letters[sample(1:5,20,replace = TRUE)])
+levels(letras)
+```
+
+
+5. Escriba un programa en R para crear un factor correspondiente al conjunto de datos de la altura de las mujeres, que contenga la altura y el peso de una muestra de mujeres.
+
+```{r}
+data <- women
+data
+height_f = cut(women$height,3)
+table(height_f)
+```
+
+## Matrices
+
+1. Escriba un programa en R para crear una matriz en blanco.
+
+```{r}
+matrix(nrow=10,ncol=10)
+```
+
+2. Escriba un programa en R para crear una matriz tomando como entrada un vector dado de números. Muestre la matriz.
+
+```{r}
+v <- 1:9
+matrix(v,3,3)
+```
+
+3. Escriba un programa en R para crear una matriz que tome un vector dado de números como entrada y defina los nombres de columna y fila. Muestre la matriz.
+
+```{r}
+v1 <- 1:9
+m <- matrix(v1,3,3,dimnames = list(c('fila','fila2','fila3'),c('col1','col2','col3')))
+m
+```
+
+
+4. Escriba un programa en R para crear dos matrices de 2x3, luego sume, reste, multiplique y divida las matrices.
+
+```{r}
+m1 <- matrix(1:6,2,3)
+m2 <- matrix(6:1,2,3)
+m1
+m2
+m1+m2
+m1-m2
+m1*m2
+m1/m2
+```
+
+5. Escriba un programa en R para crear una matriz de correlación a partir de un `data.frame` del mismo tipo de datos.
+
+```{r}
+cor(mtcars)
+```
+
+6. Escriba un programa R para encontrar el índice de fila y columna de valor máximo y mínimo en una matriz dada.
+
+```{r}
+
+m <- matrix(sample(1:100,9),3,3)
+which(m == max(m),arr.ind = TRUE)
+which(m == min(m),arr.ind = TRUE)
+
+```
+
+7. Escriba un programa R para concatenar dos matrices dadas de la misma columna pero filas diferentes.
+
+```{r}
+
+m1 <- matrix(sample(1:100,12),3,4)
+m2 <- matrix(sample(1:100,20),5,4)
+
+rbind(m1,m2)
+```
+

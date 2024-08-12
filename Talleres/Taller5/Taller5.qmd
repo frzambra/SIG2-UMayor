@@ -1,0 +1,119 @@
+---
+title: "Taller 5 (IMSE1017)"
+subtitle: "Datos raster con {terra}"
+author: 'Dr. Francisco Zambrano'
+format: 
+  html:
+    number-sections: false
+    echo: false
+    eval: false
+    table-of-contents: true
+lang: es
+bibliography: "referencias.bib"
+editor: source
+---
+
+## Descripción
+
+En la primera parte del curso se familiarizó con R [@R2023], las principales estructuras de datos, como realizar indexación, conoció algunas funciones y pudo realizar algunos gráficos básicos; utilizando R base. Ahora, en el curso hemos empezado a trabajar en R con datos geoespaciales de tipo vectoriales y raster. Para manejar datos vectoriales utilizamos `{sf}` [@Pebesma2018] y para datos de tipo raster `{terra}`[@Hijmans2023]. En este taller trabajaremos con `{terra}`.
+
+## Objetivo del taller
+
+Familiarizarce con `{terra}` para crear datos raster, asignarles SRC, transformar los SRC, leer y guardar archivos rasters desde/hacia el disco, y explorar su estructura.
+
+## Instalar y cargar {terra}
+
+Hasta el momento en el curso hemos trabajado con los paquetes que vienen inculidos en R base (stats, graphics, grDevices, utils, datasets, methods y base). Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos y cargarlos en R. En este taller trabajaremos con `{terra}` para poder manejar datos espaciales rasters.
+
+Para instala y cargar `{terra}` debe realizar lo siguiente:
+
+```{r}
+#| echo: true
+#| eval: false
+
+# instala {terra}
+install.packages('terra')
+
+# cargar {terra} en el entorno de R para poder utilizar 
+# las funciones adicionales para manejo de datos vectoriales que contiene
+
+library(terra)
+```
+
+## Data
+
+Se proporcionan capas rastesr con los que deberá trabajar en el taller, estas corresponden a estaciones de calidad de aire y capas de biodiversidad, ubicados en Chile.
+
+El archivo comprimido (.zip) que contiene los archivos los debe descargar desde [acá](https://drive.google.com/file/d/13YYw8KDhEab3sLeMwOCcQ7Wk1WAUCojc/view?usp=sharing).
+
+## ¿Qué debe entregar?
+
+Deberá utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller4.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Evaluaciones -> Talleres -> Taller4`
+
+## Fecha de entrega
+
+Viernes 10 de noviembre hasta las 10:00am
+
+## Referencias
+
+::: {#refs}
+:::
+
+## Ejercicios
+
+1. (30pts) Cree un objeto llamdo `r` de tipo `spatRaster` que tenga una extensión entre las latitudes 33°30' y 32°30' Sur; y entre las longituded 70°40' y 69°40 Oeste. Indique:
+
+- las unidades
+- la resolución espacial
+- cantidad de filas y columnas
+- el sistema de referencia de coordenadas
+
+```{r}
+library(terra)
+r <- rast(ymax=-69.66667,ymin=-70.66667, xmax = -32.50,xmin=-33.50)
+```
+
+2. (30pts) Cree un objeto llamdo `r` de tipo `spatRaster` que tenga una extensión entre las latitudes 33°30' y 32°30' Sur; y entre las longituded 70°40' y 69°40 Oeste. El raster debe tener 10 filas y 5 columnas; y debe tener como valores en las celdas los números del 1 al 50. 
+
+```{r}
+r <- rast(xmax=-69.66667,xmin=-70.66667, ymax = -32.50,ymin=-33.50,ncol=5,nrow=10)
+```
+
+3.- (30pts) Cree un raster que tenga una extensión entre 350.000m y 450.000m Este y 6.400.00m y 6.500.000m Norte (UTM EPSG:32719). Que tenga 10 filas y 10 columnas. Agregue los valores a cada celda del 100 al 1.
+
+```{r}
+r <- rast(xmin =350000, xmax=450000,ymin=6400000,ymax=6500000,crs = "EPSG:32719",
+          ncol=10,nrow=10)
+values(r) <- 100:1
+plot(r)
+text(r)
+
+```
+
+4.- (30pts) Cree un raster de tres capas, que tenga 3 filas y 3 columnas. Los pixeles de la primera capa debe tener los valores 1 a 9, de la segunda de 10 a 18 y la tercera de 19 a 27.
+
+```{r}
+r <- rast(nrow=3,ncol=3,nlyr=3)
+values(r) <- c(1:9,10:18,19:27)
+```
+
+5.- (20pts) Haga la suma de las tres capas de él raster de la pregunta anterior. Guarde el resultado en un nuevo raster. Hagua un plot del raster y muestre los valores en cada celda.
+
+```{r}
+
+r2 <- sum(r)
+```
+
+6.-

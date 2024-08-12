@@ -1,0 +1,665 @@
+---
+title: "R: Tipos y estructura de datos "
+author: "Dr. Francisco Zambrano"
+date: "2024-08-12"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSD1025|2-2024"
+    theme: default
+---
+
+## Contenidos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+::: incremental
+1. Sintaxis de R
+2. Tipos de datos básicos: `numeric, character, logical`
+3. Tipos de datos derivados: `factor, faltantes, date, time`
+4. Estructuras de datos básicos: `vector,matrix, data.frame, list`
+:::  
+
+# 0. Antes de partir {background-color="grey" }
+
+## Algunos consejos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+::: incremental
+- `R` es quizas el más poderoso ambiente computacional para análisis de datos.
+- Con `R` puedes:
+    - leer y guardar archivos,
+    - manipular y resumir datos
+    - correr modelos y test estadísticos
+    - crear elegantes gráficos
+    - y mucho, mucho más
+
+- Las funcionalidades se amplian gracias a miles de paquetes (plug-ins)
+
+- Cuando tengas duda, pruébalo! ([Norman Matloff's](https://www.nostarch.com/artofr.html))
+- Estas aprendiendo un lenguaje, tendras que dedicar mucho tiempo para alcanzar un buen nivel en R, pero vale la pena.
+- Tolerancia a la frustración es un requisito. Al principio muchas cosas fallarán y volveran a fallar, hasta que luego empezaran a funcionar.
+:::
+
+##  Instalar `R` {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+- Si deseas instalar R en tu PC 
+  - [Descargar R](https://www.r-project.org/)
+  - Descargar una IDE, aconsejo [RStudio](https://rstudio.com/)
+
+## Explorando RStudio {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: incremental
+- Por defecto RStudio está organizado en los siguientes paneles:
+    1. `Script (izquierda arriba):` Acá es donde revisas y editas los scripts.
+    2. `Consola (izquierda abajo):` acá se ejecutan los comandos de R. Las salidas de R (outputs) aparecen acá.
+    3. `Global Environment (derecha arriba):` variables almacenadas, funciones, y otros objetos de R aparecen acá.
+    4. `Misc (derecha abajo):` Una variedad de pestañas que ayudan a buscar archivos, ver los gráficos, ver ayuda, etc.
+:::
+
+## Explorando RStudio {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+RStudio también tiene varias personalizaciones que ayudan a un mejor uso::
+
+- Click Tools --> Global Options --> `Appearance` para cambiar tipo de letra y color
+- Click Tools --> Global Options --> `Code` selecciona el cuadro que dice "Soft-wrap R source files" para ajustar el texto al ancho del panel.
+- Click Tools --> Global Options --> Code --> `Display` selecciona el cuadro que dice "Highlight selected line" y "Highlight R function calls". Proporciona destacado de linea y funciones.
+
+## 1.R como una calculadora {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+
+1+1
+sqrt(9)
+3^3
+exp(10)
+pi
+```
+
+## 1. Sintaxis de R {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Ejemplo de script:
+
+- los comentarios `#` y como se utilizan para doucmentar funciones y su contenido.
+- variables y funciones
+- el operador de asignación `<-`
+- el `=` para argumentos en una función
+
+```{r}
+#| echo: true
+#| eval: false
+# Carga paquete {ggplot2}
+library(ggplot2)
+
+# nombree de variables
+nombre_archivo <- 'datos.csv'
+
+# cargar datos
+
+data <- read.csv2(nombre_archivo,header = FALSE)
+```
+
+## 1. Sintaxis de R {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+### Tener en mente
+
+> todo lo que hay en `R` es un objeto y todo lo que pasa en R es fruto de una `función`
+
+## 1. Funciones y argumentos {.smaller}
+
+- Las `funciones` ejecutan acciones sobre los `argumentos`. 
+    - synatxis: `nombre_funcion(argumentos)`
+    - ejemplo: mean(10)
+
+- Los `argumentos` son los datos de entrada - valores, expresiones, texto, etc. 
+  - Le dices a la función que argumentos necesita dentro de los parentesis. 
+
+Usa la función `ls()` para ver todos los objetos definidos. Notar que `ls()` no toma ningun argumento!
+
+```{r}
+#| echo: true
+#| eval: false
+ls()
+```
+
+# 2. Tipos de datos básicos {background-color='orange'}
+
+## Numeric: integer o double {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+1 
+x <- 1 
+x = 1 
+
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+1
+x <- 1 
+x = 1 
+class(x) 
+typeof(x) 
+```
+:::
+
+:::
+
+## Numeric: integer o double {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+```{r }
+#| echo: true
+y <- 1L 
+
+z <- as.integer(1) 
+class(y)
+class(z) 
+```
+:::
+
+
+::: {.column width="50%"}
+
+```{r }
+#| echo: true
+typeof(y)
+typeof(z) 
+```
+:::
+
+:::
+
+## Character {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Siempre entre comillas: `'` o `"`
+
+```{r}
+#| echo: true
+pais<- 'Chile'
+class(pais)
+```
+
+No es lo mismo:
+
+```{r}
+#| echo: true
+pais
+'pais'
+```
+
+## Character {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+¿Qué pasa en este caso?
+
+```{r}
+#| echo: true
+#| error: true
+Chile
+```
+
+## Character: algunas funciones útiles {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+x <- 'R es el mejor lenguaje para análisis de datos'
+nchar(x)
+y <- substr(x,3,55)
+y
+paste('Python', y)
+```
+
+## Character: algunas funciones útiles {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+x
+gsub('R es el mejor lenguaje','R y Python son dos de los mejores lenguajes',x)
+```
+
+## Logical {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+
+TRUE
+class(TRUE)
+FALSE
+class(FALSE)
+```
+:::
+
+::: {.column width="50%"}
+Algunos utilizan
+
+```{r}
+#| echo: true
+T
+F
+```
+
+**NO lo hagan**, puede generar errores díficiles de rastrear
+:::
+
+:::
+
+## Logical {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Ejemplo:
+
+```{r}
+#| echo: true
+#| error: true
+T <- 4
+
+is.logical(T)
+
+TRUE <- 4
+
+```
+
+## Logical {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+Suelen ser el resultado de un cálculo
+
+```{r}
+#| echo: true
+
+5 > 4
+
+5 < 4
+
+x <- 6
+
+x == 6
+```
+
+:::
+
+::: {.column width="50%"}
+
+Los valores lógicos pueden ser tratados como numéricos
+
+TRUE = 1; FALSE = 0
+
+```{r}
+#| echo: true
+
+TRUE + 1
+
+FALSE + 1
+```
+:::
+:::
+
+# 3. Tipos de datos derivados {background-color='lightblue'}
+
+## Valores faltantes (NA: Not Available) {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+
+El análisis de datos faltantes es muy importante en análisis de datos
+
+```{r}
+#| echo: true
+f <-  c(NA, 3, 2, NA)
+f
+sum(is.na(f)) #contar cuantos NAs tiene el vector f
+is.na(f) # busca en f los NAs, TRUE en la posicion que hay, FALSE en otro caso
+TRUE + FALSE + FALSE + TRUE
+```
+
+## Date-time {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+d <- as.Date('2020-08-27')
+d
+class(d)
+
+d2 <- as.POSIXct('2020-08-27 10:30:20', tz='America/Santiago')
+d2
+class(d2)
+```
+
+## Date-time {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+d - d2
+as.POSIXct(d) -d2 #<<
+d2
+d - as.Date(d2)
+```
+
+## Factor {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Las funciones as.________, convierten un tipo de dato a otro
+
+```{r}
+#| echo: true
+x <-c(5,3,9,3,5,3,8,9,3,8,9)
+y <- as.factor(x)
+y
+```
+--
+
+::: {.columns}
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+as.numeric(y)
+as.numeric(as.character(y))
+```
+:::
+
+::: {.column widt=50%}
+
+
+```{r}
+#| echo: true
+levels(y)
+```
+:::
+:::
+
+# 4. Estructura de datos {background-color='darkgreen'}
+
+## Vectores {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Hay dos tipos de vectores en R:
+
+- `Vectores atómicos`: homogéneos
+  - Seis tipos: logicos, integer, double, character, complex, and raw. Vectores tipo integer y double son conocidos como vectores numericos.
+
+- `Listas`: hetereogéneos
+  - son a veces llamados vectores recursivos, por que las listas puede cntener otras listas.
+
+![](img/data-structures-overview.png){width=400}
+
+## Atomic vectors {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Almacena el mismo tipo de dato (numeric, character, logical)
+
+```{r}
+#| echo: true
+c(1, 2, 3, 4) #numeric vector
+c('a', 'b', 'c') #character vector
+c(TRUE, FALSE, TRUE) # logical vector
+```
+
+
+## Atomic vectors {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+¿Qué pasa si mezclamos diferentes tipos?
+
+```{r}
+#| echo: true
+#| eval: false
+x <- c(1, TRUE, 'o')
+class(x)
+x
+```
+
+
+```{r}
+#| echo: false
+#| eval: false
+x <- c(1, TRUE, 'o')
+class(x)
+x
+```
+
+`Importante`:    
+    - Jerarquia de Coerción: logical -> integer -> double -> character
+
+¿Qué pasará con?
+
+```{r }
+#| echo: true
+#| eval: false
+class(c('TRUE',1L))
+```
+
+::: {.fragment}
+```{r }
+#| echo: false
+class(c('TRUE',1L))
+```
+:::
+
+## Numeric vector: algunas funciones {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+1:10 # crea una secuencia entre 1 y 10 con incremento de 1
+seq(from=1,to=10,by=2) #crea una secuencia entre 1 y 10 con incremento de 2
+rep(2,times=10) # repite 2, 10 veces 
+rev(c(1,2,3,4)) # inverso de 1,2,3,4
+```
+
+## Character vector: algunas funciones {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Constantes integradas en R
+
+```{r}
+#| echo: true
+letters
+month.name
+```
+
+Para ver cuántos elementos tiene un vector usamos `length`
+
+::: {.columns}
+
+::: {.column width=50%}
+```{r}
+#| echo: true
+length(letters)
+```
+:::
+
+::: {.column width=50%}
+```{r}
+#| echo: true
+length(month.name)
+```
+:::
+:::
+
+## Character vector {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Los vectores tienen atributos (metadata)
+
+```{r}
+#| echo: true
+x <- c(a=1, b=2, c=3)
+x
+
+attributes(x)
+
+attr(x,'names')
+```
+
+## Character vector: algunas funciones {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Regular expresion (regex) pueden utilizarse para buscar texto por un patrón usamos `grep`.
+
+```{r}
+#| echo: true
+month.name
+grep(pattern='a',month.name)
+```
+
+Para más información sobre regex vaya a [regexr.com](https://regexr.com/)
+
+## Factor {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+En escencia es un vector con attributos. Representa una variable nominal/categorica. Usados para test estadísticos.
+
+```{r}
+#| echo: true
+x <- c('a','a','b','c','c','c')
+v <- factor(x,levels = c('a','b','c')) 
+v
+```
+
+
+```{r}
+#| echo: true
+attributes(v)
+```
+
+## List: es un tipo de vector {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+
+Muy importante!! Permite mezlar diferentes tipos de datos
+
+::: {.columns}
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+l <- list(c(1,3,5),'a',TRUE)
+l
+```
+:::
+
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+list(l,f)
+```
+:::
+:::
+
+## Matrix {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+`vector` tiene una dimensión, la `matrix` tiene 2
+
+::: {.columns}
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+matrix(ncol=2,nrow=3)
+matrix(1:6,ncol=2,nrow=3)
+```
+:::
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+m <- matrix(1:6,ncol=2,nrow=3,byrow = TRUE)
+m
+class(m)
+typeof(m)
+```
+:::
+:::
+
+## Matrix: algunas funciones {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+a <- 1:3
+b <- 4:6
+c <- rbind(a,b) #<<
+d <- cbind(a,b) #<<
+c
+d
+```
+:::
+
+::: {.column widt=50%}
+```{r}
+e <- matrix(1:9,nrow =3)
+f <- rbind(c,e)
+f
+```
+:::
+:::
+
+## Matrix: algunas funciones {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+nrow(f)
+ncol(f)
+dim(f)
+length(f)
+```
+:::
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+rownames(f)
+colnames(f)
+colnames(f) <- c('x','y','z')
+f
+```
+:::
+:::
+
+## Data.frame {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+- Es uno de los objetos más destacados, nace del mundo de software de análisis estadístico.
+
+- Cada columna corresponde a una variable y cada fila a una observación. 
+
+
+- Puede almacenar columnas con diferentes tipos de datos
+
+```{r}
+#| echo: true
+head(iris)
+```
+
+## Data.frame {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+¿Cómo creamos un data.frame?
+
+```{r}
+#| echo: true
+id <- 1:6
+nombres <- c('Paulina','Idania','Patricia','Natalia','Alejandro','Alvaro')
+sexo <- c('F','F','F','F','M','M')
+num_letras <- nchar(nombres)
+
+df <- data.frame(id,nombres,sexo,num_letras)
+df
+```
+
+## Data.frame {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+dim(df)
+names(df)
+colnames(df)
+rownames(df)
+```

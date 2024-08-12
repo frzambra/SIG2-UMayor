@@ -1,0 +1,260 @@
+---
+title: "Evaluación 2"
+subtitle: "SIG Avanzado (IMSE1017)"
+author: "Francisco Zambrano"
+date: "2023/11/17"
+lang: es
+format: 
+  html:
+    toc: true
+    number-sections: true
+editor: source
+---
+
+# Datos
+
+Los datos que utilizará para la evaluación son los siguientes:
+
+  - `Indice Calidad de Aguas`: datos de la Dirección General de Aguas (DGA) con ubicaciones de puntos de Agua Potable Rural (APR) con mediciones de índices de calidad de agua.  
+  - `Inventario Lagos:` datos de la Dirección General de Aguas (DGA) con los lagos presentes en el territorio nacional.  
+  - `dem Chile:` datos de elevación (metros) para el territorio de Chile continental.  
+  - `imagen Copiapo:` imagen aérea capturada sobre una zona de la ciudad de Copiapo.
+  
+Los datos los debe descargar desde [acá](https://drive.google.com/file/d/1ngv-MBcbQRTD9q4Fd4L6AKSRkECIyJyW/view?usp=sharing)
+
+# Conceptos
+
+1. (10pts) Describa como puede utilizar el software R como un Sistema de Información Geográfica.
+
+>R: Se puede utilizar gracias a los paquetes que proporcionan las clases y funciones para procesar datos geospaciales de tipo raster y vectorial. En R podemos utilizar {terra} y {sf} para trabajar con datos raster y vectoriales.
+
+2. (10pts) Describa que clase de objetos se utilizan en R para trabajar con objetos geoespaciales de tipo vectoriales y rasters.
+
+>R: R utiliza las clase `sf` para trabajar con datos vectoriales y `spatRaster` para datos raster.
+
+3. (10pts) Liste los tipos de geometrias que se pueden trabajar con el paquete `{sf}`.
+>R: Puntos, lines, polígonos, multiple puntos, multiple lineas, multiple poligonos, colección de geometrias.
+
+4. (10pts) Describa los objetos de clase `sf`.
+> R: Los objetso de clase `sf` están compuestos por un `data.frame` en donde se almacenan los atributos y una columna `sfc` donde se almacenan las geometrias como clas `sfg` correspondiente a cada observación.
+
+# Vectoriales
+
+1. (20pts) Cree un hexágono con las coordenadas que se indican en los puntos A, B, C, D, E y F:
+
+![](img/p_21_graf2.gif)
+```{r}
+library(sf)
+m <- matrix(c(4,0,6,2*sqrt(3),4,4*sqrt(3),0,4*sqrt(3),-2,2*sqrt(3),0,0,4,0),ncol=2,byrow = TRUE)
+pol <- st_polygon(list(m))
+plot(pol)
+```
+
+2. Cargue la capa vectorial correspondiente al  `Inventario Lagos` e indique lo siguiente :
+    a) (5pts) tipo de geometria
+    b) (5pts) dimensión de los puntos
+    c) (10pts) sistema de referencia de coordenadas (datum, proyectada o no proyectada, huso si corresponde y código EPSG)
+    d) (5pts) cantidad de variables y observaciones
+    e) (5pts) extensión
+
+```{r}
+lagos <- read_sf('data/Lagos/')
+
+#tipo de geometria
+class(lagos$geometry)
+
+#dimensión
+str(lagos$geometry[1])
+
+# SRC
+
+lagos_src <- st_crs(lagos,parameters = TRUE)
+
+#datum y huso
+lagos_src$Name
+
+# EPSG
+lagos_src$srid
+
+# cantidad de variables
+ncol(lagos)-1
+
+# Cantidad de observaciones
+nrow(lagos)
+
+#extensión
+
+st_bbox(lagos)
+
+```
+
+3. Con la capa de `Inventario Lagos` realice lo siguiente:
+    a) (15pts) seleccione los lagos que pertenecen a la provincia de Santiago y asignelo a un objeto `lagos_stgo`. ¿Cuántos son?
+    b) (10pts) reproyecte (transforme) el sistema de referencias de coordendas de `lagos_stgo` a SRC EPSG 4326 y reemplázelo.
+    c) (15pts) haga un mapa (con plot) en donde se muestre con colores la variación de la variable área (AREA_KM2)
+    d) (20pts) seleccione el primer lago de `lagos_stgo` y simplifique su geometria, considerando una tolerancia de 30m. Haga un plot de la geometría original y simplificada.
+    
+```{r}
+#   a) (15pts) seleccione los lagos que pertenecen a la provincia de Santiago y asignelo a un objeto `lagos_stgo`. ¿Cuántos son?
+
+lagos_stgo <- lagos[lagos$PROVINCIA %in% 'Santiago',] 
+
+## ¿cuantos son?
+nrow(lagos_stgo)
+
+#    b) (10pts) reproyecte (transforme) el sistema de referencias de coordendas de `lagos_stgo` a SRC EPSG 4326 y reemplázelo.
+lagos_stgo <- st_transform(lagos_stgo,4326)
+
+#    c) (15pts) haga un mapa (con plot) en donde se muestre con colores la variación de la variable área (AREA_KM2)
+plot(lagos_stgo[,'AREA_KM2'])
+
+#    d) (20pts) seleccione el primer lago de `lagos_stgo` y simplifique su geometria, considerando una tolerancia de 30m. Haga un plot de la geometría original y simplificada.
+lagos_stgo <- st_transform(lagos_stgo,32719)
+lago_sim <- st_simplify(lagos_stgo[1,],dTolerance = 30)
+par(mfrow = c(1,2))
+plot(lagos_stgo$geometry[1],main ='original')
+plot(lago_sim$geometry,main = 'simplificado')
+                      
+```
+
+4. Cargue la capa de `Indice Calidad Aguas` y realice lo siguiente:
+    a) (15pts) Seleccione las observaciones que se encuentran en la comuna de "Romeral". ¿Cuántas puntos hay?
+    b) (10pts) cree un buffer de 1000 metros en los puntos que se encuentran en Romeral y asignelo al objeto `calag_rom_buf`.
+    c) (10pts) ¿cuáles son los nombres de las cinco primeras variables de `calag_rom_buf`. 
+    d) (15pts) guarde el objeto `calag_rom_buf` en formato geopackage y con el nombre ``
+
+```{r}
+ica <- read_sf('data/Indice_Calidad_de_Aguas')
+
+#    a) (15pts) Seleccione las observaciones que se encuentran en la comuna de "Romeral". ¿Cuántas puntos hay?
+ica_rom <- ica[ica$NOM_COM == 'ROMERAL',]
+nrow(ica_rom)
+
+#    b) (10pts) cree un buffer de 1000 metros en los puntos que se encuentran en Romeral y asignelo al objeto `calag_rom_buf`.
+calag_rom_buf <- st_buffer(ica_rom,1000)
+
+#    c) (10pts) ¿cuáles son los nombres de las cinco primeras variables de `calag_rom_buf`. 
+names(calag_rom_buf)[1:5]
+
+#    d) (15pts) guarde el objeto `calag_rom_buf` en formato geopackage y con el nombre `calidad_agua_romeral_buffer_1000m`
+write_sf(calag_rom_buf,'data/calidad_agua_romeral_buffer_1000m.gpkg')
+```
+
+
+# Raster
+
+1. (30pts) Cree un raster de 4 filas y 4 columnas que se encuentre entre 35°20' y 37°30' de latitud Sur; y 71°50' y 70°15' de longitud Oeste. El sistema de referencia de coordenadas debe ser coordenadas geográficas y datum WGS84. En cada fila el raster debe tener los siguientes valores:
+
+  -`Fila 1:` 9, 6, 4, 1  
+  -`Fila 2:` 10, 25, NA, 2  
+  -`Fila 3:` 5, 10, 15, 25  
+  -`Fila 4:` 100, 5, 30, 50
+
+```{r}
+library(terra)
+v <- c(9,6,4,1,10,25,NA,2,5,10,15,25,100,5,30,50)
+r <- rast(xmin = -71-50/60,xmax=-70-15/60,ymin=-37-30/60,ymax=-35-20/60,ncols=4,nrows=4)
+values(r) <- v
+plot(r);text(r)
+```
+
+
+2. (15pts) Considere el siguiente raster:
+
+```{r}
+#| message: false
+library(terra)
+r <- rast(x=matrix(1:16*5,4,byrow = FALSE),crs="EPSG:4326")
+plot(r);text(r)
+```
+
+Transforme el sistema de referencia de coordenadas del raster anterior a coordenadas UTM Huso 19 Sur datum WGS84.
+
+```{r}
+r_proj <- project(r,'EPSG:32719')
+r_proj
+```
+
+3. (20pts) Cree un raster nuevo utilizando el raster de la pregunta anterior, en el que se le sumen 10 y se calcule la raiz cuadrada a cada pixel. 
+
+$$\sqrt{pixel+10}$$
+```{r}
+r_nuevo <- sqrt(r_proj+10)
+plot(r_nuevo)
+```
+
+4. (20pts) Cree un nuevo raster, tomando como referencia el raster de la pregunta 2, al que se le cambie los valores que son menores que 46 y mayores que 54, por el valor `NA`.
+
+```{r}
+r[r < 46 | r > 54] <- NA
+plot(r)
+```
+
+5. (20pts) Calcule el promedio, la mediana y desviación estandar de todos los valores del raster  de la pregunta 2. Utilice una función de `{terra}`.
+
+```{r}
+funs = c(mean,median,sd)
+sapply(funs, \(fun) global(r,fun,na.rm = TRUE))
+
+```
+
+6. Cargue el archivo `dem_chile.tif` en R e indique utilizando una función de R:
+    a) (5pts) clase del objeto
+    b) (5pts) número de columnas, filas y capas
+    c) (5pts) resolución espacial
+    d) (5pts) sistema de referencia de coordenadas 
+    e) (5pts) el archivo se encuentra almacenado en la memoria o en el disco.
+    f) (15pts) cuál es la elevación máxima y mínima
+    
+```{r}
+dem_chile <- rast('data/dem_chile.tif')
+
+#    a) (5pts) clase del objeto
+class(dem_chile)
+
+#    b) (5pts) número de columnas, filas y capas
+dim(dem_chile)[1:2]
+
+#    c) (5pts) resolución espacial
+res(dem_chile)
+
+#    d) (5pts) sistema de referencia de coordenadas 
+crs(dem_chile,describe = TRUE)
+
+#    e) (5pts) el archivo se encuentra almacenado en la memoria o en el disco.
+inMemory(dem_chile)
+sources(dem_chile)
+
+#    f) (15pts) cuál es la elevación máxima y mínima
+##máxima
+global(dem_chile,'max',na.rm = TRUE)
+
+##mínima
+global(dem_chile,'min',na.rm = TRUE)
+
+```
+
+
+7. Cargue el archivo `imagen_copiapo.tif` en R. Realice lo siguiente:
+    a) (15pts) cree un raster que corresponda a la suma de las cuatro capas.
+    b) (10pts) reproyecte (transforme) el sistema de referencia de coordenadas a SRC EPSG 4326.
+    c) (10pts) haga un mapa en donde se pueda visualizar la composición de color RGB utilizando las tres primeras capas.
+    d) (15pts) guarde (`writeRaster`) la primera capa del raster con el nombre `copiapo_capa1.tif`
+
+```{r}
+im <- rast('data/imagen_copiapo.tif')
+
+#    a) (15pts) cree un raster que corresponda a la suma de las cuatro capas.
+im_nuevo <- sum(im)
+
+#    b) (10pts) reproyecte (transforme) el sistema de referencia de coordenadas a SRC EPSG 4326.
+im_4326 <- project(im,'EPSG:4326')
+
+#     c) (10pts) haga un mapa en donde se pueda visualizar la composición de color RGB utilizando las tres primeras capas.
+plotRGB(im)
+
+#     d) (15pts) guarde (`writeRaster`) la primera capa del raster con el nombre `copiapo_capa1.tif`
+writeRaster(im[[1]],'data/copiapo_capa1.tif')
+
+```
+

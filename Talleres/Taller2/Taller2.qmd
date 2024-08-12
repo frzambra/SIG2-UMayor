@@ -1,0 +1,68 @@
+---
+title: "Taller 3 (IMSE1017)"
+subtitle: "Datos vectoriales y raster con {sf} y {terra}"
+author: 'Dr. Francisco Zambrano'
+format: 
+  html:
+    number-sections: false
+    echo: true
+    eval: false
+    table-of-contents: true
+lang: es
+editor: visual
+---
+
+## Descripción
+
+En las primeras clases de la asignatura se ha empezado a trabajar con el software R, partiendo por conocer la sintaxis, la IDE RStudio, las estructuras y tipos de datos. En el primer taller trabajó con datos que vienen incluidos en los paquetes base de R como `mtcars`, aplicando funciones que permitan identificar los tipos de objetos y su estructura, además de realizar proceso de indexación para diferentes tipos de objetos (ej, data.frame, matrix, listas). En el segundo taller, trabajo con datos climáticos en donde tuvo que importar los datos, realizar diferentes tipos de indexaciones, algunas operaciones matemáticas, y exportar los datos a un archivo.
+
+## Objetivo del taller
+
+Trabajar con datos vectoriales y raster en R con los paquetes {sf} y {terra}
+
+## Paquetes R
+
+Hasta el momento hemos trabajado con los paquetes que vienen inculidos en R base. Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos. Los paquetes con los que trabajaremos con `{sf}` y `{terra}`, los que permiten trabajar con datos espaciales vectoriales y rasters.
+
+Para instalar los paquetes debe realizar lo siguiente:
+
+```{r}
+#| echo: true
+
+# instala los paquetes
+install.packages(c('sf','terra'))
+
+# carga los paqutes en el entorno de R y permite utilizar 
+# las funciones adicionales que contienen
+
+library(sf)
+library(terra)
+```
+
+## Data
+
+En el campus virtual, en la sección `Actividades -> Talleres -> Taller2` se encuentra el archivo excel `data.xlsx`. Ésta planilla tiene cuatro hojas, debe trabajar con las dos primeras que corresponden radiación sola (hoja RS) y precipitación (PP).
+
+## ¿Qué debe entregar?
+
+Debeŕa utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller3_grupo_{número_grupo}.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Talleres -> Taller2`
+
+## Fecha de entrega
+
+Viernes 20 de octubre hasta las 8:00am
+
+## Ejercicios
+
+### Ejercicio 1

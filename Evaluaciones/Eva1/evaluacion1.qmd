@@ -1,0 +1,226 @@
+---
+title: "Evaluación 1"
+subtitle: "SIG Avanzado (IMSE1017)"
+author: "Dr. Francisco Zambrano"
+format: 
+  html:
+    lang: es
+    toc: true
+    number-sections: true
+editor: visual
+---
+
+# Primera parte
+
+1.  ¿Cuál es la diferencia entre R y RStudio?\
+    **R:** `R` es el lenguaje de programación y RStudio es la IDE o interfaz gráfica que facilita el trabajar con `R`.
+
+2.  ¿Cuáles son los tres tipos de datos básicos en R?\
+    **R:** vector numérico, carácter y lógico.
+
+3.  Los argumentos de una función en R van entre paréntesis cuadrados `[ ]`.
+
+4.  El operador de asignación para un objeto en R es `<-`.
+
+5.  El resultado de la operación `FALSE + 2` es 2
+
+6.  El resultado de la siguiente operación
+
+```{r}
+x <- 5
+x < 3
+```
+
+7.  La siguiente operación
+
+```{r}
+#| eval: false
+c(TRUE, FALSE, 10, 20)
+```
+
+entrega como resultado un objeto de tipo:
+
+```{r}
+class(c(TRUE, FALSE, 10, 20))
+```
+
+8.  La siguiente operación
+
+```{r}
+#| eval: false
+c(0, TRUE, 'a')
+```
+
+entrega como resultado un objeto de tipo:
+
+```{r}
+class(c(0, TRUE, 'a'))
+```
+
+9.  El resultado de la siguiente operación en R
+
+```{r}
+20:10
+```
+
+10. ¿Cuál es la diferencia entre un objeto obtenido con la función as.Date() y as.POSIXct()?\
+    **R:** la función `as.Date` devuleve un objeto de tipo fecha y `as.POSIXct` devuleve un objeto con fecha y hora.
+
+11. ¿Cuál es la diferencia entre un vector atómico y uno de tipo lista?\
+    **R:** El vector atómico es homogéneo, es decir contener la misma clase de objetos. El vector de tipo lista es heterogéneo, es decir puede contener diferentes clases de objetos.
+
+12. ¿Cuáles son los tipos de datos derivados en R?\
+    **R:** Factor, NAs, date-time
+
+13. Considere la siguiente matriz en R
+
+```{r}
+set.seed(432)
+(m <- matrix(round(runif(25,0,100)),nrow = 5))
+```
+
+13.1. ¿Que resultado se obtendrá al ejecutar en R lo siguiente ? ¿A qué tipo de objeto corresponde el resultado?
+
+```{r}
+m[1:2,4:5]
+class(m[1:2,4:5])
+```
+
+13.2. ¿Que tipo de objeto se obtendra como resultado al ejecutar en R lo siguiente? ¿Qué valores se obtienen como resultado?
+
+```{r}
+m[,4, drop = FALSE]
+class(m[,4, drop = FALSE])
+```
+
+14. Las matrices en R pueden tener nombres de filas y columnas.\
+    **R:** Verdadero
+
+15. Considere el siguiente objeto de tipo `data.frame`
+
+```{r}
+(ir <- iris[sample(1:150,5),])
+```
+
+15.1. ¿Qué da como resultado la siguiente operación en R?
+
+```{r}
+ir$Sepal.Width
+```
+
+15.2. ¿Cuál es el resultado de la siguiente operación en R?
+
+```{r}
+ir['Species']
+```
+
+15.3. ¿Cuál es el resultado de la siguiente operación en R?
+
+```{r}
+ir[2:3,4:5]
+```
+
+16. ¿Qué resultado tendra la ejecución de la siguiente operación en R? ¿Generará algun warning? ¿Por qué?
+
+```{r}
+1:10 + c(1,3,5)
+```
+
+**R:** Se le llama reciclado de vectores, generá un warning ya que `R` al vector que tiene menor cantidad de elementos lo completa hasta alcanzar la cantidad de elementos del mayor. Para completar va repitiendo los valores, en este caso el segundo vector que tiene tres elementos lo completa hasta tener 10 elementos. Cómo 3 no es multiplo de 10, en este caso, `R` da un `warning`.
+
+17. ¿En SIG cuál es la diferencia entre tipo de datos vectorial y tipo de datos raster?\
+    **R:** Los tipos de datos vectoriales sirven para representar fenomenos discretos, están compuestos por puntos, lineas y polígonos. Los datos raster sirvern para representar de mejor forma fenómenos continuos, están compuesto de celdas/pixeles.
+
+18. Para trabajar con datos vectorial en R podemos utilizar el paquete {fs}.\
+    **R:** FALSO, el paquete es `{sf}`
+
+19. ¿Que tipo de estructuras de datos utiliza el paquete de `R` simple feature para representar los objetos espaciales en `R`?\
+    **R:** Utiliza los objetos `sf` los que están compuestos de un `data.frame` y un objeto `sfc` que corresponde a la `list-column` que almacena las geometrías espaciales. Cada geometría individual corresponde a un objeto `sfg`.
+
+20. Respecto a los objetos de datos espaciales. ¿Cuál es la diferencia entre un objeto sfc y sfg?\
+    **R:** El objeto `sfc` corresponde a un `list-column` que almacena todas las geometrías del objeto `sf`. Los `sfg` corresponde a las geometría individuales o entidades espaciales.
+
+# Segunda parte
+
+Debe descargar los datos "data_mensual.csv" que se encuentra en el campus virtual.
+
+Luego debe crear un script en R usando RStudio, que permita realizar lo siguiente:
+
+1.  Leer el set de datos almacenado como "data_mensual.csv" en R (20 pts).
+
+```{r}
+data <- read.csv2('../data/data_mensual.csv')
+```
+
+2.  obtener a que tipo de estructura de dato corresponde el archvio cargado en R (10 pts)
+
+```{r}
+class(data)
+```
+
+3.  obtener el tipo de dato de cada columna (10 pts)
+
+```{r}
+str(data)
+```
+
+4.  determinar la cantidad de filas y columnas (10 pts).
+
+```{r}
+nrow(data)
+ncol(data)
+```
+
+5.  que nombre tienen las columnas (variables) del set de datos (10 pts)
+
+```{r}
+names(data)
+```
+
+6.  calcular el promedio de las columnas "temp_promedio_aire", "temp_minima","temp_maxima" (20 pts)
+
+```{r}
+mean(data$temp_promedio_aire)
+mean(data$temp_minima)
+mean(data$temp_maxima)
+```
+
+7.  convierta la columna "comuna" a tipo de dato factor (20 pts)
+
+```{r}
+data$comuna <- as.factor(data$comuna)
+```
+
+8.  seleccione las estaciones (filas) que corresponden a la región de Valparaiso (30 pts)
+
+```{r}
+data_sel <- data[data$region == 'Valparaíso',]
+```
+
+9.  calcule cuantas estaciones (filas) hay en la región de Valparaiso (20 pts)
+
+```{r}
+nrow(data_sel)
+```
+
+10. haga un grafico que muestre la variación de la "temp_promedio_aire", "temp_minima" y "temp_maxima" entre las estaciones. (40 pts)
+
+```{r}
+plot(data$latitud,data$temp_promedio_aire)
+points(data$latitud,data$temp_maxima,col = 'red')
+points(data$latitud,data$temp_minima,col = 'blue')
+legend(-34, 9, legend=c("T° promedio", "T° máxima","T° mínima"),fill = c("black", "red","blue"))
+```
+
+11. haga un gráfico de latitud vs longitud (20 pts)
+
+```{r}
+plot(data$latitud,data$longitud)
+```
+
+12. Seleccione las estaciones (filas) de la región Metropolitana y las columnas de "latitud", "longitud", "region", "comuna" y guardelo en un archivo "temp_promedio_mensual_metropolitana.csv" (40 pts)
+
+```{r}
+data_guardar <- data[data$region == 'Metropolitana',c("latitud", "longitud", "region", "comuna")]
+write.csv2(data_guardar,'../data/temp_promedio_mensual_metropolitana.csv')
+```

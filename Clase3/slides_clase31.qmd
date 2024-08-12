@@ -1,0 +1,107 @@
+---
+title: "Introducción al análisis espacial con R"
+author: "Dr. Francisco Zambrano"
+format: 
+  revealjs:
+    slide-number: true
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSE1017|2-2023"
+    theme: default
+    echo: true
+---
+
+## Contenidos
+
+::: incremental
+1.  Un poco de historia de `R-Spatial`
+
+    i)  Evolución `R-spatial`
+    ii) Antecedentes
+    iii) Principales paquetes `R-Spatial`
+:::
+
+## 1. Evolución de paquetes espaciales
+
+![](../img/spatial_packages.png)
+
+## 2. Antecedentes {.smaller}
+
+::: incremental
+-   Desde los inicios de `R` se han desarrollado paquetes para análisis de datos geoespaciales.
+-   Point pattern analysis
+-   geostadística
+-   análisis exploratorio de datos geoespaciales
+-   econometría espacial
+    -   Sin embargo se trabajaba sobre los tipos de datos que existian en `R` (matrix, data.frame, list, arrays).
+-   Dos hítos importantes:
+    -   `{rgdal}` publicado en 2003 `(Bivand, Keitt, and Rowlingson, 2020b)`
+    -   `{sp}` publicado en 2005 `(Pebesma and Bivand, 2005; Bivand, Pebesma, and Gomez-Rubio, 2013)`
+:::
+
+## 3. Paquetes de R-Spatial {background-image="https://www.osgeo.org/wp-content/themes/roots/assets/img/logo-osgeo.svg" background-position="97.5% 2.5%" background-size="7.5%"}
+
+### `{rgdal }`
+
+-   Permite utilizar la libreria [`GDAL (OSGEO)`](https://gdal.org/) en ![](https://www.r-project.org/Rlogo.png){width="50px"} (binding)
+
+-   `{rgdal}` permite manejar datos raster y vectorial
+
+![](../img/GDALLogoColor.svg){width="300px"} Geospatial Data Abstraction Library (GDAL)
+
+## 3. Paquetes de ![](https://www.r-project.org/Rlogo.png){width="100px"}-Spatial
+
+### {sp}
+
+-   trae tipos de datos espaciales a ![](https://www.r-project.org/Rlogo.png){width="50px"}
+
+![](../img/classess_sp.png){width="800px"}
+
+## 3. Paquetes de R-Spatial
+
+### {sp}
+
+![](../img/sp_dependencies.png){width="75%" fig-align="center"}
+
+------------------------------------------------------------------------
+
+## 3. Paquetes de R-Spatial
+
+### {rgeos}
+
+-   Permite utilizar operaciones espaciales de la libreria [GEOS](https://trac.osgeo.org/geos) con objetos `{sp}`
+
+-   Union, distancia, intersección, etc
+
+-   publicada el 2011 `(Bivand and Rundel, 2020)`
+
+## Paquetes de R-Spatial
+
+-   `{sf}` publicado 2016 da soporte para [`Simple Feature`](https://en.wikipedia.org/wiki/Simple_Features) `(Pebesma, 2018)`
+
+![](../img/sf_image.jpg){width="65%" fig-align="center"}
+
+## 3. Paquetes de R-Spatial
+
+### {raster}
+
+-   `{sp}` tiene limitado soporte para obtejos raster
+
+-   `{raster}` publicado el 2010 `(Hijmans, 2020a)`
+
+    -   Permite trabajar con datos raster que son demasiado grandes para caber en la RAM.
+    -   Proporciona algebra raster
+
+![](../img//raster_classess.png)
+
+## 3. Paquetes de R-Spatial
+
+### ¿Qué está pasando ahora en el mundo `r-spatial`?
+
+-   `{terra}` publicado 2020, mejoras sobre `{raster}`
+
+-   `{stars}` Raster and Vector Datacubes
+
+-   `{gdalcubes}` tiene como objetivo hacer que los análisis de grandes colecciones de imágenes satelitales sean más fáciles, rápidos, intuitivos e interactivos.
+
+-   `{rgee}` Google Earth Engine desde `R`

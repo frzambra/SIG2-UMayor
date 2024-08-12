@@ -1,0 +1,158 @@
+---
+title: "Sistemas de Referencia de Coordenadas (SRC)"
+author: "Dr. Francisco Zambrano"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSE1017|2-2022"
+    theme: default
+    echo: true
+---
+
+```{r setup}
+#| echo: false
+#| message: false
+library(sf)
+library(terra)
+```
+
+## ¿Qué hemos visto hasta el momento? {.smaller .scrollable}
+
+- Manejo de tipos y estructuras de datos con ![](https://www.r-project.org/Rlogo.png){width="50px"}
+
+- Datos Espaciales en ![](https://www.r-project.org/Rlogo.png){width="50px"}
+
+    - Datos vectoriales (`{sf}`)
+
+    - Datos raster (`{terra}`)
+
+- Cargar y guardar datos espaciales
+  
+    - Vectoriales
+    
+    - Rasters
+
+## Contenidos clase {.smaller .scrollable}
+
+- Sistemas de Referencias de Coordenadas (SRC)
+  
+    - Datos Vectoriales
+    
+    - Datos Raster
+    
+## 1. Manejo de CRS en R {.smaller .scrollable}
+
+- `Coordenadas geográficas`: esféricas
+- `Coordenadas proyectadas`: cónica, cilíndrica y planas
+ 
+Para manejar `CRS` en `R` se utiliza la librería [`PROJ`](https://proj.org/)
+
+PROJ.4 fue usado por más de 30 años, luego mutó a $PR \phi J$, dando paso a `PROJ5`, `PROJ6`,`PROJ7`,`PROJ8`. Ahora `PROJ9` en 2022.
+  
+Así, hay tres formatos para manejar los `CRS`  
+
+- proj.4    
+- EPSG    
+- Well-known Text (wkt)
+
+`{sf}` y `{terra}` usan EPSG y wkt (well-known text)
+
+## 2. Datos vectoriales: `{sf}` {.smaller .scrollable}
+
+```{r}
+st_crs(4326)
+```
+
+## 2. Datos vectoriales: `{sf}` {.smaller .scrollable}
+
+Recomendación utilizar `EPSG (European Petroleum Survey Group)` y `wkt` para identificar el `CRS`, cuando sea posible. No se aconseja el uso de `proj4`.
+
+Transformar de un CRS a otro con `st_transform`
+
+```{r}
+nc = read_sf(system.file("shape/nc.shp", package="sf"))
+head(nc$geometry[[4]][[1]][[1]],n=3)
+nc.web_mercator <- st_transform(nc, 3857)
+head(st_geometry(nc.web_mercator)[[4]][[1]][[1]],n=3)
+```
+
+## 3. Datos raster: `{terra}` {.smaller .scrollable}
+
+```{r}
+url <- 'https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/cogs/'
+name <- 'chirps-v2.0.2021.09.cog'
+(x <- rast(paste0('/vsicurl/',url,name)))
+```
+
+## 3. Datos raster: `{terra}` {.smaller .scrollable}
+
+Para inspeccionar el SRC usamos la función `crs`
+
+```{r}
+cat(crs(x))
+```
+
+## 3. Datos raster: `{terra}` {.smaller .scrollable}
+
+Asignar un `CRS` a un raster. Utilice `crs` 
+
+```{r}
+xx <- x
+crs(xx) <- ''
+crs(xx)
+```
+
+## 3. Datos raster: `{terra}` {.smaller .scrollable}
+
+Asignar un `CRS` a un raster. Utilice `crs` 
+
+```{r}
+xx2 <- xx
+crs(xx) <- "+proj=longlat +datum=WGS84"
+crs(xx2) <- "epsg:4326"
+```
+
+## 3. Datos raster: `{terra}` {.smaller .scrollable}
+
+__Reproyectar__
+
+- La reproyección de raster se pierde precisión.
+
+- Utiliza "nearest neighbor" para datos categóricos.
+
+- En otro caso utiliza interpolación "bilineal" por defecto.
+
+```{r fig.height=3}
+r <- rast(xmin=-110, xmax=-90, ymin=40, ymax=60, ncols=40, nrows=40)
+values(r) <- 1:ncell(r)
+r
+```
+
+## 3. Datos raster: `{terra}` {.smaller .scrollable}
+
+__Reproyectar__
+
+```{r fig.height=6}
+plot(r)
+```
+
+## 3. Datos raster: `{terra}`
+
+__Reproyectar__
+
+
+```{r fig.height=4}
+newcrs <- "EPSG:32719"
+pr1 <- terra::project(r, newcrs)
+cat(crs(pr1))
+
+```
+
+## Recomendación
+
+### `Generalmente tratar de transformar el SRC de un vectorial a un raster y no al revés.`

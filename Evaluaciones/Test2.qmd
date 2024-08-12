@@ -1,0 +1,42 @@
+---
+title: "Test 2"
+subtitle: "Introducción a R"
+author: "Dr. Francisco Zambrano"
+format: pdf
+editor: visual
+---
+
+1.  ¿Cuál es la diferencia entre un vector atómico y un vector tipo lista? \newline \newline \newline
+
+2.  ¿Cuáles son los tipos de datos principales en R? \newline \newline \newline
+
+3.  ¿Cuáles son los tipos de datos derivados en R? \newline \newline \newline
+
+Considere la siguiente matrix
+
+```{r}
+set.seed(432)
+m <- matrix(round(runif(25,0,100)),nrow=5)
+m
+```
+
+4.  ¿Qué obtendré al correr en R `m[1:2,4:5]` y a que clase de objeto corresponde? \newline \newline \newline
+
+5.  ¿Qué clase de objeto obtendre al correr en R `m[,4,drop=FALSE]` \newline \newline \newline
+
+6.  ¿Las matrices en R pueden tener nombre de filas y/o columnas? \newline \newline \newline
+
+7.  ¿Cuál es la diferencia entre un objeto de clase `data.frame` y uno de tipo `matrix`? \newline \newline \newline
+
+Considere el siguiente objeto de tipo `data.frame`
+
+```{r}
+ir <- iris[sample(1:150,5),]
+ir
+```
+
+8.  ¿Qué devolverá el siguiente comando en `R` `ir$Sepal.Width`? \newline \newline \newline
+
+9.  ¿Que devolverá el siguiente comando en `R` `ir['Species']`? \newline \newline \newline
+
+10. ¿Que devolverá el siguiente comando en `R` `ir[3,5]`?

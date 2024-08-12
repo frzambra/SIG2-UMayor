@@ -1,0 +1,292 @@
+---
+title: "Operaciones geométricas con datos vectoriales"
+author: "Dr. Francisco Zambrano"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSE1017|2-2022"
+    theme: default
+    echo: true
+---
+
+## Contenidos {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Operaciones geométricas con datos vectoriales:
+
+1. Simplificación
+2. Centroides
+3. Buffers
+4. Clipping (recortar)
+5. Union
+
+```{r setup}
+#| echo: false
+#| message: false
+library(sf)
+library(terra)
+library(spData)
+```
+
+## 1. Simplificación {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+La `simplificación` es un proceso de generalización de objetos vectoriales (líneas y polígonos) generalmente para su uso en mapas de menor escala.
+
+### `geometria:` linea
+
+```{r}
+seine_simp = st_simplify(seine, dTolerance = 2000)  # 2000 m
+```
+<br>
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| out.width = "120%"
+plot(seine$geometry)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+plot(seine_simp$geometry)
+```
+:::
+:::
+
+## 1. Simplificación  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+El objeto `seine_simp` resultante es una copia del `seine` original pero con menos vértices. Esto es evidente, siendo el resultado visualmente más simple y consumiendo menos memoria que el objeto original, como se verifica a continuación:
+
+```{r}
+object.size(seine)
+object.size(seine_simp)
+```
+
+## 1. Simplificación  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+La simplificación es un proceso de generalización de objetos vectoriales (líneas y polígonos) generalmente para su uso en mapas de menor escala.
+
+### `geometria:` polígono
+
+```{r}
+us_states2163 = st_transform(us_states, "EPSG:2163")
+us_states_simp1 = st_simplify(us_states2163, dTolerance = 100000)  # 100 km
+```
+
+::: columns
+
+::: {.column width="50%"}
+```{r}
+#| out.width = "120%"
+plot(us_states2163$geometry)
+object.size(us_states2163)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+plot(us_states_simp1$geometry)
+object.size(us_states_simp1)
+```
+:::
+:::
+
+## 2. Centroides  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Las operaciones de centroide identifican el centro de los objetos geográficos.
+
+La función `st_centroid` de {sf} permite calcular los centroides.
+
+```{r}
+nz_centroid = st_centroid(nz)
+seine_centroid = st_centroid(seine)
+```
+
+## 2. Centroides  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Las operaciones de centroide identifican el centro de los objetos geográficos.
+
+```{r}
+plot(nz$geom)
+plot(nz_centroid$geom,add = TRUE,col='red')
+```
+
+## 2. Centroides {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Las operaciones de centroide identifican el centro de los objetos geográficos.
+```{r}
+plot(seine$geometry)
+plot(seine_centroid$geom,add = TRUE,col = 'red')
+```
+
+## 2. Centroides  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+A veces, el centroide geográfico cae fuera de los límites de sus objetos principales (piense en una dona).
+
+La función `st_point_on_surface` de `{sf}` asegura que los puntos caeran en el objeto.
+
+```{r}
+#| out.width = '6cm'
+nz_pos = st_point_on_surface(nz)
+plot(nz$geom)
+plot(nz_pos$geom,add = TRUE,col = 'red')
+```
+
+## 2. Centroides  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+A veces, el centroide geográfico cae fuera de los límites de sus objetos principales (piense en una dona).
+
+La función `st_point_on_surface` de `{sf}` asegura que los puntos caeran en el objeto.
+
+```{r}
+seine_pos = st_point_on_surface(seine)
+plot(seine$geom)
+plot(seine_pos$geom,add = TRUE,col = 'red')
+```
+
+## 3. Buffers  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Los `buffer` (zonas de influencia) son polígonos que representan el área dentro de una distancia determinada de una entidad geométrica: independientemente de si la entrada es un punto, una línea o un polígono, la salida es un polígono.
+
+```{r}
+seine_buff_5km = st_buffer(seine, dist = 5000)
+plot(seine_buff_5km$geometry,col ='blue')
+plot(seine$geometry,add = TRUE)
+```
+
+## 3. Buffers  {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Los `buffer` (zonas de influencia) son polígonos que representan el área dentro de una distancia determinada de una entidad geométrica: independientemente de si la entrada es un punto, una línea o un polígono, la salida es un polígono.
+
+```{r}
+seine_buff_50km = st_buffer(seine, dist = 50000)
+plot(seine_buff_50km$geometry,col ='blue')
+plot(seine$geometry,add = TRUE)
+```
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+El recorte espacial es una forma de creación de subconjuntos espaciales que implica cambios en las columnas de geometría de al menos algunas de las entidades afectadas.
+
+![](../img/venn-clip-1.png){width="800px"}
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Un ejemplo utilizando `sf`
+
+```{r}
+library(sf)
+b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
+b = st_buffer(b, dist = 1) # convert points to circles
+plot(b, border = "grey")
+text(x = c(-0.5, 1.5), y = 1, labels = c("x", "y"), cex = 3) # add text
+```
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Diferencia:** `st_difference`
+
+```{r}
+x = b[1]
+y = b[2]
+x_diff_y = st_difference(x, y)
+plot(b, border = "grey")
+plot(x_diff_y, col = "lightgrey", border = "grey", add = TRUE)
+```
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Diferencia:** `st_difference`
+
+```{r}
+y_diff_x = st_difference(y, x)
+plot(b, border = "grey")
+plot(y_diff_x, col = "lightgrey", border = "grey", add = TRUE)
+```
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Unión:** `st_union`
+
+```{r}
+y_union_x = st_union(y, x)
+plot(b, border = "grey")
+plot(y_union_x, col = "lightgrey", border = "grey", add = TRUE)
+```
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Intersección:** `st_intersection`
+
+```{r}
+x_and_y = st_intersection(x, y)
+plot(b, border = "grey")
+plot(x_and_y, col = "lightgrey", border = "grey", add = TRUE)
+```
+
+## 4. Recortar (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Diferencia simétrica:** `st_sym_difference`
+
+```{r}
+x = b[1]
+y = b[2]
+x_sym_y = st_sym_difference(x, y)
+plot(b, border = "grey")
+plot(x_sym_y, col = "lightgrey", border = "grey", add = TRUE)
+```
+
+## 5. Unión (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Une geometrias. Funciona de dos formas posibles:
+
+**disuelve**
+
+```{r}
+nc <- read_sf(system.file("shape/nc.shp", package="sf"))
+plot(nc$geometry)
+```
+## 5. Unión (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Une geometrias. Funciona de dos formas posibles:
+
+**disuelve**
+
+```{r}
+plot(st_union(nc$geometry))
+```
+
+## 5. Unión (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Une geometrias. Funciona de dos formas posibles:
+
+**une**
+
+```{r}
+plot(c(nc$geometry[1],nc$geometry[10]))
+```
+
+## 5. Unión (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Une geometrias. Funciona de dos formas posibles:
+
+**une**
+
+```{r}
+plot(st_union(nc$geometry[1],nc$geometry[10]))
+```
+## 5. Unión (clipping) {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+¿Cuál es la diferencia?
+
+```{r}
+c(nc$geometry[1],nc$geometry[10])
+st_union(nc$geometry[1],nc$geometry[10])
+```
+

@@ -1,0 +1,338 @@
+---
+title: "Taller 4 (IMSE1017)"
+subtitle: "Datos vectoriales con {sf}"
+author: 'Dr. Francisco Zambrano'
+format: 
+  html:
+    number-sections: false
+    echo: true
+    eval: true
+    table-of-contents: true
+lang: es
+bibliography: "referencias.bib"
+editor: source
+---
+
+## Descripción
+
+En la primera parte del curso se familiarizó con R [@R2023], las principales estructuras de datos, como realizar indexación, conoció algunas funciones y pudo realizar algunos gráficos básicos; utilizando R base. Ahora, en el curso hemos empezado a trabajar en R con datos geoespaciales de tipo vectoriales y raster. Para manejar datos vectoriales utilizamos `{sf}` [@Pebesma2018] y para datos de tipo raster `{terra}`[@Hijmans2023]. En este taller trabajaremos con `{sf}`.
+
+## Objetivo del taller
+
+Familiarizarce con `{sf}` para crear datos vectoriales, asignarles SRC, transformar los SRC, leer y guardar archivos vectoriales desde/hacia el disco, y explorar la estructura de las capas.
+
+## Instalar y cargar {sf}
+
+Hasta el momento en el curso hemos trabajado con los paquetes que vienen inculidos en R base (stats, graphics, grDevices, utils, datasets, methods y base). Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos y cargarlos en R. En este taller trabajaremos con `{sf}` para poder manejar datos espaciales vectoriales.
+
+Para instala y cargar `{sf}` debe realizar lo siguiente:
+
+```{r}
+#| echo: true
+#| eval: false
+
+# instala {sf}
+install.packages('sf')
+
+# cargar {sf} en el entorno de R para poder utilizar 
+# las funciones adicionales para manejo de datos vectoriales que contiene
+
+library(sf)
+```
+
+## Data
+
+Se proporcionan capas vectoriales con los que deberá trabajar en el taller, estas corresponden a estaciones de calidad de aire y capas de biodiversidad, ubicados en Chile.
+
+El archivo comprimido (.zip) que contiene los archivos los debe descargar desde [acá](https://drive.google.com/file/d/13YYw8KDhEab3sLeMwOCcQ7Wk1WAUCojc/view?usp=sharing).
+
+## ¿Qué debe entregar?
+
+Deberá utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller4.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Evaluaciones -> Talleres -> Taller4`
+
+## Fecha de entrega
+
+Viernes 3 de noviembre hasta las 11:00am
+
+## Referencias
+
+::: {#refs}
+:::
+
+## Ejercicios
+
+1.  (10pts) Cree un objeto `sfg` de tipo punto de dos, tres y cuatro dimensiones. Utilicé las coordenadas de latitud -36.25 y longitud -72.65 una elevación de 200 metros y una direccción de 90°. Revise la estructura del objeto creado utilizando la función `str`
+
+```{r}
+library(sf)
+p1 <- st_point(c(-36.25,-72.65))
+p2 <- st_point(c(-36.25,-72.65,200))
+p3 <- st_point(c(-36.25,-72.65,200,90))
+```
+
+2.  (20pts) Utilice las siguientes coordenadas para crear los siguientes tipos de objetos `sfg`:\
+
+-   `MULTIPOINT`\
+-   `LINESTRING`\
+
+Verifique que la clase y geometría del objeto es la correspondiente y haga un `plot` de cada objeto.
+
+```{r}
+#| echo: true
+#| eval: true
+df <- data.frame(
+  latitud = c(-33.38991,-33.38959,-33.38929,-33.38893),
+  longitud = c(-70.63500,-70.63468,-70.63435,-70.63396)
+)
+```
+
+```{r}
+
+# transforma data.frame en matrix 
+dfm <- as.matrix(df) 
+
+# multipoint 
+mpt <- st_multipoint(dfm)
+
+# linestring 
+ls <- st_linestring(dfm)
+
+class(mpt)
+class(ls)
+#plot(mpt)
+#plot(ls)
+```
+
+3.  (20pts) Utilice las siguientes coordenadas para crear un objeto `sfg` de tipo `MULTILINESTRING` que contenga dos lineas. Verifique que la clase y geometría del objeto es la correspondiente y haga un `plot` de cada objeto.
+
+```{r}
+#| echo: true
+#| eval: true
+df <- data.frame(
+  linea = c(rep('linea_1',4),rep('linea_2',4)),
+  latitud = c(-33.38991,-33.38959,-33.38929,-33.38893,
+              -33.38943,-33.38911,-33.38883,-33.38846),
+  longitud = c(-70.63500,-70.63468,-70.63435,-70.63396,
+               -70.63566,-70.63531,-70.63500,-70.63461)
+)
+```
+
+```{r}
+dfm <- as.matrix(df[,2:3]) #transforma en matrix
+mls <- st_multilinestring( 
+   list(dfm[1:4,],dfm[5:8,])
+   )
+
+class(mls)
+#plot(mls)
+```
+
+4.  (20pts) Utilice las coordenadas en el `data.frame` `df_pol` para crear un objeto `sfg` de tipo `POLYGON`. Verifique que la clase y geometría del objeto es la correspondiente y haga un `plot` de cada objeto
+
+```{r}
+#| echo: true
+#| eval: true
+df_pol <- data.frame(
+  latitud = c(-33.38943,-33.38911,-33.38959,-33.38991),
+  longitud = c(-70.63566,-70.63531,-70.63468,-70.63500)
+)
+```
+
+```{r}
+df_polm <- as.matrix(df_pol)
+
+# polygon
+pol <- st_polygon(
+  list(
+    rbind(df_polm,df_polm[1,]))
+  )
+
+class(pol)
+#plot(pol)
+```
+
+5.  (20pts) Utilice las coordenadas en el `data.frame` `df_mpol` para crear un objeto `sfg` de tipo `MULTIPOLYGON` que contenga dos polygonos. Verifique que la clase y geometría del objeto es la correspondiente y haga un `plot` de cada objeto.
+
+```{r}
+#| echo: true
+#| eval: true
+df_mpol <- data.frame(
+  poligono = c(rep('poligono_1',4),rep('poligono_2',4)),
+   latitud = c(-33.38943,-33.38911,-33.38959,-33.38991,
+               -33.38883,-33.38846,-33.38893,-33.38929),
+  longitud = c(-70.63566,-70.63531,-70.63468,-70.63500,
+               -70.63500,-70.63461,-70.63396,-70.63435)
+)
+ 
+```
+
+```{r}
+df_mpolm <- as.matrix(df_mpol[,2:3])
+
+mp <- st_multipolygon(
+  list(
+    list(
+      rbind(df_mpolm[1:4,],df_mpolm[1,])
+      ),
+    list(
+      rbind(df_mpolm[5:8,],df_mpolm[5,]) 
+      ) 
+    )
+  )
+class(mp)
+#plot(mp)
+```
+
+6.  (20pts) Junte todas las geometrias anteriores en un objteo `sfg` de tipo `GEOMETRY COLLECTION`. Verifique que la clase y geometría del objeto es la correspondiente y haga un `plot` de cada objeto
+
+```{r}
+gc <- st_geometrycollection(list(mpt,ls,mls,pol,mp))
+class(gc)
+#plot(gc)
+
+```
+
+7.  (20pts) Utilice las función `st_sfc` para convertir los objetos `sfg` en tipo `sfc` (salvo para la geometry collection), luego utilice la función `st_sf` para crear un objeto `sf` que contenga todas las geometrias. Agregue una columna `nombre_geometria` a los atributos en donde se identifique el tipo de geometria (ej, multipoligono, multilinea, multipuntos,etc).
+
+```{r}
+mpt_sfc <- st_sfc(mpt)
+ls_sfc <- st_sfc(ls) 
+mls_sfc <- st_sfc(mls) 
+pol_sfc <- st_sfc(pol)
+mp_sfc <- st_sfc(mp) 
+
+obj_sf <- st_sf(geometry= c(mpt_sfc,ls_sfc,mls_sfc,pol_sfc,mp_sfc))
+obj_sf$nombre_geometria <- c('multipunto','linea','multilinea','polígono','multipolígono')
+obj_sf
+```
+
+8.  (30pts) Las coordenadas siguientes corresponden a los puntos de ubicación de algunas estaciones meteorológicas automáticas (EMAs) en la región Metropolitana. Cree un objeto de tipo punto `sfg` para cada fila. Convierta todos los puntos en un objeto `sfc` y luego en un `sf` (revise la función `st_as_sf`).
+
+```{r}
+#| echo: true
+#| eval: true
+df <- data.frame(
+  latitud = c(-33.70, -33.07, -33.12,-33.67, -33.70, -33.65, -33.67, -33.66, -33.86, -33.21),
+  longitud = c(-71.37, -70.75, -70.83, -70.58, -70.70, -71.1, -70.92, -70.76, -70.63, -70.71)
+)
+```
+
+Agregue una columna `nombre_ema` como atributo con los nombres de acuerdo al siguiente vector:
+
+```{r}
+#| echo: true
+nombres_emas <- c("San Diego", "Huechúnb Ex Lampa", "Til til", "Pirque", "Buin", "Melipilla", "Talagante", "Lo Herrera", "Huelquen", "Colina")
+```
+
+```{r}
+obj_sf <- st_as_sf(df,coords = c('longitud','latitud'))
+obj_sf$nombre_ema <- nombres_emas
+```
+
+9.  (20pts) Al objeto `sf` anterior asígnele el sistema de referencia de coordenadas (SRC) geográficas, datum WGS84. Luego cree otro objeto en donde se transforme el SRC del objeto anterior a coordenadas UTM huso 19 Sur, datum WGS84.
+
+```{r}
+st_crs(obj_sf) <- 4326
+obj_sf_nuevo <- st_transform(obj_sf,32719)
+```
+
+10. (30pts) Cargue las capas vectoriales que debe descargar de la sección `datos`. Para cada una de las capas, indique:
+
+-   tipo de geometría
+-   cantidad de variables y observaciones
+-   sistema de referencia de coordenadas y código EPSG
+
+```{r}
+dir <- '/home/francisco/Descargas/capas/'
+files <- list.files(dir,pattern = 'shp$',full.names = TRUE,recursive = TRUE)
+
+bdide_owd_aefp <- read_sf(files[1])
+bdide_owd_appd <- read_sf(files[2])
+bdide_owd_azsl <- read_sf(files[3])
+bio_apreseco <- read_sf(files[4])
+bio_aprohica <- read_sf(files[5])
+bio_fvega <- read_sf(files[6])
+bio_psisos <- read_sf(files[7])
+bio_snaspe <- read_sf(files[8])
+```
+
+```{r}
+#| eval: false
+st_geometry(bdide_owd_aefp)
+st_geometry(bdide_owd_appd)
+st_geometry(bdide_owd_azsl)
+st_geometry(bio_apreseco)
+st_geometry(bio_aprohica)
+st_geometry(bio_fvega)
+st_geometry(bio_psisos)
+st_geometry(bio_snaspe)
+
+dim(bdide_owd_aefp)
+dim(bdide_owd_appd)
+dim(bdide_owd_azsl)
+dim(bio_apreseco)
+dim(bio_aprohica)
+dim(bio_fvega)
+dim(bio_psisos)
+dim(bio_snaspe)
+
+st_crs(bdide_owd_aefp)
+st_crs(bdide_owd_appd)
+st_crs(bdide_owd_azsl)
+st_crs(bio_apreseco)
+st_crs(bio_aprohica)
+st_crs(bio_fvega)
+st_crs(bio_psisos)
+st_crs(bio_snaspe)
+
+```
+
+
+11. (20pts) Transforme el sistema de referencia de coordenadas (SRC) de cada una de las capas al que corresponde al código EPSG:4326.
+
+```{r}
+bdide_owd_aefp <- st_transform(bdide_owd_aefp,4326)
+bdide_owd_appd <- st_transform(bdide_owd_appd,4326)
+bdide_owd_azsl <- st_transform(bdide_owd_azsl,4326)
+bio_apreseco <- st_transform(bio_apreseco,4326)
+bio_aprohica <- st_transform(bio_aprohica,4326)
+bio_fvega <- st_transform(bio_fvega,4326)
+bio_psisos <- st_transform(bio_psisos,4326)
+bio_snaspe <- st_transform(bio_snaspe,4326)
+```
+
+12. (30pts) Para la capa `biodi_snaspe_2021` seleccione las áreas protegidas ubicadas en la región Metropolitana. Muestre el `data.frame` para las geometrias seleccionadas, para ellas seleccione las columnas de `categoria` y `nom_unidad`. Guarde el resultado en un archivo `.csv` llamado `areas_protegidad_RM.csv`. Guárdelo con configuración latina.
+
+```{r}
+l <- bio_snaspe$region == "Metropolitana"
+bio_snaspe_metro <-bio_snaspe[l,c('categoria','nom_unidad')]
+
+dir <- tempdir()
+write_sf(bio_snaspe_metro,file.path(dir,'areas_protegidad_RM.csv'))
+```
+
+13. (20pts) Guarde la capa resultante anterior en el disco en formato geopackage con el nombre `areas_protegidad_RM.gpkg`.
+
+```{r}
+write_sf(bio_snaspe_metro,file.path(dir,'areas_protegidad_RM.gpkg'))
+
+```
+
+<!-- 14. (30pts) Respecto a la capa de `fuentes puntuales contaminantes`, seleccione las que emiten Dioxido de Carbono y se encuentran en la región Metropolitana. Guarde el resultado en un archivo geopackage llamado `fuentes_pun_cont_RM_CO2.gpkg`. -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+

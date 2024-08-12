@@ -1,0 +1,399 @@
+---
+title: "Taller 1 (IMSE1017)"
+subtitle: "Tipos, estructuras e indexación"
+author: 'Dr. Francisco Zambrano'
+format: 
+  html:
+    number-sections: false
+    echo: true
+    eval: false
+    table-of-contents: true
+lang: es
+editor: visual
+---
+
+## Descripción
+
+A continuación hay una serie de ejercicios que debe resolver utilizando \``R`\`. El objetivo es comenzar a trabajar con los tipos de datos, estructuras e indexación en R.
+
+## ¿Qué debe entregar?
+
+Debeŕa utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para la descripción del ejercicio e incorporar cualquier descripción que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller1_grupo{número_grupo}.R`. Este archivo lo debe enviar al email `francisco.zambrano@umayor.cl`.
+
+## Antes de empezar
+
+Correr lo siguiente en `R` antes de empezar:
+
+```{r}
+varA <- 3.3
+varB <- "Hola que tal"
+varC <- FALSE
+varD <- 5L
+varE <- 5
+varF <- varD + varE
+varG <- 2 * varC
+```
+
+## Ejercicios
+
+### Ejercicio 1
+
+Muestra el tipo de dato de cada uno de los objetos creados arriba, use las funciones `typeof`, `class`, o `str`.
+
+```{r}
+typeof(varA)
+typeof(varB)
+typeof(varC)
+typeof(varD)
+typeof(varE)
+typeof(varF)
+typeof(varG)
+```
+
+### Ejercicio 2
+
+Comenta las siguientes dos lineas (#) explicando el ¿por qué? la primera linea devuelve el valor `TRUE` mientras que la segunda `FALSO`
+
+```{r}
+#| echo: true
+varD == varE
+typeof(varD) == typeof(varE)
+```
+
+```{r}
+#| echo: true
+# varD tiene almacenado el mismo valor númerico por lo tanto la comparación de ambos npumeros entrega TRUE
+varD == varE
+# sin embargo los tipos de datos son diferentes, integer vs double
+typeof(varD) == typeof(varE)
+```
+
+### Ejercicio 3
+
+Comente la siguiente linea explicando por que devuelve el valor `TRUE`
+
+```{r}
+#| echo: true
+# FALSE toma como valor 0
+FALSE == 0
+```
+
+### Ejercicio 4
+
+Use una de las funciones `as` para convertir el objeto `varE` a tipo integer y asignele el resultado a un nuevo objeto llamado `varE_int` (en una sóla linea).
+
+```{r}
+#| echo: true
+varE_int <- as.integer(varE)
+class(varE_int)
+```
+
+### Ejercicio 5
+
+Use una función para convertir `varB` a letras mayusculas y asígnele a un nuevo objeto llamado `varB_may` (en una sóla linea).
+
+```{r}
+varB_may <- toupper(varB)
+varB_may
+```
+
+### Ejercicio 6
+
+Usando comentario,explique ¿por qué? al llamar el objeto `VarA` (diferente a varA) devuleve un error.
+
+```{r}
+#| echo: true
+#| error: true
+# el nombre de uno empieza con mayuscula y el otro con minuscula
+# R reconoce entre minusculas y mayuscales
+varA
+VarA
+```
+
+### Ejercicio 7
+
+Cree los siguientes objetos de tipo vector
+
+1)  exVec1 con los números: 3, 10, -5, 4, 8
+2)  exVec2 con los números: 5, -6, NA, 3, 11
+3)  exVec3 con la sequencia -5 a 5 cada 0.5 (e.g., -5.0, -4.5, -4.0, y así hasta 5.0)
+
+```{r}
+#| echo: true
+exVec1 <- c(3,10,-5,4,8)
+exVec2 <- c(5,-6,NA,3,11)
+exVec3 <- seq(from=-5,to=5,by=0.5)
+```
+
+### Ejercicio 8
+
+Junte los vectores `exVec1` con `exVec2` y guardelos en un nuevo vector llamado `exVec_resultado` (usando una sóla linea). Muestre el resultado.
+
+```{r}
+#| echo: true
+exVec_resultado <- c(exVec1,exVec2)
+exVec_resultado
+```
+
+### Ejercicio 9
+
+Usando indexación con paréntesis cuadrado:
+
+1)  devuelva el 3er elemento del vector `exVec1`
+2)  devuelva todo menos el 2do y 3er elemento en `exVec2`
+
+```{r}
+exVec1
+exVec1[3]
+exVec2
+exVec2[c(-2,-3)]
+```
+
+### Ejercicio 10
+
+Use funciones u operadores de relación para:
+
+1)  mostrar la cantidad de elementos de cada uno de los vectores creados arriba.
+
+```{r}
+#| echo: true
+length(exVec1)
+length(exVec2)
+```
+
+2)  determinar la suma de elementos en el vector `exVec1` (ej., ver `?sum`)
+
+```{r}
+#| echo: true
+sum(exVec1)
+```
+
+3)  determinar el promedio del vector `exVec2` usando la función `mean` (nota: revisar el argumento na.rm de la función mean)
+
+```{r}
+#| echo: true
+res1 <- mean(exVec2,na.rm = TRUE)
+```
+
+4)  calcular el promedio de el vector `exVec2` ahora utilizando las funciones `sum`, `length`, y `na.omit`
+
+```{r}
+#| echo: true
+a <- na.omit(exVec2)
+res2 <- sum(a)/length(a)
+```
+
+5)  muestre que los calculos del punto 3 y 4 son los mismos equivalentes/identicos
+
+```{r}
+#| echo: true
+res1 == res2
+
+identical(res1,res2)
+```
+
+### Ejercicio 11
+
+Use la función data para cargar el set de datos `mtcars` (ver ?data):
+
+Una vez cargado `mtcars`, use el comando `?mtcars` para ver descripción sobre este set de datos.
+
+```{r}
+#| echo: true
+
+data(mtcars)
+?mtcars
+```
+
+### Ejercicio 12
+
+Use funciones para mostrar :
+
+1)  la estructura del set de datos
+
+```{r}
+#| echo: true
+
+str(mtcars)
+```
+
+2)  el número de columnas y de filas del set de datos
+
+```{r}
+#| echo: true
+
+ncol(mtcars)
+nrow(mtcars)
+dim(mtcars)
+```
+
+3)  el nombre de las columnas del set de datos
+
+```{r}
+#| echo: true
+
+
+colnames(mtcars)
+names(mtcars)
+```
+
+4)  el encabezado del set de datos (ver `?head`)
+
+```{r}
+#| echo: true
+
+
+head(mtcars)
+```
+
+5)  los últimos 5 elementos del set de datos (ver `?tail`)
+
+```{r}
+#| echo: true
+
+
+tail(mtcars)
+```
+
+5.1) Agregar los modelos de auto como una columna del data.frame
+
+```{r}
+#| echo: true
+
+
+#mtcars$modelo <- rownames(mtcars)
+mtcars2 <- cbind(modelo =rownames(mtcars),mtcars)
+row.names(mtcars2) <- NULL
+str(mtcars2)
+```
+
+6)  la suma de la columna con nombre `hp`
+
+```{r}
+#| echo: true
+
+
+sum(mtcars[4])
+sum(mtcars$hp)
+sum(mtcars[,'hp'])
+```
+
+7)  el promedio de la columna llamada `mpg` (redondeado a 2 decimales) (nota: ver `?round`)
+
+```{r}
+#| echo: true
+
+
+# forma 1
+round(mean(mtcars$mpg),2)
+
+# forma 2, creando un objeto intemedio
+promedio <- mean(mtcars[[1]])
+round(promedio,2)
+```
+
+8)  una tabla de frecuencia mostrando la cantidad de valores en la columna `vs`
+
+```{r}
+#| echo: true
+
+
+table(mtcars$vs)
+```
+
+### Ejercicio 13
+
+Cambiar la columna `am` a tipo factor y verificar el cambio mostrando la estructura.
+
+```{r}
+#| echo: true
+
+mtcars$am <- factor(mtcars$am)
+str(mtcars)
+```
+
+### Ejercicio 14
+
+Trabajar con el data.frame mtcars:
+
+1)  muestre sólo las columnas `cyl`, `vs`, y `am.`
+
+```{r}
+#| echo: true
+mtcars[c('cyl','vs','am')]
+mtcars[c(2,8,9)]
+```
+
+2)  muestre los valores de `disp`, `hp`, y `mpg` para la 3er y 6° fila (ej., Datsun 710 y Valiant)
+
+```{r}
+#| echo: true
+mtcars[c(3,6),c('disp','hp','mpg')]
+mtcars[c(3,6),c(3,4,1)]
+```
+
+3)  cambiar el valor de `wt` de la 2da fila a `NA`
+
+```{r}
+#| echo: true
+
+mtcars[2,'wt'] <- NA
+head(mtcars)
+
+mtcars[5:20,c('wt','disp')] <- NA
+mtcars
+```
+
+Para los siguientes ejercicios deberá trabajar con la siguiente matriz:
+
+```{r}
+#| echo: true
+#| eval: true
+numbers <- 1:40
+matriz_prueba <- matrix(numbers, nrow = 4)
+rownames(matriz_prueba) <- letters[1:4]
+colnames(matriz_prueba) <- LETTERS[1:10]
+matriz_prueba
+```
+
+### Ejercicio 15
+
+Escriba dos formas de codigo en una linea para obtener la siguiente matriz:
+
+```{r}
+#| echo: true
+#| eval: true
+matriz_prueba[,c("B","C","D","E")]
+```
+
+### Ejercicio 16
+
+Escriba con una linea de codigo cómo obtener la siguiente matriz:
+
+```{r}
+#| echo: true
+#| eval: true
+matriz_prueba[,"A",drop = FALSE]
+```
+
+### Ejercicio 17
+
+Escriba una forma conveniente de obtener la siguiente matriz.
+
+```{r}
+#| echo: true
+#| eval: true
+matriz_prueba[,-c(2,6)]
+```

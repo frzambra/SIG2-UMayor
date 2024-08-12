@@ -1,0 +1,349 @@
+---
+title: "Evaluación 1"
+subtitle: "SIG Avanzado (IMSE1017)"
+author: "Dr. Francisco Zambrano"
+date: "6 octubre 2023"
+format:
+  html:
+    lang: es
+    toc: true
+    number-sections: true
+execute:
+    echo: true
+    eval: true
+editor: visual
+---
+
+```{r}
+set.seed(9999)
+```
+
+## Parte 1: Estructuras y manipulación de datos en R
+
+1)  (5pts) Cree los siguientes objetos de tipo vector
+
+-   exVec1 con los números: `r (-50:50)[sample(100,5)]`
+-   exVec2 con los números: `r c(-50:50,rep(NA,20))[sample(120,5)]`
+-   exVec3 con la sequencia -5 a 5 cada 0.5 (ej, -5.0, -4.5, -4.0, y así hasta 5.0)
+
+```{r}
+exVec1 <- c(45, -45, -10, -48, 23)
+exVec2 <- c(15, NA, -43, -20, -42)
+exVec3 <- seq(from=-5,to=5,by=0.5)
+```
+
+2) (5pts) Junte los vectores `exVec1` con `exVec2` y guardelos en un nuevo vector llamado `exVec_resultado` (usando una sóla linea). Muestre el resultado.
+
+```{r}
+exVec_resultado <- c(exVec1,exVec2)
+exVec_resultado
+```
+
+3) (5pts) Usando indexación con paréntesis cuadrado:
+
+    - devuelva el 3er elemento del vector `exVec1`\
+    - devuelva todo menos el 2do y 3er elemento en `exVec2`
+
+```{r}
+exVec1 #vector
+exVec1[3] #tercer elemento del vector
+exVec2 #vector
+exVec2[c(-2,-3)] #2do y 3er elemento del vector
+```
+
+4) (15pts) Use funciones u operadores de relación para:
+
+- (3pts) mostrar la cantidad de elementos de cada uno de los vectores creados arriba.
+
+```{r}
+length(exVec1)
+length(exVec2)
+```
+
+- (3pts) determinar la suma de elementos en el vector `exVec1`.
+
+```{r}
+sum(exVec1)
+```
+
+- (3pts) determinar el promedio del vector `exVec2` usando la función `mean` (nota: revisar el argumento na.rm de la función mean)
+
+```{r}
+res1 <- mean(exVec2,na.rm = TRUE)
+```
+
+- (3pts) calcular el promedio de el vector `exVec2` ahora utilizando las funciones `sum`, `length`, y `na.omit`
+
+```{r}
+a <- na.omit(exVec2)
+res2 <- sum(a)/length(a)
+```
+
+- (3pts) muestre que los calculos del punto 3 y 4 son los mismos equivalentes/identicos
+
+```{r}
+res1 == res2
+
+identical(res1,res2)
+```
+
+5)  (10pts) Explique que hace la siguiente operación e indique ¿por qué?
+
+```{r}
+#| echo: true
+rnorm(6) + rnorm(2)
+```
+
+```{r}
+#suma un vector que tiene 5 elementos correspondientes 
+#a valores aleatorios con otro que tiene 10 elementos 
+# aleatorios. En este caso tambien se aplica la funcionalidad
+# de vectores reciclados, ya que el primer vector tiene 5 
+# elementos y el segundo diez elementos, por lo que el  
+# primero se recicla dos veces para poder ser sumado al 
+# segundo vector.
+
+```
+
+6)  (10pts) Cuáles son los tipos de vectores en R, de un ejemplo de cada caso.
+
+```{r}
+# En R existen dos tipos de vectores, 
+# 1) vectores atómicos y 
+# 2) vectores de tipo listas
+
+v1 <- 1:5 #vector atómico
+v2 <- list(1,2,4,'a',matrix(1:9,3)) #vector de tipo lista
+```
+
+7)  (10pts) De un ejemplo de una lista que contenga como primer elemento un vector lógico, como segundo una matriz 3x3, y como tercer el `data.frame` `mtcars`
+
+```{r}
+l <- list(c(TRUE,FALSE,FALSE, TRUE),
+          matrix(9:1,3,3,3),
+          mtcars)
+l
+```
+
+8)  (15 pts) Muestre tres formas de indexar la primera columna del `data.frame` `r c('iris','mtcars','airquality','USArrests')[sample(1:4,1)]`
+
+```{r}
+
+#forma 1
+iris[,1]
+
+#forma 2
+iris$Sepal.Length
+
+#forma 3
+iris[,'Sepal.Length']
+```
+
+
+9)  (10 pts) Señale cuál es la diferencia en el resultado de los dos códigos que se aplican a la matriz m.
+
+```{r}
+#| echo: true
+m <- matrix(1:9,3)
+
+# en el siguiente caso se extrae el vector númerico almacenado en la matriz
+#codigo 1
+m[,1]
+
+#en el siguiente caso se extrae la matriz de 3x1 que contiene sólo los elementos de la primera columna
+#codigo 2
+m[,1,drop = FALSE]
+```
+
+10)  (10pts) Haga una union por por columna de las matrices `m1` y `m2`.
+
+```{r}
+#| echo: true
+m1 <- matrix(1:sample(seq(9,18,3),1),3)
+m2 <- matrix(1:sample(seq(9,18,3),1),3)
+
+cbind(m1,m2)
+```
+
+```{r}
+#| echo: false
+i <- sample(1:4,1)
+df <- list(iris,mtcars,airquality,USArrests)[[i]]
+cols <- names(df)[sample(ncol(df),3)]
+cond <- c("Sepal.Lenght mayores o iguales que 6",
+               "mpg menores a 21",
+               "Solar.R mayores a 200",
+               "Murder menor o igual a8")
+             
+```
+
+11)  (24pts) Respecto del `data.frame` `r c('iris','mtcars','airquality','USArrests')[i]` que vienen incorporados en R, realice lo siguiente:
+
+-   (6pts) Cree un nuevo data.frame de nombre `r c('iris2','mtcars2','airquality2','USArrest2')[i]` que tenga las columnas `r cols[1]`, `r cols[2]` y `r cols[3]`. Hágalo de dos maneras diferentes.
+
+```{r}
+iris2 <- iris[,c('Petal.Length','Petal.Width','Sepal.Length')]
+```
+
+-   (6pts) Agregue una nueva columna "nueva_col" la que debe contener los valores de 1 hasta el número de filas del `data.frame`.
+
+```{r}
+iris$nueva_col <- 1:nrow(iris)
+```
+
+-   (6pts) Cree un nuevo data.frame `r c('iris3','mtcars3','airquality3','USArrest3')[i]` en el que estén solo las filas `r sample(nrow(df),5)`. Hágalo de dos maneras diferentes.
+
+```{r}
+iris3 <- iris[c(147, 101, 48, 71, 112),]
+```
+
+-   (6pts) Cree un nuevo data.frame `r c('iris4','mtcars4','airquality4','USArrest4')[i]` en el que estén las filas que cumplen la condición `r cond[i]`
+
+```{r}
+iris4 <- iris[iris$Sepal.Length >= 6,]
+```
+
+12)  (10pts) De un ejemplo de un vector numérico, caracter y lógico. Cada vector debe contener 5 elementos. Luego con los tres vectores cree un `data.frame` que tenga tres columnas `numeros`, `caracteres` y `logicos`; en donde se almacene cada vector creado.
+
+```{r}
+num <- 1:5
+car <- letters[1:5]
+log <- c(TRUE,TRUE,FALSE,FALSE,TRUE)
+```
+
+13) (25pts) Para los siguientes ejercicios utilice el `data.frame` `r c('iris','mtcars','airquality','USArrests')[i]`
+
+Use funciones para mostrar:
+
+```{r}
+data(iris)
+?mtcars
+```
+
+- (5pts)  la estructura del set de datos
+
+```{r}
+str(iris)
+```
+
+- (5pts)  el número de columnas y de filas del set de datos
+
+```{r}
+ncol(iris)
+nrow(iris)
+dim(iris)
+```
+
+- (5pts)  el nombre de las columnas del set de datos
+
+```{r}
+colnames(iris)
+names(iris)
+```
+
+- (5pts)  el encabezado del set de datos 
+
+```{r}
+head(iris)
+```
+
+- (5pts)  los últimos seis elementos del set de datos
+
+```{r}
+tail(iris)
+```
+
+14) (15pts) ¿Cuál es la diferencia entre un objeto de clase `data.frame` y uno de clase `sf`?
+
+```{r}
+# Los objetos sf sirven para almacena estructuras de datos geoespaciales
+# vectoriales, los data.frame permitehn trabajar con datos tabulados. Los 
+# objetos sf estan formados por un data.frame (atributos) y una columna sfc # que almacena las geometrias.
+```
+
+
+## Parte 2: Manejo de archivos
+
+**Datos:** Descargue los archivos desde este [link](https://drive.google.com/file/d/1MwajIWkWAkY4jG9o9wdyxy92rsh3UUl8/view?usp=sharing)
+
+1. (50pts) Con el archivo que se encuentra en formato CSV :
+  - (10pts) Cargue el archivo en formato CSV en R y asignelo al objeto `data`
+
+```{r}
+data <- read.csv('data_5/datos_ema_309.csv')
+```
+  
+  - (10pts) De un resumen de la estructura de los datos de `data` (clase, variables, observaciones).
+
+```{r}
+str(data)
+```
+  
+  - (10pts) Seleccione las observaciones que son mayores al promedio de la humedad relativa promedio.
+  
+```{r}
+#promedio de la columna humedad relativa promedio
+hum_rel_prom <- mean(data$humed_rel_promedio,na.rm = TRUE)
+
+#seleccion de los valores mayores al promedio
+
+data2 <- data[data$humed_rel_promedio > hum_rel_prom,]
+```
+  
+  - (10pts) Con el set de datos resultado anterior, seleccione las variables de fecha_hora, humed_rel_promedio, veloc_max_viento.
+  
+```{r}
+data3 <- data2[,c('fecha_hora','humed_rel_promedio','veloc_max_viento')]
+
+```
+  
+  
+  - (10pts) Con el `data.frame` resultante de las operaciones anteriores guardelo en un archivo con formato CSV ("datos_21.csv") con configuración latina.
+  
+```{r}
+write.csv2(data3,'data_5/datos_21.csv')
+```
+  
+  
+2. (80pts) Con el archivo que se encuentra en formato Geopackage:
+  - (10pts) Cargue el archivo en R y asígnelo al objeto `geo`.
+  
+```{r}
+#install.packages('sf)
+library(sf)
+geo <- read_sf("data_5/region_O'Higgins.gpkg")
+```
+  
+  - (10pts) ¿Qué clase de objeto es `geo`?
+
+```{r}
+class(geo)
+```
+
+  - (10pts) Indique el tipo de geometría y la cantidad de geometrias que tiene `geo`.
+
+```{r}
+st_geometry(geo)
+```
+
+  - (10pts) ¿Cuántas variables y observaciones tiene `geo`?
+  
+```{r}
+# 6 variables y 49 observaciones
+```
+  
+  - (20pts) Haga un mapa en donde se muestre la variación de la variable comuna. 
+
+```{r}
+plot(geo[,'comuna'])
+```
+  
+  - (20pts) Seleccione todas las estaciones que pertenecen a la institución `INIA`.
+  
+```{r}
+
+geo[geo$institucion == 'INIA',]
+
+```
+  
+  

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Francisco Zambrano">
+
+<title>Proyecto Final (IMSE1017)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="proyecto_final_files/libs/clipboard/clipboard.min.js"></script>
+<script src="proyecto_final_files/libs/quarto-html/quarto.js"></script>
+<script src="proyecto_final_files/libs/quarto-html/popper.min.js"></script>
+<script src="proyecto_final_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="proyecto_final_files/libs/quarto-html/anchor.min.js"></script>
+<link href="proyecto_final_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="proyecto_final_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="proyecto_final_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="proyecto_final_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="proyecto_final_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción-a-los-modelos-de-distribución-de-especie-lee-yaw2021" id="toc-introducción-a-los-modelos-de-distribución-de-especie-lee-yaw2021" class="nav-link active" data-scroll-target="#introducción-a-los-modelos-de-distribución-de-especie-lee-yaw2021"><span class="header-section-number">1</span> Introducción a los Modelos de Distribución de Especie <span class="citation" data-cites="Lee-Yaw2021">(A. Lee-Yaw et&nbsp;al. 2022)</span></a></li>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">2</span> Contexto</a>
+  <ul class="collapse">
+  <li><a href="#fuentes-de-datos-climáticos" id="toc-fuentes-de-datos-climáticos" class="nav-link" data-scroll-target="#fuentes-de-datos-climáticos"><span class="header-section-number">2.1</span> Fuentes de Datos Climáticos</a></li>
+  <li><a href="#fuentes-de-datos-de-especies" id="toc-fuentes-de-datos-de-especies" class="nav-link" data-scroll-target="#fuentes-de-datos-de-especies"><span class="header-section-number">2.2</span> Fuentes de Datos de Especies</a></li>
+  <li><a href="#preparación-de-la-información-para-el-mde" id="toc-preparación-de-la-información-para-el-mde" class="nav-link" data-scroll-target="#preparación-de-la-información-para-el-mde"><span class="header-section-number">2.3</span> Preparación de la información para el MDE</a></li>
+  </ul></li>
+  <li><a href="#objetivo-del-proyecto" id="toc-objetivo-del-proyecto" class="nav-link" data-scroll-target="#objetivo-del-proyecto"><span class="header-section-number">3</span> Objetivo del proyecto</a></li>
+  <li><a href="#datos-que-debe-utilizar" id="toc-datos-que-debe-utilizar" class="nav-link" data-scroll-target="#datos-que-debe-utilizar"><span class="header-section-number">4</span> Datos que debe utilizar</a></li>
+  <li><a href="#lo-que-debe-hacer" id="toc-lo-que-debe-hacer" class="nav-link" data-scroll-target="#lo-que-debe-hacer"><span class="header-section-number">5</span> Lo que debe hacer</a></li>
+  <li><a href="#lo-que-debe-entregar" id="toc-lo-que-debe-entregar" class="nav-link" data-scroll-target="#lo-que-debe-entregar"><span class="header-section-number">6</span> Lo que debe entregar</a></li>
+  <li><a href="#fecha-de-entrega" id="toc-fecha-de-entrega" class="nav-link" data-scroll-target="#fecha-de-entrega"><span class="header-section-number">7</span> Fecha de entrega</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">8</span> Referencias</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Proyecto Final (IMSE1017)</h1>
+<p class="subtitle lead">Preparación de datos para generar un modelo de distribución de especies (MDE)</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Autor/a</div>
+  <div class="quarto-title-meta-heading">Afiliación</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Dr.&nbsp;Francisco Zambrano </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Ingeniería en Medio Ambiente y Sustentabilidad, Universidad Mayor
+          </p>
+      </div>
+    </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">14 de noviembre de 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción-a-los-modelos-de-distribución-de-especie-lee-yaw2021" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción a los Modelos de Distribución de Especie <span class="citation" data-cites="Lee-Yaw2021">(<a href="#ref-Lee-Yaw2021" role="doc-biblioref">A. Lee-Yaw et&nbsp;al. 2022</a>)</span></h1>
+<p>Modelar la distribución de las especies y la demografía de las poblaciones es un pilar de la ecología. En teoría, se espera que las especies se encuentren en lugares donde las condiciones permitan que las tasas de crecimiento poblacional sean estables o positivas <span class="citation" data-cites="Pulliam2002">(<a href="#ref-Pulliam2002" role="doc-biblioref">Pulliam 2000</a>)</span>. Dentro de este conjunto de condiciones, se espera que ambientes más favorables resulten en un mayor exceso de nacimientos (por ejemplo, mayor supervivencia y éxito reproductivo de los individuos) y, por lo tanto, se espera que la abundancia y la aptitud media de la población aumenten positivamente con la idoneidad del hábitat <span class="citation" data-cites="Brown1984">(<a href="#ref-Brown1984" role="doc-biblioref">Brown 1984</a>)</span>. Las poblaciones grandes son menos propensas a la pérdida de alelos debido a la deriva genética <span class="citation" data-cites="Frankham1996 Leimu2006 Mccusker2010">(<a href="#ref-Frankham1996" role="doc-biblioref">Frankham 1996</a>; <a href="#ref-Leimu2006" role="doc-biblioref">Leimu et&nbsp;al. 2006</a>; <a href="#ref-Mccusker2010" role="doc-biblioref">Mccusker y Bentzen 2010</a>)</span> y, por lo tanto, la idoneidad del hábitat (a través de efectos sobre el tamaño de la población) también puede influir en la cantidad de diversidad genética dentro de las poblaciones <span class="citation" data-cites="Eckert2008">(<a href="#ref-Eckert2008" role="doc-biblioref">Eckert, Samis, y Lougheed 2008</a>)</span>, que a su vez puede retroalimentarse para influir en la persistencia de la población <span class="citation" data-cites="Agashe2009">(<a href="#ref-Agashe2009" role="doc-biblioref">Agashe 2009</a>)</span>.</p>
+<p>Una forma de hacer predicciones sobre la demografía de la población es utilizar información sobre las condiciones ambientales que subyacen a la ocurrencia de especies (es decir, presencia o presencia-ausencia) para modelar el nicho ecológico (o parte del mismo) de una especie de interés <span class="citation" data-cites="Peterson2011">(<a href="#ref-Peterson2011" role="doc-biblioref">Peterson et&nbsp;al. 2011</a>)</span>. En adelante utilizamos el término modelo de distribución de especies (MDE) para referirnos a este enfoque. En algunos casos, el resultado de un MDE se trata como probabilidad de ocurrencia y la proyección espacial del modelo se utiliza para hacer predicciones sobre la distribución de las poblaciones. En otros casos, el resultado del modelo se trata como idoneidad relativa del hábitat, ya sea debido a decisiones tomadas durante la construcción del modelo <span class="citation" data-cites="Peterson2012">(<a href="#ref-Peterson2012" role="doc-biblioref">Peterson y Soberón 2012</a>)</span> o por convención (ver <span class="citation" data-cites="Elith2010">Elith et&nbsp;al. (<a href="#ref-Elith2010" role="doc-biblioref">2011</a>)</span> para el tratamiento del resultado máximo), y luego se utilizan predicciones para hacer inferencias sobre diferencias potenciales en el desempeño demográfico de las poblaciones en todo el espacio. Un atractivo importante de estos modelos es que solo requieren un conjunto de registros de localidad y los datos ambientales correspondientes para generarlos, los cuales a menudo están disponibles gratuitamente. Por lo tanto, ha habido un interés creciente en utilizar estos métodos para inferir parámetros poblacionales que son difíciles de medir directamente <span class="citation" data-cites="Vaz2015">(<a href="#ref-Vaz2015" role="doc-biblioref">Vaz, Cunha, y Nabout 2015</a>)</span>.</p>
+</section>
+<section id="contexto" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Contexto</h1>
+<section id="fuentes-de-datos-climáticos" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="fuentes-de-datos-climáticos"><span class="header-section-number">2.1</span> Fuentes de Datos Climáticos</h2>
+<p>Un formato muy utlizado para trabajar con información climática es el <code>raster</code>, hoy existen multiples productos de estimaciones de variables climáticas a diferentes resoluciones espaciales y temporales. Producto del avance en el desarrollo de modelos climáticos e imagenes satelitales, es posible contar con estimaciones basadas en modelos climáticos, interpolaciones espaciales, o combinaciones de ambas. Uno de estos productos, es el Reanalisis climático de <a href="https://www.ecmwf.int/en/era5-land">ERA5-Land</a> (ECMWF Re-Analysis Land), el que provee de variables climáticas y atmosféricas para todo el planeta. Este productos utiliza modelos numéricos océano-atmósfera junto con redes de estaciones climáticas globales para estimar las diferentes variables ambientales.</p>
+</section>
+<section id="fuentes-de-datos-de-especies" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="fuentes-de-datos-de-especies"><span class="header-section-number">2.2</span> Fuentes de Datos de Especies</h2>
+<p><a href="https://www.inaturalist.org/">iNaturalist</a> es un proyecto de ciencia ciudadana y red social en línea de naturalistas, científicos ciudadanos, y biólogos basada en el concepto de mapeo e intercambio de observaciones de biodiversidad a través del mundo. Se puede acceder al proyecto a través de su sitio web o de sus aplicaciones móviles. Las observaciones realizadas con <code>iNaturalist</code> proporcionan datos abiertos valiosos a proyectos de búsqueda científica, agencias de conservación, otras organizaciones, y el público en general. El proyecto se ha denominado como “un estándar-portador para historia natural aplicaciones móviles.”</p>
+<p><a href="https://www.inaturalist.org/">iNaturalist.org</a> comenzó en el 2008 como proyecto final de posgrado de Nate Agrin, Jessica Kline, y Ken-ichi Ueda para la Universidad de California en Berkeley. Nate Agrin y Ken-ichi Ueda continuaron trabajando en el sitio con Sean McGregor, un desarrollador web. En 2011, Ueda empezó una colaboración con Scott Loarie, un socio investigador en la Universidad Stanford y conferenciante en UC Berkeley. Ueda y Loarie son los actuales codirectores de iNaturalist.org. La organización se fusionó con la Academia de California de Ciencias el 24 de abril de 2014. En 2014, <code>iNaturalist</code> celebró su millonésima observación. En 2017, <code>iNaturalist</code> se convirtió en una iniciativa conjunta entre la Academia Ciencias de California y la Sociedad Geográfica Nacional.</p>
+</section>
+<section id="preparación-de-la-información-para-el-mde" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="preparación-de-la-información-para-el-mde"><span class="header-section-number">2.3</span> Preparación de la información para el MDE</h2>
+<p>De acuerdo a lo que se describe los MDE nos permiten identifcar las zonas en las que hay probabilidades de que se encuentre una especie (Spatial Predictions <a href="#fig-MDE">Figura&nbsp;1</a>). Para poder realizar esto, en primer lugar hay que identificar la o las especies para las que se quiere realizar un MDE. Luego, hay que reunir información de dónde hay presencia de la especie. En este sentido, la fuente de información de <code>iNaturalist</code> pone a disposición datos sobre las especies y la coordenada espacial en la que se encuentra (Species field observations, <a href="#fig-MDE">Figura&nbsp;1</a>). El MDE se utilizará para poder espacializar la presencia-ausencia (en un raster) en dónde no se tiene información de la presencia-ausencia de la especie (Spatial predictions, <a href="#fig-MDE">Figura&nbsp;1</a>). Como información que permita al MDE reconocer su hábitat, se utilizan variables ambientales (clima, elevación, etc) que están espacialmente distribuidas (datos raster).</p>
+<p>Para las variables ambientales se utilizan fuentes de datos raster, por ejemplo los datos climáticos de <code>ERA5-Land</code>. Los datos de <code>iNaturalist</code> nos entregan las coordenadas en donde hay evidencia de que hay presencia de la especie. Por otra parte, es difícil contar con evidencia de la ausencia de la especies, por lo que la práctica habitual es generar puntos aleatorios en el entorno dónde se quiere aplicar el MDE, estos puntos se denóminas de <code>pseudo-ausencia</code>. Con esto, se tendrá un set de puntos con ausencia y pseudo-ausencia de la especie distribuidos en el entorno dónde se quiere aplicar el MDE (Species field observations, <a href="#fig-MDE">Figura&nbsp;1</a>). El paso siguiente es seleccionar las variables raster que pueden permitir al MDE identificar el hábitat dónde se encuetra la especie (variables predictoras). Por último, antes de aplicar em MDE, hay que extraer la información de las variables predictoras en la ubicación de los puntos de presencia y pseudo-ausencia. Con esto se generará una tabla con <span class="math inline">\(n\)</span> número de observaciones (filas) de acuerdo a la cantidad de puntos que se tenga y con <span class="math inline">\(m\)</span> variables (columnas) de acuerdo a la cantidad de variables predictoras se hayan seleccionado.</p>
+<div id="fig-MDE" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="img/mde_diagram.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;1: Diagrama modelo de distribución de especies</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="objetivo-del-proyecto" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Objetivo del proyecto</h1>
+<p>Generar un script en <code>R</code> paso a paso, que permita generar un <code>data.frame</code> en el que se tengan los datos de las <span class="math inline">\(n\)</span> presencia-ausencia y <span class="math inline">\(m\)</span> variables predictoras, para la especie <code>Frickius Variolosus</code> en el sur de Chile.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Deberá trabajar principalmente con <code>{terra}</code> <span class="citation" data-cites="Hijmans2023">(<a href="#ref-Hijmans2023" role="doc-biblioref">Hijmans 2023</a>)</span>, <code>{sf}</code> <span class="citation" data-cites="Pebesma2018">(<a href="#ref-Pebesma2018" role="doc-biblioref">Pebesma 2018</a>)</span> y <code>{tmap}</code> <span class="citation" data-cites="Tennekes2018">(<a href="#ref-Tennekes2018" role="doc-biblioref">Tennekes 2018</a>)</span>.</p>
+<div id="fig-frickius_img" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="img/Frickius-variolosus-mD588a.jpg" class="img-fluid figure-img" style="width:30.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;2: Especie Frickius Variolosus</figcaption>
+</figure>
+</div>
+</section>
+<section id="datos-que-debe-utilizar" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Datos que debe utilizar</h1>
+<ul>
+<li><p>Planilla <code>Excel</code> con datos de presencia de <code>Frickius Variolosus</code>: Se entrega una planilla que contiene las coordenadas en donde se ha identificado la presencia de la especie. <a href="https://docs.google.com/spreadsheets/d/1gEdMUjZwewZy7iVLMPB-0pselxb6Zcot/edit?usp=sharing&amp;ouid=101739380117499617729&amp;rtpof=true&amp;sd=true">Para descargar pinche acá</a></p></li>
+<li><p>Datos climáticos <code>ERA5-Land</code>: Se entregan seis años de datos mensuales de precipitación acumulada mensual y temperatura promedio mensual. <a href="https://drive.google.com/file/d/11A0Rd3EAaeBZtYo5NPinkK_qinwsteYy/view?usp=sharing">Para descargar pinche acá</a></p></li>
+<li><p>Datos de elevación: Para descargar datos de elevación en <code>R</code> los puede hacer utilizando el paquete {<code>geodata</code>} yla función <code>elevation_global</code>.</p></li>
+</ul>
+</section>
+<section id="lo-que-debe-hacer" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Lo que debe hacer</h1>
+<ul>
+<li><p>Crear un objeto <code>sf</code> de tipo polígono que defina la extensión del aŕea de estudio. Esta debe ir desde la latitud <span class="math inline">\(-38,075\)</span> y longitud <span class="math inline">\(-74,00\)</span> a latitud <span class="math inline">\(-48,00\)</span> y longitud <span class="math inline">\(-70,75\)</span>.</p></li>
+<li><p>A partir de la planilla con las coordenadas de presencia de la especie <code>Frickius Variolosus</code>, debe crear un objeto <code>sf</code> con geometrias de tipo puntos. Haga un gráfico de la ubicación de los puntos en el área de estudio.</p></li>
+<li><p>Debe crear 100 puntos de pseudo-ausencia de la espeice, estos deben ser creados de forma aleatoria y deben estar dentro del área de estudio. Utilice la función de <code>{sf}</code> <code>st_sample</code>.</p></li>
+<li><p>Cree áreas de influencia de 250m en cada uno de los puntos de presencia de <code>Frickius Variolosus</code>. Utilice estas áreas de influencia para eliminar los puntos de pseudo-ausencia que se encuentran a menos de 250m de uno de presencia.</p></li>
+<li><p>Una los puntos de pseudo-ausencia seleccionados con los de presencia. Debe quedar con un sólo set de datos de puntos, estos deben tener un atributo denóminado <code>presencia</code> que sea <code>1</code> para las observaciones de presencia y <code>0</code> en los puntos de pseudo-ausencia.</p></li>
+<li><p>Debe cortar los datos climáticos raster de temperatura media y precipitacion acumulada mensual para el área de estudio.</p></li>
+<li><p>Con los datos raster climáticos cortados para el área de estudio, debe crear promedios de precipitación acumulada mensual y temperatura media mensual, entre los años 2017 al 2022. Como resultado debe obtener un raster con 12 capas para precipitación acumulada mensual y otro raster multicapa de 12 capas para temperatura media mensual.</p></li>
+<li><p>Descargue la elevación global utilizando la función <code>elevation_global</code> de <code>{geodata}</code>. Corte el raster de elevación para el área de estudio. Haga un resampleo (<code>función</code>resample<code>en {</code>terra`}) de la elevación a la resolución de los datos climáticos.</p></li>
+<li><p>Una los raster en un raster multicapa, con 25 capas, 12 de precipitación, 12 para temperatura y una para elevación. Luego, extraiga los datos del raster en los pixeles de ubicación de los puntos de ausencia y pseudo-ausencia. Utilice la funcion <code>extract</code> de <code>{terra}</code>. Con el resultado obtenido cree un <code>data.frame</code> que tenga los valores extraidos más la columna de <code>presencia</code> de los datos de presencia y pseudo-ausencia. Guarde el <code>data.frame</code> en formato <code>RDS</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> con la función <code>writeRDS</code> y con el nombre <code>datos_predictores.rds</code>.</p></li>
+</ul>
+<ul>
+<li><p>Debe crear mapas estáticos con grilla, leyenda, flecha norte y en coordenadas UTM de acuerdo al huso que corresponda. Debe crear un mapa para cada variable predictora (precipitación, temperatura, elevación). En el caso de precipitación y temperatura deben ser mapas con 12 paneles, para cada mes del año. Cada mapa debe mostrar los puntos de presencia y pseudo-ausencia en el que se pueda identificar cuál es cuál. Los mapas los debe crear utilizando <code>{tmap}</code>.Utilice las escalas de color <code>viridis</code> para precipitación e <code>inferno</code> para temperatura; ambos del paquete <code>{viridis}</code>. Para elevación utilice los colores que permite obtener la función <code>terrain.colors</code> de R-base. Exporte cada mapa a una imagen en formato <code>PNG</code> como <code>mapa_estatico_pf_precipitacion.png</code>, <code>mapa_estatico_pf_temperatura.png</code> y <code>mapa_estatico_pf_elevación.png</code>.</p></li>
+<li><p>Cree un raster en el que se calcule el promedio anual con los datos de temperatura promedio mensual (2017-2022). Cree un raster en el que se calcule la precipitación acumulada anual, con los datos de precipitación promedio mensual 2017-2022.</p></li>
+<li><p>Debe crear un mapa interactivo en el que se muestre el raster de precipitación acumulada anual, temperatura promedio, elevación y la ubicación de los puntos de presencia y pseudo-ausencia. Debe utilizar las mismas escalas de color que en el mapa estático. El mapa lo debe exportar a un archivo <code>mapa_interactivo_pf.html</code></p></li>
+</ul>
+</section>
+<section id="lo-que-debe-entregar" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Lo que debe entregar</h1>
+<p>Debe crear un script en R de forma muy ordenada y con comentarios en cada sección, de forma que se vaya explicando en el script que es lo que se fue haciendo y por qué.</p>
+</section>
+<section id="fecha-de-entrega" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Fecha de entrega</h1>
+<p>1 de diciembre 2023 hasta las 23:59</p>
+</section>
+<section id="referencias" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Referencias</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Lee-Yaw2021" class="csl-entry" role="listitem">
+A. Lee-Yaw, Julie, Jenny L. McCune, Samuel Pironon, y Seema N. Sheth. 2022. <span>«Species distribution models rarely predict the biology of real populations»</span>. <em>Ecography</em> 2022 (6): e05877. https://doi.org/<a href="https://doi.org/10.1111/ecog.05877">https://doi.org/10.1111/ecog.05877</a>.
+</div>
+<div id="ref-Agashe2009" class="csl-entry" role="listitem">
+Agashe, Deepa. 2009. <span>«The <span>Stabilizing</span> <span>Effect</span> of <span>Intraspecific</span> <span>Genetic</span> <span>Variation</span> on <span>Population</span> <span>Dynamics</span> in <span>Novel</span> and <span>Ancestral</span> <span>Habitats</span>»</span>. <em>The American Naturalist</em> 174 (2): 255-67. <a href="https://doi.org/10.1086/600085">https://doi.org/10.1086/600085</a>.
+</div>
+<div id="ref-Brown1984" class="csl-entry" role="listitem">
+Brown, James H. 1984. <span>«On the <span>Relationship</span> between <span>Abundance</span> and <span>Distribution</span> of <span>Species</span>»</span>. <em>The American Naturalist</em> 124 (2): 255-79. <a href="https://doi.org/10.1086/284267">https://doi.org/10.1086/284267</a>.
+</div>
+<div id="ref-Eckert2008" class="csl-entry" role="listitem">
+Eckert, C. G., K. E. Samis, y S. C. Lougheed. 2008. <span>«Genetic variation across species’ geographical ranges: the central–marginal hypothesis and beyond»</span>. <em>Molecular Ecology</em> 17 (5): 1170-88. <a href="https://doi.org/10.1111/j.1365-294X.2007.03659.x">https://doi.org/10.1111/j.1365-294X.2007.03659.x</a>.
+</div>
+<div id="ref-Elith2010" class="csl-entry" role="listitem">
+Elith, Jane, Steven J. Phillips, Trevor Hastie, Miroslav Dudík, Yung En Chee, y Colin J. Yates. 2011. <span>«A statistical explanation of <span>MaxEnt</span> for ecologists: <span>Statistical</span> explanation of <span>MaxEnt</span>»</span>. <em>Diversity and Distributions</em> 17 (1): 43-57. <a href="https://doi.org/10.1111/j.1472-4642.2010.00725.x">https://doi.org/10.1111/j.1472-4642.2010.00725.x</a>.
+</div>
+<div id="ref-Frankham1996" class="csl-entry" role="listitem">
+Frankham, Richard. 1996. <span>«Relationship of <span>Genetic</span> <span>Variation</span> to <span>Population</span> <span>Size</span> in <span>Wildlife</span>»</span>. <em>Conservation Biology</em> 10 (6): 1500-1508. <a href="https://doi.org/10.1046/j.1523-1739.1996.10061500.x">https://doi.org/10.1046/j.1523-1739.1996.10061500.x</a>.
+</div>
+<div id="ref-Hijmans2023" class="csl-entry" role="listitem">
+Hijmans, Robert J. 2023. <em>terra: Spatial Data Analysis</em>. <a href="https://CRAN.R-project.org/package=terra">https://CRAN.R-project.org/package=terra</a>.
+</div>
+<div id="ref-Leimu2006" class="csl-entry" role="listitem">
+Leimu, Roosa, Pia Mutikainen, Julia Koricheva, y Markus Fischer. 2006. <span>«How general are positive relationships between plant population size, fitness and genetic variation?»</span> <em>Journal of Ecology</em> 94 (5): 942-52. <a href="https://doi.org/10.1111/j.1365-2745.2006.01150.x">https://doi.org/10.1111/j.1365-2745.2006.01150.x</a>.
+</div>
+<div id="ref-Mccusker2010" class="csl-entry" role="listitem">
+Mccusker, Megan R., y Paul Bentzen. 2010. <span>«Positive relationships between genetic diversity and abundance in fishes»</span>. <em>Molecular Ecology</em> 19 (22): 4852-62. <a href="https://doi.org/10.1111/j.1365-294X.2010.04822.x">https://doi.org/10.1111/j.1365-294X.2010.04822.x</a>.
+</div>
+<div id="ref-Pebesma2018" class="csl-entry" role="listitem">
+Pebesma, Edzer. 2018. <span>«<span>Simple Features for R: Standardized Support for Spatial Vector Data</span>»</span>. <em><span>The R Journal</span></em> 10 (1): 439-46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+</div>
+<div id="ref-Peterson2012" class="csl-entry" role="listitem">
+Peterson, A. Townsend, y Jorge Soberón. 2012. <span>«Species <span>Distribution</span> <span>Modeling</span> and <span>Ecological</span> <span>Niche</span> <span>Modeling</span>: <span>Getting</span> the <span>Concepts</span> <span>Right</span>»</span>. <em>Natureza &amp; Conservação</em> 10 (2): 102-7. <a href="https://doi.org/10.4322/natcon.2012.019">https://doi.org/10.4322/natcon.2012.019</a>.
+</div>
+<div id="ref-Peterson2011" class="csl-entry" role="listitem">
+Peterson, A. Townsend, Jorge Soberón, Richard G. Pearson, Robert P. Anderson, Enrique Martínez-Meyer, Miguel Nakamura, y Miguel B. Araújo. 2011. <em>Ecological <span>Niches</span> and <span>Geographic</span> <span>Distributions</span> (<span>MPB</span>-49)</em>. 1.ª ed. Princeton University Press. <a href="https://academic.oup.com/princeton-scholarship-online/book/16160">https://academic.oup.com/princeton-scholarship-online/book/16160</a>.
+</div>
+<div id="ref-Pulliam2002" class="csl-entry" role="listitem">
+Pulliam, H. R. 2000. <span>«On the relationship between niche and distribution»</span>. <em>Ecology Letters</em> 3 (4): 349-61. <a href="https://doi.org/10.1046/j.1461-0248.2000.00143.x">https://doi.org/10.1046/j.1461-0248.2000.00143.x</a>.
+</div>
+<div id="ref-Tennekes2018" class="csl-entry" role="listitem">
+Tennekes, Martijn. 2018. <span>«<span>tmap</span>: Thematic Maps in <span>R</span>»</span>. <em>Journal of Statistical Software</em> 84 (6): 1-39. <a href="https://doi.org/10.18637/jss.v084.i06">https://doi.org/10.18637/jss.v084.i06</a>.
+</div>
+<div id="ref-Vaz2015" class="csl-entry" role="listitem">
+Vaz, U. L., H. F. Cunha, y J. C. Nabout. 2015. <span>«Trends and biases in global scientific literature about ecological niche models»</span>. <em>Brazilian Journal of Biology</em> 75 (4 suppl 1): 17-24. <a href="https://doi.org/10.1590/1519-6984.22713">https://doi.org/10.1590/1519-6984.22713</a>.
+</div>
+</div>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas</h2>
+
+<ol>
+<li id="fn1"><p>No se aplicará un MDE, sólo se preparará la información que permita posteriormente la aplicación de un MDE.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Este es un tipo de archivo nativo de R que puede almacenar cualquier objeto a un archivo en nuestro disco duro. Además, RDS comprime los datos que almacena, por lo que ocupa menos espacio en disco duro que otros tipos de archivos, aunque contengan la misma información.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

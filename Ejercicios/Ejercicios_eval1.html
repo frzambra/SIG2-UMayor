@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Ejercicios Evaluación 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Ejercicios_eval1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ejercicios_eval1_files/libs/quarto-html/quarto.js"></script>
+<script src="Ejercicios_eval1_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ejercicios_eval1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ejercicios_eval1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ejercicios_eval1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ejercicios_eval1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ejercicios_eval1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ejercicios_eval1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ejercicios_eval1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Indice de contenidos</h2>
+   
+  <ul>
+  <li><a href="#vectores" id="toc-vectores" class="nav-link active" data-scroll-target="#vectores">Vectores</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1">Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2">Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3">Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4">Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5">Ejercicio 5</a></li>
+  <li><a href="#ejercicio-6" id="toc-ejercicio-6" class="nav-link" data-scroll-target="#ejercicio-6">Ejercicio 6</a></li>
+  <li><a href="#ejercicio-7" id="toc-ejercicio-7" class="nav-link" data-scroll-target="#ejercicio-7">Ejercicio 7</a></li>
+  <li><a href="#ejercicio-8" id="toc-ejercicio-8" class="nav-link" data-scroll-target="#ejercicio-8">Ejercicio 8</a></li>
+  </ul></li>
+  <li><a href="#valores-faltantes-nas" id="toc-valores-faltantes-nas" class="nav-link" data-scroll-target="#valores-faltantes-nas">Valores faltantes (NAs)</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1-1" id="toc-ejercicio-1-1" class="nav-link" data-scroll-target="#ejercicio-1-1">Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2-1" id="toc-ejercicio-2-1" class="nav-link" data-scroll-target="#ejercicio-2-1">Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3-1" id="toc-ejercicio-3-1" class="nav-link" data-scroll-target="#ejercicio-3-1">Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4-1" id="toc-ejercicio-4-1" class="nav-link" data-scroll-target="#ejercicio-4-1">Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5-1" id="toc-ejercicio-5-1" class="nav-link" data-scroll-target="#ejercicio-5-1">Ejercicio 5</a></li>
+  <li><a href="#ejercicio-6-1" id="toc-ejercicio-6-1" class="nav-link" data-scroll-target="#ejercicio-6-1">Ejercicio 6</a></li>
+  <li><a href="#ejercicio-7-1" id="toc-ejercicio-7-1" class="nav-link" data-scroll-target="#ejercicio-7-1">Ejercicio 7</a></li>
+  </ul></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1-2" id="toc-ejercicio-1-2" class="nav-link" data-scroll-target="#ejercicio-1-2">Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2-2" id="toc-ejercicio-2-2" class="nav-link" data-scroll-target="#ejercicio-2-2">Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3-2" id="toc-ejercicio-3-2" class="nav-link" data-scroll-target="#ejercicio-3-2">Ejercicio 3</a></li>
+  </ul></li>
+  <li><a href="#data.frame" id="toc-data.frame" class="nav-link" data-scroll-target="#data.frame">data.frame</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1-3" id="toc-ejercicio-1-3" class="nav-link" data-scroll-target="#ejercicio-1-3">Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2-3" id="toc-ejercicio-2-3" class="nav-link" data-scroll-target="#ejercicio-2-3">Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3-3" id="toc-ejercicio-3-3" class="nav-link" data-scroll-target="#ejercicio-3-3">Ejercicio 3</a></li>
+  </ul></li>
+  <li><a href="#indexación" id="toc-indexación" class="nav-link" data-scroll-target="#indexación">Indexación</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1-4" id="toc-ejercicio-1-4" class="nav-link" data-scroll-target="#ejercicio-1-4">Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2-4" id="toc-ejercicio-2-4" class="nav-link" data-scroll-target="#ejercicio-2-4">Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3-4" id="toc-ejercicio-3-4" class="nav-link" data-scroll-target="#ejercicio-3-4">Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4-2" id="toc-ejercicio-4-2" class="nav-link" data-scroll-target="#ejercicio-4-2">Ejercicio 4</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ejercicios Evaluación 1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="vectores" class="level1">
+<h1>Vectores</h1>
+<section id="ejercicio-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
+<p>Comencemos muy fácil (no se preocupe, pasaremos rápidamente a problemas más desafiantes) con un vector que contiene solo un número, al que también llamamos escalar. Ingrese un vector en R, simplemente escribiendo un número aleatorio, p.&nbsp;100, cuando se le solicite y presione la tecla Intro.</p>
+</section>
+<section id="ejercicio-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h2>
+<p>¡Excelente! ¡Acabas de crear tu primer vector! Ahora, primero ingresemos un vector con más de un número. P.ej. un vector que contiene los números 1, 2, 3, 4, 5, en ese orden. Si ingresa estos números así, R responderá con un mensaje de error. Lanza un error, porque necesita un poco más de información de nuestro lado de que realmente queremos almacenar esos números en una estructura vectorial. Tenemos que usar la siguiente notación para esto:</p>
+<p>c(1, 2, 3, 4, 5).</p>
+<p>Ahora, ingrese un vector con los primeros 5 números pares en R y presione Enter.</p>
+</section>
+<section id="ejercicio-3" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-3">Ejercicio 3</h2>
+<p>Ahora ingresemos un vector mucho más largo, que contenga los números del 1 al 10, 10 veces (utilice copiar y pegar). ¿Qué significan los números entre corchetes en la salida R?</p>
+</section>
+<section id="ejercicio-4" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-4">Ejercicio 4</h2>
+<p>Debería estar bastante familiarizado con la introducción de vectores ahora. Puede que te sientas un poco aburrido escribiendo todos estos números. La vida sería bastante miserable si tuviéramos que ingresar datos de esta manera una y otra vez en R. Pero, afortunadamente, ¡hay una buena solución! Podemos asignar un vector a un nombre de variable de modo que podamos recuperar los datos que hemos ingresado, convenientemente simplemente escribiendo el nombre de la variable.</p>
+<p>Intente asignar un vector que contenga los números 1, 2, 3, 4, 5 a una variable llamada a, usando el operador de asignación (&lt;-), y vea cuál de las siguientes declaraciones funciona.</p>
+<p>Ingrese cada una de las 9 declaraciones una a la vez en el indicador, presione Entrar e intente recuperar el contenido de a, escribiendo a en el indicador después de ingresar cada declaración:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">-&gt;</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">31</span>, <span class="dv">42</span>, <span class="dv">53</span>, <span class="dv">64</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">10</span>) <span class="ot">&lt;-</span> un</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>, <span class="dv">104</span>, <span class="dv">105</span>) <span class="ot">-&gt;</span> un</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>a <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>a <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">99</span>, <span class="dv">88</span>, <span class="dv">77</span>, <span class="dv">66</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-5" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-5">Ejercicio 5</h2>
+<p>En un script R, es posible que haya creado docenas o incluso cientos de vectores. En ese caso, nombrarlos a, b, c, etc. no es ideal, porque será difícil hacer un seguimiento de lo que realmente significan todas esas letras. Este problema se mitiga fácilmente mediante el uso de nombres de variables más largos y significativos.</p>
+<p>Asigne los siguientes vectores a un nombre de variable significativo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">16</span>, <span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  4  6  8 10 12 14 16 20</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fl">3.141593</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.141593</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1e+00 1e+01 1e+02 1e+03 1e+04 1e+05</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicio-6" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-6">Ejercicio 6</h2>
+<p>Cree vectores que correspondan a los siguientes nombres de variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>IMC</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>años</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>días por mes</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>primeroCincoPrimosNúmeros</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-7" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-7">Ejercicio 7</h2>
+<p>Hasta ahora, hemos creado vectores a partir de un montón de números. Sin embargo, en lugar de números, también puede ingresar otros vectores, p.&nbsp;c(vector1, vector2, vector3) y únalos.</p>
+<p>Para practicar esto, primero creemos tres vectores que contengan solo 1 elemento con nombres de variables p, q y r, y valores 1, 2 y 3. Luego, cree un nuevo vector que contenga múltiples elementos, usando los escalares que acabamos de crear Es decir, cree un vector <code>u</code> de longitud 3, con los elementos siguientes de <code>p</code>, <code>q</code> y <code>r</code>.</p>
+</section>
+<section id="ejercicio-8" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-8">Ejercicio 8</h2>
+<p>Para jugar un poco más con esto, creemos un vector más largo, usando solo el operador de asignación (&lt;-), la función c() y el vector u que acabamos de crear. Es decir, cree un nuevo vector u con longitud 96 que contenga los elementos de u de la siguiente manera: 1, 2, 3, 1, 2, 3, …., 1, 2, 3</p>
+</section>
+</section>
+<section id="valores-faltantes-nas" class="level1">
+<h1>Valores faltantes (NAs)</h1>
+<section id="ejercicio-1-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1-1">Ejercicio 1</h2>
+<p>Si <code>X &lt;- c (22,3,7,NA,NA,67)</code>, ¿cuál será la salida para la la instrucción R <code>lenght(X)</code></p>
+</section>
+<section id="ejercicio-2-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2-1">Ejercicio 2</h2>
+<p>Si <code>X = c(NA,3,14,NA,33,17,NA,41)</code> escriba algún código R que elimine todas las apariciones de NA en X.</p>
+</section>
+<section id="ejercicio-3-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-3-1">Ejercicio 3</h2>
+<p>Si <code>Y = c (1, 3, 12, NA, 33, 7, NA, 21)</code>, ¿qué instrucción de R reemplazará todas las ocurrencias de NA con 11?</p>
+</section>
+<section id="ejercicio-4-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-4-1">Ejercicio 4</h2>
+<p>Si <code>X = c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)</code>, entonces, ¿cómo contará el número de ocurrencias de NA en X?</p>
+</section>
+<section id="ejercicio-5-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-5-1">Ejercicio 5</h2>
+<p>Considere el siguiente vector <code>W &lt;- c(11, 3, 5, NA, 6)</code> Escriba algún código R que devuelva VERDADERO para el valor de W que falta en el vector.</p>
+</section>
+<section id="ejercicio-6-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-6-1">Ejercicio 6</h2>
+<p>Cargue el conjunto de datos ‘Orange’ desde R usando el comando <code>data(Orange)</code>. Reemplace todos los valores de <code>edad = 118</code> con <code>NA</code>.</p>
+</section>
+<section id="ejercicio-7-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-7-1">Ejercicio 7</h2>
+<p>Considere el siguiente vector <code>A &lt;- c(33, 21, 12, NA, 7, 8)</code>. Escriba un código R que calcule la media de A sin el valor faltante.</p>
+</section>
+</section>
+<section id="matrices" class="level1">
+<h1>Matrices</h1>
+<section id="ejercicio-1-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1-2">Ejercicio 1</h2>
+<p>Crea tres vectores x, y, z con números enteros y cada vector tiene 3 elementos. Combine los tres vectores para convertirse en una matriz A de 3 × 3 donde cada columna representa un vector. Cambie los nombres de las filas por <code>a,b,c</code>.</p>
+</section>
+<section id="ejercicio-2-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2-2">Ejercicio 2</h2>
+<p>Verifique su resultado del Ejercicio 1, usando is.matrix(A). Debería devolver TRUE, si su respuesta es correcta. De lo contrario, por favor corrija su respuesta. Sugerencia: tenga en cuenta que is.matrix() devolverá FALSO en un tipo de entrada que no sea de matriz. Por ejemplo: un vector y así sucesivamente.</p>
+</section>
+<section id="ejercicio-3-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-3-2">Ejercicio 3</h2>
+<p>Crea un vector con 12 enteros. Convierta el vector en una matriz B de 4*3 usando matrix(). Cambie los nombres de las columnas a <code>x, y, z</code> y los nombres de las filas a <code>a, b, c, d</code>. El argumento byrow en matrix() está configurado como <code>FALSE</code> de forma predeterminada. Cámbielo a TRUE e imprima B para ver las diferencias.</p>
+</section>
+</section>
+<section id="data.frame" class="level1">
+<h1>data.frame</h1>
+<section id="ejercicio-1-3" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1-3">Ejercicio 1</h2>
+<p>Cree el siguiente <code>data.frame</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          edad altura peso sexo
+Andrea      25    177   57    F
+Ignacia     31    163   69    F
+Tomas       23    190   83    M
+Felipe      52    179   75    M
+Paula       76    163   70    F
+Cristobal   49    183   83    M
+Patricia    26    164   53    F</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-3" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2-3">Ejercicio 2</h2>
+<p>Cree el siguiente <code>data.frame</code> (asegúrese de importar la variable <code>trabajando</code> como carácter y no como factor).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          trabajando
+Andrea            Si
+Ignacia           No
+Tomas             No
+Felipe            Si
+Paula             Si
+Cristobal         No
+Patricia          Si</code></pre>
+</div>
+</div>
+<p>Agregue este <code>data.frame</code> en forma de columna al anterior. a) ¿Cuántas filas y columnas tiene el nuevo marco de datos? b) ¿Qué clase de datos hay en cada columna?</p>
+</section>
+<section id="ejercicio-3-3" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-3-3">Ejercicio 3</h2>
+<p>Verifique qué clase de datos es el <code>state.center</code> (conjunto de datos incorporado) y conviértalo en un <code>data.frame</code>.</p>
+</section>
+</section>
+<section id="indexación" class="level1">
+<h1>Indexación</h1>
+<p>Respecto del set de datos <code>data(mtcars)</code> que vienen incorporados en R, realicé los siguientes ejercicios.</p>
+<section id="ejercicio-1-4" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1-4">Ejercicio 1</h2>
+<p>Cree un nuevo <code>data.frame</code> de nombre <code>mtcars2</code> que tenga las columnas <code>mpg</code>, <code>cyl</code> y <code>disp</code>. Hagalo de dos maneras diferentes.</p>
+</section>
+<section id="ejercicio-2-4" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2-4">Ejercicio 2</h2>
+<p>Agregue el modelo de los autos como una nueva columna <code>modelo</code> en el <code>data.frame</code> <code>mtcars</code></p>
+</section>
+<section id="ejercicio-3-4" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-3-4">Ejercicio 3</h2>
+<p>Cree un nuevo <code>data.frame</code> <code>mtcars3</code> en el que estén solo las filas correspondientes a los modelos de autos <code>Duster 360</code>, <code>Cadillac Fleetwood</code>, <code>Toyota Corolla</code> y <code>Ferrari Dino</code>. Hagalo de dos maneras diferentes.</p>
+</section>
+<section id="ejercicio-4-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-4-2">Ejercicio 4</h2>
+<p>Cree un nuevo <code>data.frame</code> <code>mtcars4</code> en el que estén las filas que cumplen la condición <code>hp &gt; 100</code></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

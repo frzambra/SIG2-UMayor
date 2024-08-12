@@ -1,0 +1,234 @@
+---
+title: "Presentación del curso"
+author: "Dr. Francisco Zambrano"
+date: "2024/08/12"
+lang: "es"
+format: 
+  revealjs:
+    slide-number: true
+    #title-slide-attributes: 
+      #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
+      #data-background-size: "contain"
+    title-block-banner: true
+    logo: "logo_hemera.jpg"
+    footer: "IMSD1025|2-2024"
+    theme: default
+---
+
+# El profesor {background-color='lightblue'}
+
+## Profesión y grado académico {.smaller}
+
+::: {.columns}
+
+
+::: {.column width="40%"}
+
+::: incremental
+- {{< fa user >}} Dr. Francisco Zambrano: 
+  -  Ingeniero Civil Agrícola (UdeC)
+  -  Dr. en Ingeniería Agrícola mención Recursos Hídricos (UdeC)
+  - {{< fa envelope >}} email: [francisco.zambrano@umayor.cl](mailto:francisco.zambrano@umayor.cl)
+  - Investigador en centro Hémera UMayor.
+  - Camino la Piramide #5750, Edifico de Ciencias, Nivel -1.
+:::
+
+:::
+
+::: {.column width="60%"}
+
+::: {.r-stack}
+
+![](img/google-scholar1.png){.fragment align=center width=90%}
+![](img/google-scholar2.png){.fragment align=center width=70% height=250}
+:::
+
+:::
+
+:::
+
+# Lineas de Investigación {background-color='orange'}
+
+## {background-image="https://media.giphy.com/media/1hBVgVAst7sZAQRdWl/giphy.gif" background-size="contain"}
+
+## Principales Temas
+
+::: incremental
+
+- Sequía (Zambrano et al. (2018;2021;2022))
+  - Imágenes satelitales MODIS: vegetación, evapotranspiración, uso de suelo
+  - Reanalysis ERA-5: humedad de suelo, precipitación
+  - CHELSA v1 y CHIRPS v2.0: Precipitación
+  - Datos climáticos
+:::
+
+## {background-image="img/map_study_area_join.png" background-size="contain"}
+
+## {background-image="img/map_zcNDVI_ts.png" background-size="contain"}
+
+
+## Principales Temas
+
+- Uso eficiente de agua en agricultura (Jopia et al. (2020)[^1])
+  - Imágenes satelitales Sentinel-1/2. Landsat 8/9
+  - Evapotranspiración de alta resolución
+  - Riego deficitario controlado
+  - Datos climáticos
+
+[^1]: Jopia, A.; Zambrano, F.; Pérez-Martínez, W.; Vidal-Páez, P.; Molina, J.; de la Hoz Mardones, F. Time-Series of Vegetation Indices (VNIR/SWIR) Derived from Sentinel-2 (A/B) to Assess Turgor Pressure in Kiwifruit. ISPRS Int. J. Geo-Inf. 2020, 9, 641. https://doi.org/10.3390/ijgi9110641
+
+## Principales Temas
+
+- Uso eficiente de agua en agricultura 
+
+![](img/wue1_satelite.png){width="80%" fig-align="center"}
+
+## Principales Temas
+
+- Uso eficiente de agua en agricultura 
+
+![](img/wue2_satelite.png){width="80%" fig-align="center"}
+
+## Principales Temas
+
+- Monitoreo de fenología y estimación de producción (trigo y maíz)
+  - Imagenes satelitales Sentinel-2
+  - Derivación de índices espectrales
+  - Cálculo de índice de área foliar (LAI)
+  - Muestreo de biomasa vegetal
+
+## Principales Temas
+
+- Monitoreo de fenología y estimación de producción 
+
+![](img/map_study_chile_globe_H_VB.png){width="80%" fig-align="center"}
+
+## Principales Temas
+
+- Monitoreo de fenología y estimación de producción 
+
+![](img/fenolgia_indices_temporada.png){width="80%" fig-align="center"}
+
+
+# Proyectos {background-color='lightblue'}
+
+## Director: {.smaller}
+
+1. Fondecyt de Iniciación `N°11190360` (ANID)
+    - `Título:` The impact of weather variability on wheat and maize production: an improved early warning model for agricultural drought
+    - `Monto:` ~100 $MM
+    - `Periodo:` 2019-2023
+
+::: {layout-nrow=1}
+![](img/fondecyt_ini1.jpeg){width=200}
+![](img/fondecyt_ini2.jpeg){width=200}
+![](img/fondecyt_ini3.jpeg){width=200}
+![](img/fondecyt_ini5.jpeg){width=200}
+![](img/fondecyt_ini6.jpeg){width=200}
+:::
+
+## Director: {.smaller}
+
+2. Fondef  Idea `ID21|10297` (ANID)
+    - `Título:` SatOri: Sistema Satelital para Optimización de Riego
+    - `Monto:` ~200 $MM
+    - `Periodo:` 2022-2024
+
+::: {layout-nrow=2}
+![](img/fondef_idea1.jpeg){width=200}
+![](img/fondef_idea2.jpeg){width=200}
+![](img/fondef_idea3.jpeg){ width=200}
+![](img/fondef_idea4.jpeg){ width=200}
+
+:::
+
+## Director: {.smaller}
+
+3. Fondo Estrategíco en Sequía `FSEQ210022` (ANID)
+    - `Título:` A multi-scale drought observatory for Chile: an early warning system to mitigate agricultural and ecological impacts 
+    - `Monto:` ~300 $MM
+    - `Periodo:` 2022-2023
+
+::: {layout-nrow=1}
+![](img/visita_dirk1.jpeg){width=300}
+![](img/visita_dirk4.jpeg){width=200}
+![](img/visita_anton2.jpeg){ width=200}
+![](img/visita_anton3.jpeg){ width=200}
+
+:::
+
+## Otras colaboraciones en proyectos {.smaller}
+
+- `Fondecyt regular:` MULTIVARIATE DROUGHT MONITOR SYSTEM: BIOPHYSICAL MODELLING, REMOTE SENSING AND HYDROCLIMATIC INFORMATION FOR DROUGHT ANALYISIS AND FORECASTING IN AGRICULTURE.
+    - `Institución:` Universidad Católica
+    - `Periodo:` 2021-2024
+    - `Inv. Responsable:` Dr. Francisco Meza
+
+- `Anillo`: Modeling of Epigenetic Gene Regulatory Networks in sweet cherry floral buds in response to differential seasonal climate conditions
+    - `Institución:` Universidad Mayor
+    - `Periodo:` 2021-2024
+    - `Inv. Responsable:` Dra. Andrea Miyasaka
+
+# Descripción del Curso {background-color='green'}
+
+## Objetivos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: incremental
+- Lograr habilidades en el uso básico del software `R`
+- Lograr habilidades en el manejo de datos geospaciales de tipo  vectoriales y raster mediante el uso del `software R`
+- Lograr habilidades en la aplicacion de operaciones geométricas con datos vectoriales.
+- Lograr habilidades en la aplicación de operaciones espaciales con datos raster.
+- Realizar análisis de imágenes multiespectrales con el `software R`
+
+:::
+
+## Metodología {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+- Clases teóricas con ejemplos 
+
+- Talleres en computador utilizando `R` y la IDE `RStudio`
+
+
+## Horario {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+
+::: incremental
+- Lunes 8:30 - 9:50 (Catedra)
+- Lunes 10:00 - 12:40 (Taller)  
+Sala 
+   
+:::
+
+## Evaluaciones  {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+- Evaluación 1 (20%)
+    - Tipo: teórica practica
+    - Fecha: 6 octubre 2023
+  
+- Evaluación 2 (30%)
+    - Tipo: teórica practica
+    - Fecha: 10 noviembre 2023
+
+- Talleres (30%)
+    - Tipo: laboratorio computación
+    - Cantidad: 5-7 talleres
+    
+- Trabajo Final (20%)
+
+
+## Recursos para aprender {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: incremental
+- R
+  - [SWIRL](https://swirlstats.com/)
+  - [Quick-R](https://www.statmethods.net/)
+
+- R-Spatial
+  - [r-spatial](https://www.r-spatial.org/) - Edzer Pebesma
+  - [rspatial](https://www.rspatial.org/) - Robert Hijmans
+
+- Libros R-Spatial
+  - [Applied Spatial Data Analysis with R. Roger Bivand, Edzer Pebesma, Virgilio Gómez-Rubio.](http://gis.humboldt.edu/OLM/r/Spatial%20Analysis%20With%20R.pdf)
+  - [Geocomputation with R. Robin Lovelace, Jakub Nowosad, Jannes Muenchow](https://geocompr.robinlovelace.net/)
+  - [Spatial Data Science](https://keen-swartz-3146c4.netlify.app/). Edzer Pebesma y Roger Bivand. Estado: en desarrollo
+:::
