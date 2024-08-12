@@ -178,7 +178,7 @@ format:
 - Lograr habilidades en el manejo de datos geospaciales de tipo  vectoriales y raster mediante el uso del `software R`
 - Lograr habilidades en la aplicacion de operaciones geométricas con datos vectoriales.
 - Lograr habilidades en la aplicación de operaciones espaciales con datos raster.
-- Realizar análisis de imágenes multiespectrales con el `software R`
+<!-- - Realizar análisis de imágenes multiespectrales con el `software R` -->
 
 :::
 
