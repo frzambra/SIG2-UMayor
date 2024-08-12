@@ -203,11 +203,11 @@ Sala
 
 - Evaluación 1 (20%)
     - Tipo: teórica practica
-    - Fecha: 6 octubre 2023
+    - Fecha: 23 septiembre 2024
   
 - Evaluación 2 (30%)
     - Tipo: teórica practica
-    - Fecha: 10 noviembre 2023
+    - Fecha: 04 noviembre 2024
 
 - Talleres (30%)
     - Tipo: laboratorio computación

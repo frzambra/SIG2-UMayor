@@ -16,7 +16,7 @@ format:
 
 ## Reseña
 
-En este repositorio se pone a disposición de los alumnos de Ing. en Medio Ambiente y sustentabilidad de la UMayor, las clases, laboratorios y material que se utilizará en la asignatura de SIG Avanzado. Este repositorio está creado con [quarto](https://quarto.org/) por medio del software `R`.
+En este repositorio se pone a disposición de los alumnos de Ing. en Medio Ambiente y Sustentabilidad de la UMayor, las clases, laboratorios y material que se utilizará en la asignatura de SIG Avanzado. Este repositorio está creado con [quarto](https://quarto.org/) por medio del software `R`.
 
 ## Clases
 
@@ -45,7 +45,7 @@ I) Unidad 1:Introducción al uso de R.
 
 ## Proyecto Final (20%)
 
-- [Preparación de datos para MDE](proyecto_final/proyecto_final.html)
+<!-- - [Preparación de datos para MDE](proyecto_final/proyecto_final.html) -->
 
 <!-- 
 2) [Taller 2: Datos climáticos en R](Talleres/Taller2/Taller2.html)
