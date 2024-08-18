@@ -12,6 +12,8 @@ format:
     logo: "logo_hemera.jpg"
     footer: "IMSD1025|2-2024"
     theme: default
+    revealjs-plugins:
+      - drop
 ---
 
 ## Contenidos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
