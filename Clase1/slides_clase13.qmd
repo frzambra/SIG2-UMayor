@@ -1,9 +1,11 @@
 ---
-title: "R: Tipos y estructura de datos "
+title: "R: Tipos y estructuras de datos "
 author: "Dr. Francisco Zambrano"
 date: "2024-08-12"
 format: 
   revealjs:
+    drop:
+      shortcut: "]"
     slide-number: true
     #title-slide-attributes: 
       #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
@@ -82,7 +84,7 @@ pi
 
 Ejemplo de script:
 
-- los comentarios `#` y como se utilizan para doucmentar funciones y su contenido.
+- los comentarios `#` y como se utilizan para documentar funciones y su contenido.
 - variables y funciones
 - el operador de asignación `<-`
 - el `=` para argumentos en una función
@@ -391,11 +393,11 @@ Hay dos tipos de vectores en R:
   - Seis tipos: logicos, integer, double, character, complex, and raw. Vectores tipo integer y double son conocidos como vectores numericos.
 
 - `Listas`: hetereogéneos
-  - son a veces llamados vectores recursivos, por que las listas puede cntener otras listas.
+  - son a veces llamados vectores recursivos, por que las listas puede contener otras listas.
 
 ![](img/data-structures-overview.png){width=400}
 
-## Atomic vectors {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+## Vectores atómicos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
 Almacena el mismo tipo de dato (numeric, character, logical)
 
@@ -407,7 +409,7 @@ c(TRUE, FALSE, TRUE) # logical vector
 ```
 
 
-## Atomic vectors {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+## Vectores atómicos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
 ¿Qué pasa si mezclamos diferentes tipos?
 
