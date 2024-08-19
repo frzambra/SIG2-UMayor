@@ -89,10 +89,10 @@ pi
 
 Ejemplo de script:
 
-- los comentarios `#` y como se utilizan para documentar funciones y su contenido.
-- variables y funciones
+- los comentarios `#` se utilizan para documentar funciones y su contenido.
+- objetos (variables) y funciones
 - el operador de asignación `<-`
-- el `=` para argumentos en una función
+- el operador `=` para argumentos en una función
 
 ```{r}
 #| echo: true
