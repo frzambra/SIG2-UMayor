@@ -36,7 +36,7 @@ I) Unidad 1:Introducción al uso de R.
     
 ## Talleres
 
-<!-- 1) [Taller 1: Tipos y estructuras de datos en R](Talleres/Taller1_2023/Ejercicios_R-base.html) -->
+1) [Taller 1: Tipos y estructuras de datos en R](Talleres/Taller1_v2/Ejercicios_R-base.html)
 <!-- 2) [Taller 2: Tipos y estructuras de datos en R](Talleres/Taller2_2023/taller2_rbase.html) -->
 <!-- 3) [Taller 3: Evaluación 1 talleres](Evaluaciones/eva1_talleres/eva1_talleres.html) -->
 <!-- 4) [Taller 4: Manejo de datos vectoriales con {sf}](Talleres/Taller4_2023/Taller4.html) -->

@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
-
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-}
-pre.numberSource { margin-left: 3em; padding-left: 4px; }
-div.sourceCode
-{ }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -3025,10 +2991,9 @@ vertical-align: -.125em;
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#lo-básico" id="toc-lo-básico" class="nav-link active" data-scroll-target="#lo-básico"><span class="header-section-number">1</span> Lo básico</a></li>
-  <li><a href="#vectores" id="toc-vectores" class="nav-link" data-scroll-target="#vectores"><span class="header-section-number">2</span> Vectores</a></li>
-  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors"><span class="header-section-number">3</span> Factors</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">4</span> Matrices</a></li>
+  <li><a href="#vectores" id="toc-vectores" class="nav-link active" data-scroll-target="#vectores"><span class="header-section-number">1</span> Vectores</a></li>
+  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors"><span class="header-section-number">2</span> Factors</a></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">3</span> Matrices</a></li>
   </ul>
 </nav>
 </div>
@@ -3061,7 +3026,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">25 de agosto de 2023</p>
+      <p class="date">19 de agosto de 2024</p>
     </div>
   </div>
   
@@ -3071,808 +3036,139 @@ vertical-align: -.125em;
 
 </header>
 
-<section id="lo-básico" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="lo-básico"><span class="header-section-number">1</span> Lo básico</h2>
+<!-- ## Lo básico -->
+<!-- 1. Escriba un programa en R para crear una secuencia de números del 20 al 50 y encuentre la media de los números del 20 al 60 y la suma de los números del 51 al 91. -->
+<!-- ```{r} -->
+<!-- seq(20,50) -->
+<!-- mean(20:60) -->
+<!-- sum(51:91) -->
+<!-- ``` -->
+<!-- 2. Escriba un programa en R para crear una curva de campana de una distribución normal aleatoria -->
+<!-- ```{r} -->
+<!-- n <- rnorm(10000, 500, 100) -->
+<!-- hist(n) -->
+<!-- ``` -->
+<!-- 3. Escriba un programa R para crear una lista de elementos usando vectores, matrices y funciones. Imprime el contenido de la lista. -->
+<!-- ```{r} -->
+<!-- l = list( -->
+<!--   c(1, 2, 2, 5, 7, 12),   -->
+<!--   month.abb, -->
+<!--   matrix(c(3, -8, 1, -3), nrow = 2), -->
+<!--   asin -->
+<!-- ) -->
+<!-- l -->
+<!-- ``` -->
+<!-- 4. Escriba un programa en R para crear una matriz de 5 x 4, una matriz de 3 x 3 con etiquetas y rellene la matriz por filas y una matriz de 2 x 2 con etiquetas y rellene la matriz por columnas. -->
+<!-- ```{r} -->
+<!-- m1 <- matrix(1:20, nrow=5, ncol=4) -->
+<!-- m1 -->
+<!-- cells <- c(1,3,5,7,8,9,11,12,14) -->
+<!-- rnames <- c("Row1", "Row2", "Row3") -->
+<!-- cnames <- c("Col1", "Col2", "Col3") -->
+<!-- m2 <- matrix(cells, nrow=3, ncol=3, byrow=TRUE, dimnames=list(rnames, cnames)) -->
+<!-- m2 -->
+<!-- m3 <- matrix(cells, nrow=3, ncol=3, byrow=FALSE, dimnames=list(rnames, cnames)) -->
+<!-- m3 -->
+<!-- ``` -->
+<!-- 5. Escriba un programa R para crear un `data.frame` que contenga detalles (genero, edad, rut, dirección, profesión) de 5 empleados y muestre un resumen de los datos. -->
+<!-- ```{r} -->
+<!-- empleados <- data.frame(Nombre=c("Joaquin","Josefina","Israel", "Esteban","Claudio"), -->
+<!--                       Genero = c("M","F","M","M","M"), -->
+<!--                       Edad = c(23,22,25,26,32), -->
+<!--                       Designation=c("CEO","CTO","Ejecutivo","CEO","Data Scientist"), -->
+<!--                       SSN = c("123-34-2346","123-44-779","556-24-433","123-98-987","679-77-576") -->
+<!--                       ) -->
+<!-- summary(empleados) -->
+<!-- ``` -->
+<section id="vectores" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="vectores"><span class="header-section-number">1</span> Vectores</h2>
 <ol type="1">
-<li>Escriba un programa en R para crear una secuencia de números del 20 al 50 y encuentre la media de los números del 20 al 60 y la suma de los números del 51 al 91.</li>
+<li>Escriba un programa en R para crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 10.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">20</span>,<span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44
-[26] 45 46 47 48 49 50</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="dv">20</span><span class="sc">:</span><span class="dv">60</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 40</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="dv">51</span><span class="sc">:</span><span class="dv">91</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2911</code></pre>
-</div>
-</div>
 <ol start="2" type="1">
-<li>Escriba un programa en R para crear una curva de campana de una distribución normal aleatoria</li>
+<li>Escriba un programa en R para sumar dos vectores de tipo entero y longitud 5.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="dv">500</span>, <span class="dv">100</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="data:image/png;base64,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" class="img-fluid" width="672"></p>
-</div>
-</div>
 <ol start="3" type="1">
-<li>Escriba un programa R para crear una lista de elementos usando vectores, matrices y funciones. Imprime el contenido de la lista.</li>
+<li>Escriba un programa en R para encontrar la suma, la media y el producto de un vector con 10 elementos.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">12</span>),  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  month.abb,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">8</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  asin</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>l</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
-[1]  1  2  2  5  7 12
-
-[[2]]
- [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot; &quot;Nov&quot; &quot;Dec&quot;
-
-[[3]]
-     [,1] [,2]
-[1,]    3    1
-[2,]   -8   -3
-
-[[4]]
-function (x)  .Primitive(&quot;asin&quot;)</code></pre>
-</div>
-</div>
-<ol start="4" type="1">
-<li>Escriba un programa en R para crear una matriz de 5 x 4, una matriz de 3 x 3 con etiquetas y rellene la matriz por filas y una matriz de 2 x 2 con etiquetas y rellene la matriz por columnas.</li>
-</ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">nrow=</span><span class="dv">5</span>, <span class="at">ncol=</span><span class="dv">4</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4]
-[1,]    1    6   11   16
-[2,]    2    7   12   17
-[3,]    3    8   13   18
-[4,]    4    9   14   19
-[5,]    5   10   15   20</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cells <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>rnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Row1&quot;</span>, <span class="st">&quot;Row2&quot;</span>, <span class="st">&quot;Row3&quot;</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Col1&quot;</span>, <span class="st">&quot;Col2&quot;</span>, <span class="st">&quot;Col3&quot;</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(cells, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>, <span class="at">dimnames=</span><span class="fu">list</span>(rnames, cnames))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>m2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Col1 Col2 Col3
-Row1    1    3    5
-Row2    7    8    9
-Row3   11   12   14</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(cells, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">FALSE</span>, <span class="at">dimnames=</span><span class="fu">list</span>(rnames, cnames))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>m3</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Col1 Col2 Col3
-Row1    1    7   11
-Row2    3    8   12
-Row3    5    9   14</code></pre>
-</div>
-</div>
-<ol start="5" type="1">
-<li>Escriba un programa R para crear un <code>data.frame</code> que contenga detalles (genero, edad, rut, dirección, profesión) de 5 empleados y muestre un resumen de los datos.</li>
-</ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>empleados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nombre=</span><span class="fu">c</span>(<span class="st">&quot;Joaquin&quot;</span>,<span class="st">&quot;Josefina&quot;</span>,<span class="st">&quot;Israel&quot;</span>, <span class="st">&quot;Esteban&quot;</span>,<span class="st">&quot;Claudio&quot;</span>),</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Genero =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>,<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;M&quot;</span>),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Edad =</span> <span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">22</span>,<span class="dv">25</span>,<span class="dv">26</span>,<span class="dv">32</span>),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Designation=</span><span class="fu">c</span>(<span class="st">&quot;CEO&quot;</span>,<span class="st">&quot;CTO&quot;</span>,<span class="st">&quot;Ejecutivo&quot;</span>,<span class="st">&quot;CEO&quot;</span>,<span class="st">&quot;Data Scientist&quot;</span>),</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">SSN =</span> <span class="fu">c</span>(<span class="st">&quot;123-34-2346&quot;</span>,<span class="st">&quot;123-44-779&quot;</span>,<span class="st">&quot;556-24-433&quot;</span>,<span class="st">&quot;123-98-987&quot;</span>,<span class="st">&quot;679-77-576&quot;</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                      )</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(empleados)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Nombre             Genero               Edad      Designation       
- Length:5           Length:5           Min.   :22.0   Length:5          
- Class :character   Class :character   1st Qu.:23.0   Class :character  
- Mode  :character   Mode  :character   Median :25.0   Mode  :character  
-                                       Mean   :25.6                     
-                                       3rd Qu.:26.0                     
-                                       Max.   :32.0                     
-     SSN           
- Length:5          
- Class :character  
- Mode  :character  
-                   
-                   
-                   </code></pre>
-</div>
-</div>
-</section>
-<section id="vectores" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="vectores"><span class="header-section-number">2</span> Vectores</h2>
-<ol type="1">
-<li>Escriba un programa en R para crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 6.</li>
-</ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dv">5</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0 0 0 0 0</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;complex&quot;</span>, <span class="dv">5</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0+0i 0+0i 0+0i 0+0i 0+0i</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;logical&quot;</span>, <span class="dv">5</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>l</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE FALSE FALSE FALSE FALSE</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>chr <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;character&quot;</span>, <span class="dv">5</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>chr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot;</code></pre>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Escriba un programa en R para sumar dos vectores de tipo entero y longitud 3.</li>
-</ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">40</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10 20 30</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 20 10 40</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> x <span class="sc">+</span> y</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>z</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 30 30 70</code></pre>
-</div>
-</div>
-<ol start="4" type="1">
-<li>Escriba un programa en R para encontrar la suma, la media y el producto de un vector.</li>
-</ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 60</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 20</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prod</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6000</code></pre>
-</div>
-</div>
 <ol start="7" type="1">
 <li>Escriba un programa R para encontrar la suma, la media y el producto de un vector, ignore elementos como NA o NaN.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">2</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1]         NA  1.1015374         NA  0.1602093 -0.3408991  0.4104385
- [7]  1.1998768  1.1411214  0.6306642  1.1904490</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#una forma</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x,<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6866747</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x,<span class="at">na.rm  =</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.493398</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prod</span>(x,<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.02538274</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#2da forma utilizando na.omit, que omite los NA de un vector o data.frame</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(x)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6866747</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.493398</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prod</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.02538274</code></pre>
-</div>
-</div>
 <ol start="8" type="1">
 <li>Escriba un programa en R para ordenar un Vector en orden ascendente y descendente.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  1.1015374  0.1602093 -0.3408991  0.4104385  1.1998768  1.1411214  0.6306642
-[8]  1.1904490
-attr(,&quot;na.action&quot;)
-[1] 1 3
-attr(,&quot;class&quot;)
-[1] &quot;omit&quot;</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3408991  0.1602093  0.4104385  0.6306642  1.1015374  1.1411214  1.1904490
-[8]  1.1998768</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x,<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  1.1998768  1.1904490  1.1411214  1.1015374  0.6306642  0.4104385  0.1602093
-[8] -0.3408991</code></pre>
-</div>
-</div>
 <ol start="9" type="1">
 <li>Escriba un programa R para probar si un vector dado contiene un elemento específico.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">%in%</span> x</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-</div>
 <ol start="10" type="1">
 <li>Escriba un programa R para encontrar el segundo valor más alto en un vector dado.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>)<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x,<span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 19</code></pre>
-</div>
-</div>
 <ol start="11" type="1">
 <li>Escriba un programa en R para encontrar el enésimo valor más alto en un vector dado.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co">#n esimo</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x,<span class="at">decreasing =</span> <span class="cn">TRUE</span>)[n]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8</code></pre>
-</div>
-</div>
 <ol start="12" type="1">
 <li>Escriba un programa en R para convertir la(s) columna(s) dada(s) de un <code>data.frame</code> en un vector.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Length</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Width</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>v3 <span class="ot">&lt;-</span> iris<span class="sc">$</span>Species</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
 <ol start="13" type="1">
 <li>Escriba un programa R para encontrar los elementos de un vector dado que no están en otro vector dado.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">7</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>v1;v2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 2 3 4 5</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3 4 5 6 7</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">#los elementos de v1 que no estan en v2</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>v1[<span class="sc">!</span>(v1 <span class="sc">%in%</span> v2)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 2</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co">#los elementos de v2 que no estan en v1</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>v2[<span class="sc">!</span>(v2 <span class="sc">%in%</span> v1)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6 7</code></pre>
-</div>
-</div>
 <ol start="14" type="1">
 <li>Escriba un programa en R para invertir el orden del vector dado.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rev</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
-</div>
-</div>
 <ol start="15" type="1">
 <li>Escriba un programa en R para crear un vector y encuentre la longitud y la dimensión del vector.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
-</div>
 <ol start="16" type="1">
 <li>Escriba un programa R para probar si el valor del elemento de un vector dado es mayor que 10 o no. Devuelve <code>TRUE</code> o <code>FALSE</code>.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">14</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">8</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 12</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">8</span>] <span class="sc">&gt;</span> <span class="dv">10</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-</div>
 <ol start="17" type="1">
 <li>Escriba un programa en R para sumar 3 a cada elemento en un vector dado. Imprime el vector original y el nuevo.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>v <span class="sc">+</span> <span class="dv">3</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4 5 6 7 8</code></pre>
-</div>
-</div>
 <ol start="18" type="1">
 <li>Escriba un programa en R para crear un vector usando el operador : y la función seq().</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>v1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">2</span>)</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>v2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 3 5 7 9</code></pre>
-</div>
-</div>
 </section>
-<section id="factors" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="factors"><span class="header-section-number">3</span> Factors</h2>
+<section id="factors" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="factors"><span class="header-section-number">2</span> Factors</h2>
 <ol type="1">
 <li>Escriba un programa R para encontrar los niveles de factor de un vector dado.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;setosa&quot;     &quot;versicolor&quot; &quot;virginica&quot; </code></pre>
-</div>
-</div>
 <ol start="2" type="1">
 <li>Escriba un programa R para cambiar el primer nivel de un factor con otro nivel de un factor dado.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>letras <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],<span class="dv">40</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(iris<span class="sc">$</span>Species)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">levels</span>(letras)[<span class="dv">1</span>]</span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;a&quot;          &quot;versicolor&quot; &quot;virginica&quot; </code></pre>
-</div>
-</div>
 <ol start="3" type="1">
 <li>Escriba un programa en R para crear un factor ordenado a partir de datos que consisten en los nombres de los meses.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>(month.name, <span class="at">levels =</span> month.name)</span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] January   February  March     April     May       June      July     
- [8] August    September October   November  December 
-12 Levels: January February March April May June July August ... December</code></pre>
-</div>
-</div>
 <ol start="4" type="1">
 <li>Escriba un programa R para extraer los cinco niveles de factor creados a partir de una muestra aleatoria de las <code>letters</code> (parte de la distribución base R).</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>letras <span class="ot">&lt;-</span> <span class="fu">factor</span>(letters[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">20</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>)])</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(letras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
-</div>
-</div>
 <ol start="5" type="1">
 <li>Escriba un programa en R para crear un factor correspondiente al conjunto de datos de la altura de las mujeres, que contenga la altura y el peso de una muestra de mujeres.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> women</span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>   height weight
-1      58    115
-2      59    117
-3      60    120
-4      61    123
-5      62    126
-6      63    129
-7      64    132
-8      65    135
-9      66    139
-10     67    142
-11     68    146
-12     69    150
-13     70    154
-14     71    159
-15     72    164</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>height_f <span class="ot">=</span> <span class="fu">cut</span>(women<span class="sc">$</span>height,<span class="dv">3</span>)</span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(height_f)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>height_f
-  (58,62.7] (62.7,67.3]   (67.3,72] 
-          5           5           5 </code></pre>
-</div>
-</div>
 </section>
-<section id="matrices" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="matrices"><span class="header-section-number">4</span> Matrices</h2>
+<section id="matrices" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="matrices"><span class="header-section-number">3</span> Matrices</h2>
 <ol type="1">
 <li>Escriba un programa en R para crear una matriz en blanco.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="at">nrow=</span><span class="dv">10</span>,<span class="at">ncol=</span><span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
- [1,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [2,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [3,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [4,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [5,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [6,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [7,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [8,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
- [9,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-[10,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA</code></pre>
-</div>
-</div>
 <ol start="2" type="1">
 <li>Escriba un programa en R para crear una matriz tomando como entrada un vector dado de números. Muestre la matriz.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span></span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(v,<span class="dv">3</span>,<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]    1    4    7
-[2,]    2    5    8
-[3,]    3    6    9</code></pre>
-</div>
-</div>
 <ol start="3" type="1">
 <li>Escriba un programa en R para crear una matriz que tome un vector dado de números como entrada y defina los nombres de columna y fila. Muestre la matriz.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span></span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(v1,<span class="dv">3</span>,<span class="dv">3</span>,<span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&#39;fila&#39;</span>,<span class="st">&#39;fila2&#39;</span>,<span class="st">&#39;fila3&#39;</span>),<span class="fu">c</span>(<span class="st">&#39;col1&#39;</span>,<span class="st">&#39;col2&#39;</span>,<span class="st">&#39;col3&#39;</span>)))</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>      col1 col2 col3
-fila     1    4    7
-fila2    2    5    8
-fila3    3    6    9</code></pre>
-</div>
-</div>
 <ol start="4" type="1">
 <li>Escriba un programa en R para crear dos matrices de 2x3, luego sume, reste, multiplique y divida las matrices.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>m1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]    1    3    5
-[2,]    2    4    6</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>m2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]    6    4    2
-[2,]    5    3    1</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>m1<span class="sc">+</span>m2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]    7    7    7
-[2,]    7    7    7</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>m1<span class="sc">-</span>m2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]   -5   -1    3
-[2,]   -3    1    5</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>m1<span class="sc">*</span>m2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]    6   12   10
-[2,]   10   12    6</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>m1<span class="sc">/</span>m2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>          [,1]     [,2] [,3]
-[1,] 0.1666667 0.750000  2.5
-[2,] 0.4000000 1.333333  6.0</code></pre>
-</div>
-</div>
 <ol start="5" type="1">
 <li>Escriba un programa en R para crear una matriz de correlación a partir de un <code>data.frame</code> del mismo tipo de datos.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mtcars)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>            mpg        cyl       disp         hp        drat         wt
-mpg   1.0000000 -0.8521620 -0.8475514 -0.7761684  0.68117191 -0.8676594
-cyl  -0.8521620  1.0000000  0.9020329  0.8324475 -0.69993811  0.7824958
-disp -0.8475514  0.9020329  1.0000000  0.7909486 -0.71021393  0.8879799
-hp   -0.7761684  0.8324475  0.7909486  1.0000000 -0.44875912  0.6587479
-drat  0.6811719 -0.6999381 -0.7102139 -0.4487591  1.00000000 -0.7124406
-wt   -0.8676594  0.7824958  0.8879799  0.6587479 -0.71244065  1.0000000
-qsec  0.4186840 -0.5912421 -0.4336979 -0.7082234  0.09120476 -0.1747159
-vs    0.6640389 -0.8108118 -0.7104159 -0.7230967  0.44027846 -0.5549157
-am    0.5998324 -0.5226070 -0.5912270 -0.2432043  0.71271113 -0.6924953
-gear  0.4802848 -0.4926866 -0.5555692 -0.1257043  0.69961013 -0.5832870
-carb -0.5509251  0.5269883  0.3949769  0.7498125 -0.09078980  0.4276059
-            qsec         vs          am       gear        carb
-mpg   0.41868403  0.6640389  0.59983243  0.4802848 -0.55092507
-cyl  -0.59124207 -0.8108118 -0.52260705 -0.4926866  0.52698829
-disp -0.43369788 -0.7104159 -0.59122704 -0.5555692  0.39497686
-hp   -0.70822339 -0.7230967 -0.24320426 -0.1257043  0.74981247
-drat  0.09120476  0.4402785  0.71271113  0.6996101 -0.09078980
-wt   -0.17471588 -0.5549157 -0.69249526 -0.5832870  0.42760594
-qsec  1.00000000  0.7445354 -0.22986086 -0.2126822 -0.65624923
-vs    0.74453544  1.0000000  0.16834512  0.2060233 -0.56960714
-am   -0.22986086  0.1683451  1.00000000  0.7940588  0.05753435
-gear -0.21268223  0.2060233  0.79405876  1.0000000  0.27407284
-carb -0.65624923 -0.5696071  0.05753435  0.2740728  1.00000000</code></pre>
-</div>
-</div>
 <ol start="6" type="1">
 <li>Escriba un programa R para encontrar el índice de fila y columna de valor máximo y mínimo en una matriz dada.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">9</span>),<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(m <span class="sc">==</span> <span class="fu">max</span>(m),<span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     row col
-[1,]   3   1</code></pre>
-</div>
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(m <span class="sc">==</span> <span class="fu">min</span>(m),<span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     row col
-[1,]   1   2</code></pre>
-</div>
-</div>
 <ol start="7" type="1">
 <li>Escriba un programa R para concatenar dos matrices dadas de la misma columna pero filas diferentes.</li>
 </ol>
-<div class="cell">
-<details open>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">12</span>),<span class="dv">3</span>,<span class="dv">4</span>)</span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">20</span>),<span class="dv">5</span>,<span class="dv">4</span>)</span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(m1,m2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4]
-[1,]   74   37   21   81
-[2,]   95   94   57   97
-[3,]   98   31   83   28
-[4,]    6   94   33   70
-[5,]   23   88   43   80
-[6,]   53   14   84   18
-[7,]   32   46   68   16
-[8,]    3   59   78   21</code></pre>
-</div>
-</div>
 </section>
 
 </main>

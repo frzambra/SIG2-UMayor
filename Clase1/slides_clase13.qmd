@@ -1,7 +1,7 @@
 ---
 title: "R: Tipos y estructuras de datos "
 author: "Dr. Francisco Zambrano"
-date: "2024-08-12"
+date: "2024-08-19"
 format: 
   revealjs:
     drop:
@@ -45,10 +45,15 @@ format:
 - Tolerancia a la frustración es un requisito. Al principio muchas cosas fallarán y volveran a fallar, hasta que luego empezaran a funcionar.
 :::
 
-##  Instalar `R` {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
-- Si deseas instalar R en tu PC 
-  - [Descargar R](https://www.r-project.org/)
-  - Descargar una IDE, aconsejo [RStudio](https://rstudio.com/)
+##  ¿Cómo utilizar R? {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+1. Instalar `R` 
+    - Si deseas instalar R en tu PC 
+      - [Descargar R](https://www.r-project.org/)
+      - Descargar una IDE, aconsejo [RStudio](https://rstudio.com/)
+2. En la nube
+    - Posit Cloud [https://posit.cloud/](https://posit.cloud/)
+3. En las diapos de clase utilizando `]`
 
 ## Explorando RStudio {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
