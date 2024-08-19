@@ -2992,8 +2992,6 @@ vertical-align: -.125em;
    
   <ul>
   <li><a href="#vectores" id="toc-vectores" class="nav-link active" data-scroll-target="#vectores"><span class="header-section-number">1</span> Vectores</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">2</span> Matrices</a></li>
-  <li><a href="#factores" id="toc-factores" class="nav-link" data-scroll-target="#factores"><span class="header-section-number">3</span> Factores</a></li>
   </ul>
 </nav>
 </div>
@@ -3127,51 +3125,84 @@ vertical-align: -.125em;
 <ol start="15" type="1">
 <li>Escriba un programa en R para crear un vector usando el operador <code>:</code> y la función <code>seq()</code>.</li>
 </ol>
-</section>
-<section id="matrices" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="matrices"><span class="header-section-number">2</span> Matrices</h2>
-<ol type="1">
-<li>Escriba un programa en R para crear una matriz en blanco.</li>
-</ol>
-<ol start="2" type="1">
-<li>Escriba un programa en R para crear una matriz tomando como entrada un vector dado de números <code>v &lt;- 1:9</code>. Muestre la matriz.</li>
-</ol>
-<ol start="3" type="1">
-<li>Escriba un programa en R para crear una matriz que tome un vector dado de números como entrada <code>v1 &lt;- 1:9</code> y defina los nombres de columna y fila. Muestre la matriz.</li>
-</ol>
-<ol start="4" type="1">
-<li>Escriba un programa en R para crear dos matrices de 2x3, luego sume, reste, multiplique y divida las matrices.</li>
-</ol>
-<ol start="5" type="1">
-<li>Escriba un programa en R para crear una matriz de correlación a partir de un <code>data.frame</code> del mismo tipo de datos.</li>
-</ol>
-<ol start="6" type="1">
-<li>Escriba un programa R para encontrar el índice de fila y columna de valor máximo y mínimo en una matriz dada.</li>
-</ol>
-<ol start="7" type="1">
-<li>Escriba un programa R para concatenar dos matrices dadas de la misma columna pero filas diferentes.</li>
-</ol>
-<ol start="8" type="1">
-<li>Escriba un programa R para concatenar dos matrices dadas de la misma filas pero columnas diferentes.</li>
-</ol>
-</section>
-<section id="factores" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="factores"><span class="header-section-number">3</span> Factores</h2>
-<ol type="1">
-<li>Escriba un programa R para encontrar los niveles del factor de un vector dado <code>iris$Species</code>.</li>
-</ol>
-<ol start="2" type="1">
-<li>Escriba un programa R para cambiar el primer nivel de un factor con otro nivel de un factor dado.</li>
-</ol>
-<ol start="3" type="1">
-<li>Escriba un programa en R para crear un factor ordenado a partir de datos que consisten en los nombres de los meses.</li>
-</ol>
-<ol start="4" type="1">
-<li>Escriba un programa <code>R</code> para extraer los cinco niveles de factor creados a partir de una muestra aleatoria de las <code>letters</code> (parte de base R).</li>
-</ol>
-<ol start="5" type="1">
-<li>Escriba un programa en R para crear un factor correspondiente al conjunto de datos de la altura de las mujeres, que contenga la altura y el peso de una muestra de mujeres.</li>
-</ol>
+<!-- ## Matrices -->
+<!-- 1. Escriba un programa en R para crear una matriz en blanco. -->
+<!-- ```{r} -->
+<!-- matrix(nrow=10,ncol=10) -->
+<!-- ``` -->
+<!-- 2. Escriba un programa en R para crear una matriz tomando como entrada un vector dado de números `v <- 1:9`. Muestre la matriz. -->
+<!-- ```{r} -->
+<!-- v <- 1:9 -->
+<!-- matrix(v,3,3) -->
+<!-- ``` -->
+<!-- 3. Escriba un programa en R para crear una matriz que tome un vector dado de números como entrada `v1 <- 1:9` y defina los nombres de columna y fila. Muestre la matriz. -->
+<!-- ```{r} -->
+<!-- v1 <- 1:9 -->
+<!-- m <- matrix(v1,3,3,dimnames = list(c('fila','fila2','fila3'),c('col1','col2','col3'))) -->
+<!-- m -->
+<!-- ``` -->
+<!-- 4. Escriba un programa en R para crear dos matrices de 2x3, luego sume, reste, multiplique y divida las matrices. -->
+<!-- ```{r} -->
+<!-- m1 <- matrix(1:6,2,3) -->
+<!-- m2 <- matrix(6:1,2,3) -->
+<!-- m1 -->
+<!-- m2 -->
+<!-- m1+m2 -->
+<!-- m1-m2 -->
+<!-- m1*m2 -->
+<!-- m1/m2 -->
+<!-- ``` -->
+<!-- 5. Escriba un programa en R para crear una matriz de correlación a partir de un `data.frame` del mismo tipo de datos. -->
+<!-- ```{r} -->
+<!-- cor(mtcars) -->
+<!-- ``` -->
+<!-- 6. Escriba un programa R para encontrar el índice de fila y columna de valor máximo y mínimo en una matriz dada. -->
+<!-- ```{r} -->
+<!-- m <- matrix(sample(1:100,9),3,3) -->
+<!-- which(m == max(m),arr.ind = TRUE) -->
+<!-- which(m == min(m),arr.ind = TRUE) -->
+<!-- ``` -->
+<!-- 7. Escriba un programa R para concatenar dos matrices dadas de la misma columna pero filas diferentes. -->
+<!-- ```{r} -->
+<!-- m1 <- matrix(sample(1:100,12),3,4) -->
+<!-- m2 <- matrix(sample(1:100,20),5,4) -->
+<!-- rbind(m1,m2) -->
+<!-- ``` -->
+<!-- 8. Escriba un programa R para concatenar dos matrices dadas de la misma filas pero columnas diferentes. -->
+<!-- ```{r} -->
+<!-- m1 <- matrix(sample(1:100,12),4,3) -->
+<!-- m2 <- matrix(sample(1:100,20),4,5) -->
+<!-- cbind(m1,m2) -->
+<!-- ``` -->
+<!-- ## Factores -->
+<!-- 1. Escriba un programa R para encontrar los niveles del factor de un vector dado `iris$Species`. -->
+<!-- ```{r} -->
+<!-- levels(iris$Species) -->
+<!-- ``` -->
+<!-- 2. Escriba un programa R para cambiar el primer nivel de un factor con otro nivel de un factor dado. -->
+<!-- ```{r} -->
+<!-- letras <- factor(sample(letters[1:5],40,replace = TRUE)) -->
+<!-- levels(iris$Species)[1] <- levels(letras)[1] -->
+<!-- levels(iris$Species) -->
+<!-- ``` -->
+<!-- 3. Escriba un programa en R para crear un factor ordenado a partir de datos que consisten en los nombres de los meses. -->
+<!-- ```{r} -->
+<!-- f <- factor(month.name, levels = month.name) -->
+<!-- f -->
+<!-- ``` -->
+<!-- 4. Escriba un programa `R` para extraer los cinco niveles de factor creados a partir de una muestra aleatoria de las `letters` (parte de base R). -->
+<!-- ```{r} -->
+<!-- letras <- factor(letters[sample(1:5,20,replace = TRUE)]) -->
+<!-- levels(letras) -->
+<!-- ``` -->
+<!-- 5. Escriba un programa en R para crear un factor correspondiente al conjunto de datos de la altura de las mujeres, que contenga la altura y el peso de una muestra de mujeres. -->
+<!-- ```{r} -->
+<!-- data <- women -->
+<!-- data -->
+<!-- height_f = cut(women$height,3) -->
+
+<!-- table(height_f) -->
+<!-- ``` -->
 </section>
 
 </main>
