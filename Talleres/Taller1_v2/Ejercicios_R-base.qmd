@@ -77,7 +77,9 @@ format:
 
 ## Vectores
 
-1. Escriba un programa en R para crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 10.
+Escriba un script en R para resolver lo siguiente:
+
+1.  Crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 10.
 
 ```{r}
 x <- vector("numeric", 5)
@@ -90,18 +92,18 @@ chr <- vector("character", 5)
 chr
 ```
 
-2. Escriba un programa en R para sumar dos vectores de tipo entero y longitud 5.
+2. Sumar dos vectores de tipo entero y longitud 5.
 
 ```{r}
-x <- c(10, 20, 30)
-y <- c(20, 10, 40)
+x <- c(10, 20, 30, 40, 50)
+y <- c(20, 10, 40, 35, 10)
 x
 y
 z = x + y
 z
 ```
 
-3. Escriba un programa en R para encontrar la suma, la media y el producto de un vector con 10 elementos.
+3. Calcular la suma, la media y el producto de un vector con 10 elementos.
 
 ```{r}
 x <- c(10, 20, 30, 32, 45, 50, 70, 80, 87, 100)
@@ -110,7 +112,7 @@ mean(x)
 prod(x)
 ```
 
-4. Escriba un programa R para encontrar la suma, la media y el producto de un vector con 10 elementos y que tenga 3 valores NA, ignore elementos como NA o NaN.
+4. Calcular la suma, la media y el producto de un vector con 10 elementos y que tenga 3 valores NA, ignore elementos como NA o NaN.
 
 ```{r}
 x <- rnorm(10)
@@ -129,7 +131,7 @@ sum(x)
 prod(x)
 ```
 
-5. Escriba un programa en R para ordenar un vector con 8 elementos en orden ascendente y descendente.
+5. Ordenar un vector con ocho elementos en orden ascendente y descendente.
 
 ```{r}
 x
@@ -137,7 +139,7 @@ sort(x)
 sort(x,decreasing = TRUE)
 ```
 
-6. Escriba un programa R para probar si el vector `[1, 2, 5, 25, 35, 32]` dado contiene el elemento `5` específico.
+6. Probar si el vector `[1, 2, 5, 25, 35, 32]` dado contiene el elemento `5` específico.
 
 ```{r}
 x <- c(1, 2, 5, 25, 35, 32)
@@ -145,81 +147,81 @@ x <- c(1, 2, 5, 25, 35, 32)
 5 %in% x
 ```
 
-7. Escriba un programa R para encontrar el segundo valor más alto en un vector numérico dado que contiene 10 elementos.
+7. Encontrar el segundo valor más alto en un vector numérico dado que contiene 10 elementos.
 
 ```{r}
 x <- round(rnorm(10)*10)
 sort(x,decreasing = TRUE)[2]
 ```
 
-8. Escriba un programa en R para encontrar el enésimo valor más alto en un vector numérico dado que contiene 10 elementos.
+8. Encontrar el enésimo valor más alto en un vector numérico dado que contiene 10 elementos.
 
 ```{r}
 n <- 5 #n esimo
 sort(x,decreasing = TRUE)[n]
 ```
 
-9. Escriba un programa en R para convertir la(s) columna(s) dada(s) de el `data.frame` `iris` en un vector.
+<!-- 9. Escriba un programa en R para convertir la(s) columna(s) dada(s) de el `data.frame` `iris` en un vector. -->
 
-```{r}
-v1 <- iris$Sepal.Length
-v2 <- iris$Sepal.Width
-v3 <- iris$Species
-```
+<!-- ```{r} -->
+<!-- v1 <- iris$Sepal.Length -->
+<!-- v2 <- iris$Sepal.Width -->
+<!-- v3 <- iris$Species -->
+<!-- ``` -->
 
-10. Escriba un programa R para encontrar los elementos de un vector dado `v1 <- 1:5` que no están en otro vector dado `v2 <- 3:7`. 
+<!-- 10. Escriba un programa R para encontrar los elementos de un vector dado `v1 <- 1:5` que no están en otro vector dado `v2 <- 3:7`.  -->
 
-```{r}
-v1 <- 1:5
-v2 <- 3:7
-v1;v2
+<!-- ```{r} -->
+<!-- v1 <- 1:5 -->
+<!-- v2 <- 3:7 -->
+<!-- v1;v2 -->
 
-#los elementos de v1 que no estan en v2
-v1[!(v1 %in% v2)]
+<!-- #los elementos de v1 que no estan en v2 -->
+<!-- v1[!(v1 %in% v2)] -->
 
-#los elementos de v2 que no estan en v1
-v2[!(v2 %in% v1)]
+<!-- #los elementos de v2 que no estan en v1 -->
+<!-- v2[!(v2 %in% v1)] -->
 
-```
+<!-- ``` -->
 
-11. Escriba un programa en R para invertir el orden del vector dado `x <- 1:10`.
+<!-- 11. Escriba un programa en R para invertir el orden del vector dado `x <- 1:10`. -->
 
-```{r}
-x <- 1:10
-rev(x)
-```
+<!-- ```{r} -->
+<!-- x <- 1:10 -->
+<!-- rev(x) -->
+<!-- ``` -->
 
-12. Escriba un programa en R para crear un vector numérico con 8 elementos y determine la longitud y la dimensión del vector.
+<!-- 12. Escriba un programa en R para crear un vector numérico con 8 elementos y determine la longitud y la dimensión del vector. -->
 
-```{r}
-x <- 1:10
-length(x)
-dim(x)
-```
+<!-- ```{r} -->
+<!-- x <- 1:10 -->
+<!-- length(x) -->
+<!-- dim(x) -->
+<!-- ``` -->
 
-13. Escriba un programa R para probar si el valor del octavo elemento de un vector dado `v <- 5:14` es mayor que 10 o no. Devuelve `TRUE` o `FALSE`.
+<!-- 13. Escriba un programa R para probar si el valor del octavo elemento de un vector dado `v <- 5:14` es mayor que 10 o no. Devuelve `TRUE` o `FALSE`. -->
 
-```{r}
-v <- 5:14
-v[8]
-v[8] > 10
-```
+<!-- ```{r} -->
+<!-- v <- 5:14 -->
+<!-- v[8] -->
+<!-- v[8] > 10 -->
+<!-- ``` -->
 
-14. Escriba un programa en R para sumar 3 a cada elemento en un vector dado `v <- 1:5`. Imprime el vector original y el nuevo.
+<!-- 14. Escriba un programa en R para sumar 3 a cada elemento en un vector dado `v <- 1:5`. Imprime el vector original y el nuevo. -->
 
-```{r}
-v <- 1:5
-v + 3
-```
+<!-- ```{r} -->
+<!-- v <- 1:5 -->
+<!-- v + 3 -->
+<!-- ``` -->
 
-15. Escriba un programa en R para crear un vector usando el operador `:` y la función `seq()`.
+<!-- 15. Escriba un programa en R para crear un vector usando el operador `:` y la función `seq()`. -->
 
-```{r}
-v1 <- 1:10
-v1
-v2 <- seq(1,10,2)
-v2
-```
+<!-- ```{r} -->
+<!-- v1 <- 1:10 -->
+<!-- v1 -->
+<!-- v2 <- seq(1,10,2) -->
+<!-- v2 -->
+<!-- ``` -->
 
 <!-- ## Matrices -->
 

@@ -3080,51 +3080,76 @@ vertical-align: -.125em;
 <!-- ``` -->
 <section id="vectores" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="vectores"><span class="header-section-number">1</span> Vectores</h2>
+<p>Escriba un script en R para resolver lo siguiente:</p>
 <ol type="1">
-<li>Escriba un programa en R para crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 10.</li>
+<li>Crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 10.</li>
 </ol>
 <ol start="2" type="1">
-<li>Escriba un programa en R para sumar dos vectores de tipo entero y longitud 5.</li>
+<li>Sumar dos vectores de tipo entero y longitud 5.</li>
 </ol>
 <ol start="3" type="1">
-<li>Escriba un programa en R para encontrar la suma, la media y el producto de un vector con 10 elementos.</li>
+<li>Calcular la suma, la media y el producto de un vector con 10 elementos.</li>
 </ol>
 <ol start="4" type="1">
-<li>Escriba un programa R para encontrar la suma, la media y el producto de un vector con 10 elementos y que tenga 3 valores NA, ignore elementos como NA o NaN.</li>
+<li>Calcular la suma, la media y el producto de un vector con 10 elementos y que tenga 3 valores NA, ignore elementos como NA o NaN.</li>
 </ol>
 <ol start="5" type="1">
-<li>Escriba un programa en R para ordenar un vector con 8 elementos en orden ascendente y descendente.</li>
+<li>Ordenar un vector con ocho elementos en orden ascendente y descendente.</li>
 </ol>
 <ol start="6" type="1">
-<li>Escriba un programa R para probar si el vector <code>[1, 2, 5, 25, 35, 32]</code> dado contiene el elemento <code>5</code> específico.</li>
+<li>Probar si el vector <code>[1, 2, 5, 25, 35, 32]</code> dado contiene el elemento <code>5</code> específico.</li>
 </ol>
 <ol start="7" type="1">
-<li>Escriba un programa R para encontrar el segundo valor más alto en un vector numérico dado que contiene 10 elementos.</li>
+<li>Encontrar el segundo valor más alto en un vector numérico dado que contiene 10 elementos.</li>
 </ol>
 <ol start="8" type="1">
-<li>Escriba un programa en R para encontrar el enésimo valor más alto en un vector numérico dado que contiene 10 elementos.</li>
+<li>Encontrar el enésimo valor más alto en un vector numérico dado que contiene 10 elementos.</li>
 </ol>
-<ol start="9" type="1">
-<li>Escriba un programa en R para convertir la(s) columna(s) dada(s) de el <code>data.frame</code> <code>iris</code> en un vector.</li>
-</ol>
-<ol start="10" type="1">
-<li>Escriba un programa R para encontrar los elementos de un vector dado <code>v1 &lt;- 1:5</code> que no están en otro vector dado <code>v2 &lt;- 3:7</code>.</li>
-</ol>
-<ol start="11" type="1">
-<li>Escriba un programa en R para invertir el orden del vector dado <code>x &lt;- 1:10</code>.</li>
-</ol>
-<ol start="12" type="1">
-<li>Escriba un programa en R para crear un vector numérico con 8 elementos y determine la longitud y la dimensión del vector.</li>
-</ol>
-<ol start="13" type="1">
-<li>Escriba un programa R para probar si el valor del octavo elemento de un vector dado <code>v &lt;- 5:14</code> es mayor que 10 o no. Devuelve <code>TRUE</code> o <code>FALSE</code>.</li>
-</ol>
-<ol start="14" type="1">
-<li>Escriba un programa en R para sumar 3 a cada elemento en un vector dado <code>v &lt;- 1:5</code>. Imprime el vector original y el nuevo.</li>
-</ol>
-<ol start="15" type="1">
-<li>Escriba un programa en R para crear un vector usando el operador <code>:</code> y la función <code>seq()</code>.</li>
-</ol>
+<!-- 9. Escriba un programa en R para convertir la(s) columna(s) dada(s) de el `data.frame` `iris` en un vector. -->
+<!-- ```{r} -->
+<!-- v1 <- iris$Sepal.Length -->
+<!-- v2 <- iris$Sepal.Width -->
+<!-- v3 <- iris$Species -->
+<!-- ``` -->
+<!-- 10. Escriba un programa R para encontrar los elementos de un vector dado `v1 <- 1:5` que no están en otro vector dado `v2 <- 3:7`.  -->
+<!-- ```{r} -->
+<!-- v1 <- 1:5 -->
+<!-- v2 <- 3:7 -->
+<!-- v1;v2 -->
+<!-- #los elementos de v1 que no estan en v2 -->
+<!-- v1[!(v1 %in% v2)] -->
+<!-- #los elementos de v2 que no estan en v1 -->
+<!-- v2[!(v2 %in% v1)] -->
+<!-- ``` -->
+<!-- 11. Escriba un programa en R para invertir el orden del vector dado `x <- 1:10`. -->
+<!-- ```{r} -->
+<!-- x <- 1:10 -->
+<!-- rev(x) -->
+<!-- ``` -->
+<!-- 12. Escriba un programa en R para crear un vector numérico con 8 elementos y determine la longitud y la dimensión del vector. -->
+<!-- ```{r} -->
+<!-- x <- 1:10 -->
+<!-- length(x) -->
+<!-- dim(x) -->
+<!-- ``` -->
+<!-- 13. Escriba un programa R para probar si el valor del octavo elemento de un vector dado `v <- 5:14` es mayor que 10 o no. Devuelve `TRUE` o `FALSE`. -->
+<!-- ```{r} -->
+<!-- v <- 5:14 -->
+<!-- v[8] -->
+<!-- v[8] > 10 -->
+<!-- ``` -->
+<!-- 14. Escriba un programa en R para sumar 3 a cada elemento en un vector dado `v <- 1:5`. Imprime el vector original y el nuevo. -->
+<!-- ```{r} -->
+<!-- v <- 1:5 -->
+<!-- v + 3 -->
+<!-- ``` -->
+<!-- 15. Escriba un programa en R para crear un vector usando el operador `:` y la función `seq()`. -->
+<!-- ```{r} -->
+<!-- v1 <- 1:10 -->
+<!-- v1 -->
+<!-- v2 <- seq(1,10,2) -->
+<!-- v2 -->
+<!-- ``` -->
 <!-- ## Matrices -->
 <!-- 1. Escriba un programa en R para crear una matriz en blanco. -->
 <!-- ```{r} -->
