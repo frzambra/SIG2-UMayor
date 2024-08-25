@@ -6,8 +6,8 @@ author: "Dr. Francisco Zambrano"
 date: "2023-09-08"
 lang: "es"
 execute:
-  echo: true
-  eval: true
+  echo: false
+  eval: false
 format:
   html:
     number-sections: true
@@ -39,15 +39,82 @@ Debeŕá utilizar RStudio para crear un script, en donde resolverá cada uno de 
 
 # Ejercicios
 
+## Vectores
+
+1. Considere el vector: x = (4,6,5,7,10,9,4,15). ¿Cuál es el resultado de?: x < 7 ?
+
+```{r}
+x <- c(4,6,5,7,10,9,4,15)
+x < 7
+```
+
+2. Considere los dos vectores p = (3, 5, 6, 8) y q = (3, 3, 3). ¿Cuál es el resultado de p+q? ¿Qué pasa cuando se suman vectores con diferente cantidad de elementos?
+
+3. Considere los dos vectores, x = (4,6,5,7,10,9,4,15) e y = (0,10,1,8,2,3,4,1). ¿Cuál es el resultado de `x*y`?
+
+4. Considere los dos vectores a = (1,2,4,5,6) y b = (3,2,4,1,9). ¿Cuál es el resultado de `cbind(a,b)`?
+
+5. Considere los dos vectores, a, b a = (10,2,4,15) y b = (3,12,4,11). ¿Cuál es el resultado de `rbind(a,b)`?
+
+6. Determine cuantos elementos tiene el vector `letters`
+
+7. Del vector `letters` extraiga las letras `a`, `o` y `w` usando indexación.
+
+8. Considere el siguiente vector v = (9, 4, 3, 76, 43, 22). Usando indexación extraiga el 2do y 4to elemento.
+
+9. Del vector que se genera con el siguiente script:
+
+```{r}
+v <- runif(40,0,100)
+```
+
+Extraiga los elementos que son menores que 50 y guardelos en el objeto `v_menor_50`.
+
+## Matrices
+
+1. Cree 2 vectores A y B, donde A es (1,2,3) y B es (4,5,6). Con estos vectores,
+- use la función cbind() o rbind() para crear una matriz de 2 por 3 a partir de los vectores. 
+
+2. Cree una matriz de 3 por 3 que consta de los números del 1 al 9. Cree esta matriz usando  1:9 y especificando el argumento nrow en la llamada a la función Matrix(). 
+
+3. Confirme que la matriz anterior es efectivamente una matriz usando la función `is.matrix()`
+
+4. Cree una matriz de 5 por 5 con los números del 1 al 25 y asignela al objeto `mat2`. La primera fila debe tener los numero del 1 al 5.
+
+5. Usando indexación, tome una subsección de `mat2` del ejercicio anterior que se ve así:  
+[1] [7,8]  
+[2] [12,13]
+
+6. Determine la suma de todos los elementos de `mat2`
+
+7. El siguiente código crea en R la matriz de 5×5 que se muestra a continuación.
+
+```{r}
+m = rbind(c(11,12,13,14,15),
+            c(21,22,23,24,25),
+            c(31,32,33,34,35),
+            c(41,42,43,44,45),
+            c(51,52,53,54,55))
+m
+```
+
+Usando lo anterior, escriba código R para generar las siguientes submatrices de m:
+
+  - la submatriz de elementos en las filas 3, 4 o 5 y en las columnas 1 o 2
+
+  - la submatriz formada al eliminar las columnas 2 y 4
+
+  - la submatriz de filas cuyo primer elemento de columna tiene un valor par 
+
 ## Data.frames
 
-1. Escriba un programa en R para crear un `data.frame` vacío.
+1. Crear un `data.frame` vacío.
 
 ```{r}
 data.frame()
 ```
 
-2. Escriba un programa en R para crear un `data.frame` a partir de cuatro vectores dados.
+2. Crear un `data.frame` a partir de cuatro vectores dados de tipo entero, double, caracter y lógico.
 
 ```{r}
 v1 <- 1:5
@@ -61,14 +128,14 @@ df <- data.frame(numeros = v1,
            meses = v4)
 ```
 
-3. Escriba un programa R para extraer una columna específica de un `data.frame` usando el nombre de la columna.
+3. Extraer una columna específica de el `data.frame` `iris` usando el nombre de la columna.
 
 ```{r}
 #iris es el data.frame dado, es decir cualquier data.frame
 iris$Sepal.Length
 ```
 
-4. Escriba un programa en R para extraer las filas 3 y 5 con las columnas 1 y 3 de un `data.frame` dado.
+4. Extraer las filas 3 y 5 con las columnas 1 y 3 de el `data.frame` `mtcars`.
 
 ```{r}
 #iris es el data.frame dado, es decir cualquier data.frame
@@ -76,7 +143,7 @@ iris[c(3,5),c(1,3)]
 ```
 
 
-5. Escriba un programa en R para eliminar la(s) columna(s) por nombre de un `data.frame` dado.
+5. Eliminar dos columna por nombre de el `data.frame` `mtcars`.
 
 ```{r}
 #iris es el data.frame dado, es decir cualquier data.frame
@@ -84,13 +151,13 @@ iris$Sepal.Length <- NULL #para una sola columna
 iris[c(1,3)] <- NULL #para eliminar más de una
 ```
 
-6. Escriba un programa en R para agregar una nueva columna en un `data.frame` determinado.
+6. Agregar una nueva columna al `data.frame` `iris`.
 
 ```{r}
 iris$nueva_columna <- 150:1
 ```
 
-7. Escriba un programa en R para ordenar un `data.frame` dado por varias columnas.
+7. Ordenar el `data.frame` `iris` por las columns `Sepal.Length` y `Sepal.Width`.
 
 ```{r}
 data("iris") #carga el data.frame iris original
@@ -100,27 +167,7 @@ iris_sub[pos,] #luego puedo hacer indexación con el vector con las posiciones o
 
 ```
 
-
-8. Escriba un programa en R para crear uniones (fusiones) internas, externas, izquierdas y derechas a partir de dos `data.frames` dados.
-
-```{r}
-df1 <- data.frame(numid = c(12, 14, 10, 11))
-df2 <- data.frame(numid = c(13, 15, 11, 12))
-
-#union izquierda
-(result <- merge(df1, df2, by = "numid", all.x = TRUE))
-
-#union derecha
-(result <- merge(df1, df2, by = "numid", all.y = TRUE))
-
-#union externa
-(result <- merge(df1, df2, by = "numid", all = TRUE))
-
-# union cruzada
-(result <- merge(df1, df2, by = NULL))
-```
-
-9. Escriba un programa R para reemplazar los valores de NA con 3 en un `data.frame` dado.
+8. Para el set de datos `airquality`, reemplazar los valores `NA` de la columna `Ozone` con 3 de la columna `Solar.R` con 99.
 
 ```{r}
 df <-data.frame(a= c(1,2,NA,4,8),b = c(NA,'a','b',NA,NA))
@@ -128,8 +175,7 @@ df[is.na(df)] <- 3 #is.na pregunta que elementos son NA en df, a esos se le asig
 df
 ```
 
-
-10. Escriba un programa R para cambiar más de un nombre de columna de un `data.frame` dado.
+9. Cambiar más de un nombre de columna de un `data.frame` dado.
 
 ```{r}
 exam_data <- data.frame(
@@ -147,48 +193,7 @@ colnames(exam_data)[which(names(exam_data) == "score")] = "avg_score"
 exam_data
 ```
 
-11. Escriba un programa R para comparar dos `data.frame` para encontrar las filas en el primer `data.frame` que no están presentes en el segundo data.frame. (ver `?setdiff`)
-
-```{r}
-df_90 = data.frame(
-  item = c("item1", "item2", "item3"),
-  Jan_sale = c(12, 14, 12),
-  Feb_sale = c(11, 12, 15),
-  Mar_sale = c(12, 14, 15)
-)
-df_91 = data.frame(
-  item = c("item1", "item2", "item3"),
-  Jan_sale = c(12, 14, 12),
-  Feb_sale = c(11, 12, 15),
-  Mar_sale = c(12, 15, 18)
-)
-#data.frames originales 
-df_90
-df_91
-# imprime las filas en el primer data.frame que no están presentes en el segundo
-setdiff(df_90,df_91)
-```
-
-12. Escriba un programa en R para encontrar elementos que estén presentes en dos `data.frames` dados. (ver `?intersect`)
-
-```{r}
-a <- c("a", "b", "c", "d", "e")
-b <- c("d", "e", "f", "g")
-
-#elementos que están presentes en ambos data.frames
-result <- intersect(a, b)
-```
-
-13. Escriba un programa en R para encontrar elementos que vienen solo una vez y que son comunes a ambos `data.frames` dados. (ver `?union`)
-```{r}
-a <- c("a", "b", "c", "d", "e")
-b <- c("d", "e", "f", "g")
-# encuentra elementos que están en los dos 
-result <- union(a, b)
-result
-```
-
-14. Escriba un programa R para contar el número de valores NA en una columna de `data.frames`.
+10. Cuente el número de valores NA en las columnas el `data.frame` `airquality`.
 
 ```{r}
 exam_data <- data.frame(
@@ -202,7 +207,7 @@ exam_data
 sum(is.na(exam_data$attempts))
 ```
 
-15. Escriba un programa en R para crear un `data.frame` utilizando dos vectores dados y muestre los elementos duplicados y las filas únicas de dicho `data.frame`. (ver `?duplicated`)
+11. Cree un `data.frame` utilizando dos vectores dados y muestre.
 
 ```{r}
 a <- c(10,20,10,10,40,50,20,30)
@@ -215,7 +220,7 @@ duplicated(ab)
 unique(ab)
 ```
 
-16. Escriba un programa en R para llamar al conjunto de datos (incorporado) `airquality`. Elimine las variables 'Solar.R' y 'Wind' y muestre el `data.frame`.
+12. Llame al conjunto de datos (incorporado) `airquality`. Elimine las variables 'Solar.R' y 'Wind' y muestre el `data.frame`.
 
 ```{r}
 data <- airquality
@@ -227,7 +232,7 @@ data[,c("Wind")]=NULL
 head(data)
 ```
 
-17. Escriba un programa R para llamar al conjunto de datos (integrado) `airquality`. ¿Comprueba si es un `data.frame` o no? Ordene todo el `data.frame` por la primera y segunda columna. (ver `?order`)
+13. Escriba un programa R para llamar al conjunto de datos (integrado) `airquality`. ¿Comprueba si es un `data.frame` o no? Ordene todo el `data.frame` por la primera y segunda columna. (ver `?order`)
 
 ```{r}
 data <- airquality
@@ -238,174 +243,4 @@ result <- data[order(data[,1],data[,2]),]
 head(result)
 ```
 
-## Listas
-
-1. Escriba un programa R para crear una lista que contenga un vector, una matriz y una lista y asigne nombres a los elementos de la lista.
-
-```{r}
-l <- list(e1 = 1:10,
-          e2 = matrix(1:9,3),
-          e3 = list(1:3))
-l
-```
-
-2. Escriba un programa en R para crear una lista que contenga un vector, una matriz y una lista y asigne nombres a los elementos de la lista. Accede al primer y segundo elemento de la lista.
-
-```{r}
-list_data <- list(
-  c("Red","Green","Black"), 
-  matrix(c(1,3,5,7,9,11), nrow = 2),
-  list("Python", "PHP", "Java"))
-list_data #lista
-
-#asigna nombres a los elementos de una lista
-names(list_data) = c("Color", "Odd numbers", "Language(s)")
-
-list_data
-
-#primer elemento
-list_data[[1]]
-#segundo elemento
-list_data[[2]]
-```
-
-3. Escriba un programa R para crear una lista que contenga un vector, una matriz y una lista y agregue un elemento al final de la lista.
-
-```{r}
-list_data <- list(
-  c("Red","Green","Black"), 
-  matrix(c(1,3,5,7,9,11), nrow = 2),
-  list("Python", "PHP", "Java"))
-
-list_data
-
-#agregar un elemento al final de la lista
-list_data[4] = "New element"
-list_data
-```
-
-4. Escriba un programa en R para seleccionar el segundo elemento de una lista anidada determinada.
-
-```{r}
-x <- list(list(0,2), list(3,4), list(5,6))
-x
-e <- lapply(x, '[[', 2)
-#Segundo elemento de la lista anidada
-e
-```
-
-5. Escriba un programa R para fusionar dos listas dadas en una lista.
-
-```{r}
-n1 <- list(1,2,3)
-c1 <- list("Red", "Green", "Black")
-n1
-c1
-
-#dos listas unidas
-mlist <-  c(n1, c1)
-mlist
-```
-
-6. Escriba un programa en R para convertir una lista dada en vector.
-
-```{r}
-n1 <- list(1,2,3)
-c1 <- list(4,5,6)
-n1
-c1
-#convertir las listas en vectores
-v1 <- unlist(n1)
-v1
-```
-
-7. Escriba un programa en R para crear una lista de `data.frames` y acceda a cada uno de esos `data.frames` de la lista.
-
-```{r}
-df1 <- data.frame(y1 = c(0, 1, 2), y2 = c(3, 4, 5))
-df2 <- data.frame(y1 = c(6, 7, 8), y2 = c(9, 10, 11))
-new_list <- list(df1, df2)
-
-#lista con dos data.frames
-new_list
-
-#data.frame 1
-new_list[[1]]
-#data.frame 2
-new_list[[2]]
-```
-
-8. Escriba un programa R para contar el número de objetos en una lista dada.
-
-```{r}
-list_data <- list(
-  c("Red","Green","Black"), 
-  matrix(c(1,3,5,7,9,11), nrow = 2),
-  list("Python", "PHP", "Java"))
-
-list_data
-#número de elementos de la lista
-length(list_data)
-```
-
-9. Escriba un programa en R para convertir una matriz dada en una lista.
-
-```{r}
-m <- matrix(1:10,nrow=2, ncol=2)
-m
-
-l <- split(m, rep(1:ncol(m), each = nrow(m)))
-
-#lista obtenida de la matriz
-l
-```
-
-10. Escriba un programa R para asignar NULL a un elemento de lista dado.
-
-```{r}
-l <- list(1, 2, 3, 4, 5)
-l
-
-#asigna NULL al 2do y 3er elemento de la lista
-l[2] <- list(NULL) 
-l[3] <- list(NULL) 
-l
-```
-
-11. Escriba un programa R para crear una lista llamada `s` que contenga una secuencia de 15 letras mayúsculas, comenzando desde 'E'.
-
-```{r}
-l <- LETTERS[match("E", LETTERS):(match("E", LETTERS)+15)]
-l
-```
-
-12. Escriba un programa R para asignar nuevos nombres "a", "b" y "c" a los elementos de una lista dada.
-
-```{r}
-list1 <- list(g1 = 1:10, g2 = "R Programming", g3 = "HTML")
-list1
-list1 = c("a", "b", "c")
-list1
-```
-
-13. Escriba un programa en R para obtener la longitud de los dos primeros vectores de una lista dada.
-
-```{r}
-list1 <- list(g1 = 1:10, g2 = "R Programming", g3 = "HTML")
-list1
-#longitud de los elementos de la lista
-length(list1$g1)
-length(list1$g2)
-```
-
-14. Escriba un programa R para encontrar todos los elementos de una lista dada que no están en otra lista dada. (ver `?setdiff`)
-
-```{r}
-l1 <- list("x", "y", "z")
-l2 <- list("X", "Y", "Z", "x", "y", "z")
-l1
-l2
-#todos los elemntos de l2 que no están en l1
-setdiff(l2, l1)
-```
 

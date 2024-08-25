@@ -16,6 +16,7 @@ format:
       - drop
 ---
 
+
 ## Contenidos
 
 1) Indexado
@@ -34,6 +35,7 @@ format:
 
 ::: columns
 ::: {.column widt="50%"}
+
 ```{r}
 a <- 5:12
 a
@@ -43,8 +45,10 @@ a[1] #<<
 3:5
 
 ```
+
 :::
 ::: {.column widt="50%"}
+
 ```{r}
 a[3:5] #<<
 #elementos 3, 5, 8
@@ -52,10 +56,12 @@ a[c(3, 5, 8)]
 # que pasa enm ete caso
 a[c(3, 8, 12)]
 ```
+
 :::
 :::
 
 ## Vector: reciclado
+
 
 ```{r}
 a <- rep(NA,10)
@@ -64,9 +70,11 @@ a[1:10] <- c(1,2)
 a
 ```
 
+
 ## Matrix
 
 Obtener un valor [#fila,#columna]
+
 
 
 ```{r}
@@ -75,17 +83,22 @@ colnames(m) <- c('a', 'b', 'c')
 m
 ```
 
+
 ::: columns
 ::: {.column widt="50%"}
+
 ```{r}
 m[2,2]
 ```
+
 :::
 
 ::: {.column widt="50%"}
+
 ```{r}
 m[1,3]
 ```
+
 :::
 :::
 
@@ -95,15 +108,18 @@ Varios valores
 
 ::: columns
 ::: {.column widt="50%"}
+
 ```{r}
 m
 #toda una columna o fila
 m[,2] #columna
 m[3,] #fila
 ```
+
 :::
 
 ::: {.column widt="50%"}
+
 ```{r}
 # dos filas, dos columnas
 m[1:2,1:2]
@@ -113,6 +129,7 @@ m[1:2,1:2]
 # dos filas, dos columnas
 m[1:2,2:3]
 ```
+
 :::
 :::
 
@@ -121,26 +138,32 @@ m[1:2,2:3]
 ::: columns
 ::: {.column widt="50%"}
 Por nombre de columna
+
 ```{r}
 m[, 'b']
 m[, c('a', 'c')]
 ```
+
 
 Por un solo valor
 
+
 ```{r}
 m[, 'b']
 m[, c('a', 'c')]
 ```
+
 :::
 
 ::: {.column widt="50%"}
 
 __Importante notar__
+
 ```{r}
 m[,2] 
 m[,2,drop=FALSE]
 ```
+
 :::
 :::
 
@@ -151,18 +174,22 @@ Por índice numérico
 
 ::: columns
 ::: {.column widt="50%"}
+
 ```{r}
 d <- data.frame(m)
 class(d)
 d
 d[,2]
 ```
+
 :::
 
 ::: {.column widt="50%"}
+
 ```{r}
 d[2] #la segunda columna
 ```
+
 :::
 :::
 
@@ -174,23 +201,28 @@ Por nombre de columna
 ::: {.column widt="50%"}
 No mantienen la estructura
 
+
 ```{r}
 d[,'b']
 d$b
 d[['b']]
 ```
+
 :::
 
 ::: {.column widt="50%"}
 En este caso se mantiene la estructura de `data.frame`
+
 ```{r}
 d['b']
 d[,'b', drop = FALSE]
 ```
+
 :::
 :::
 
 ## Técnicas de indexación con `which`, `%in%` y `match`
+
 
 ```{r}
 x <- 10:20
@@ -201,9 +233,11 @@ i
 x[i]
 ```
 
+
 ## Técnicas de indexación con `which`, `%in%` y `match`
 
 ¿Cómo saber si los valor de un vector `j` están en un vector `x`?
+
 
 ```{r}
 x <- 10:20
@@ -214,29 +248,37 @@ j %in% x
 
 ```
 
+
 ## Técnicas de indexación con `which`, `%in%` y `match`
+
 
 ```{r}
 which(j %in% x)
 ```
 
+
 Otra función importante es `match`
+
 
 ```{r}
 match(j, x)
 ```
 
+
 No es lo mismo `match(j, x)` que `match(x, j)`
+
 
 ```{r}
 match(x, j)
 ```
+
 
 # 2 Algebra
 
 ## Vector
 
 La suma, resta y multiplicación es elemento a elemento
+
 
 ```{r}
 a <- 1:5
@@ -246,37 +288,46 @@ b
 a*b
 ```
 
+
 ## Vector
 
 La multiplicación `vector` por `escalar`
+
 
 ```{r}
 a*5
 ```
 
+
 ¿Qué pasa en este caso?
+
 
 ```{r}
 a+c(1,0)
 ```
 
+
 ## Vector
 
 ¿Por qué no pasa lo mismo acá?
+
 
 ```{r}
 1:10 + c(1,0)
 ```
 
+
 ## Comparaciones lógicas
 
 Para igualdad: `==`  
+
 
 ```{r}
 a
 a == 2
 a < 4
 ```
+
 
 ## Comparaciones lógicas
 
@@ -285,19 +336,23 @@ a < 4
 y : `&`  
 
 
+
 ```{r}
 a
 a >= 3 & b < 8
 ```
+
 :::
 
 ::: {.column widt="50%"}
 o : `|`
 
+
 ```{r}
 b
 a > 3 & b <= 8
 ```
+
 :::
 :::
 
@@ -305,13 +360,16 @@ a > 3 & b <= 8
 
 Not : !
 
+
 ```{r}
 !TRUE
 a > 3
 !(a > 3)
 ```
 
+
 ## Algunas funciones
+
 
 ```{r}
 sqrt(9)
@@ -320,29 +378,35 @@ sqrt(a)
 exp(a)
 ```
 
+
 ## Algunas funciones
 
 ::: columns
 ::: {.column widt="50%"}
+
 ```{r}
 min(a)
 max(a)
 range(a)
 sum(a)
 ```
+
 :::
 
 ::: {.column widt="50%"}
+
 ```{r}
 mean(a)
 median(a)
 prod(a)
 sd(a)
 ```
+
 :::
 :::
 
 ## Números aleatorios
+
 
 ```{r}
 set.seed(123) #<<
@@ -350,14 +414,18 @@ runif(10) # dsitribución uniforme
 rnorm(10, mean=4, sd=1) #distribución normal
 ```
 
+
 ## Números aleatorios
+
 
 ```{r}
 runif(10) # dsitribución uniforme
 rnorm(10, mean=4, sd=1) #distribución normal
 ```
 
+
 ## Números aleatorios
+
 
 ```{r}
 set.seed(123) #<<
@@ -365,23 +433,28 @@ runif(10) # distribución uniforme
 rnorm(10, mean=4, sd=1) #distribución normal
 ```
 
+
 ## Matrices
 
 ::: columns
 ::: {.column widt="50%"}
+
 ```{r}
 m <- matrix(1:6, ncol=3, nrow=2, byrow=TRUE)
 m
 m * 1:2
 m * m
 ```
+
 :::
 
 ::: {.column widt="50%"}
+
 ```{r}
 #multiplación de matrices
 m %*% t(m)
 ```
+
 :::
 :::
 
@@ -390,6 +463,7 @@ m %*% t(m)
 ## Delimitadores
 
 Delimitadores para ruta debe ser `/` o `\\`
+
 
 ```{r error=TRUE}
 f <- "C:\projects\research\data\obs.csv"
@@ -406,7 +480,9 @@ f2 <- "\\home\\francisco\\Documentos\\data.csv"
 file.exists(f1) #<<
 ```
 
+
 ## Funciones para cargar y guardar
+
 
 ```{r}
 head(iris)
@@ -418,7 +494,9 @@ write.csv2(iris,'data.csv',row.names = FALSE) #sep , dec .
 file.exists('data.csv')
 ```
 
+
 ## Funciones para cargar y guardar
+
 
 
 ```{r}
@@ -427,14 +505,18 @@ head(data)
 readLines('data.csv')
 ```
 
+
 ## Funciones para cargar y guardar
+
 
 ```{r}
 webpage <- readLines("https://psl.noaa.gov/enso/mei/data/meiv2.data", warn=FALSE)
 webpage
 ```
 
+
 ## Otras funciones
+
 
 ```{r}
 getwd() #cual es el directorio actual
@@ -442,30 +524,38 @@ file.path(getwd(),'files') # concatena texto para crear un path
 list.files()  # lista los archivos
 ```
 
+
 # 4 Exploración de datos
 
 ## Summary y Table
+
 
 ```{r}
 head(iris)
 str(iris)
 ```
 
+
 ## Summary y Table
+
 
 ```{r}
 summary(iris)
 unique(iris$Species)
 ```
 
+
 ## Summary y Table
+
 
 ```{r}
 table(iris$Species)
 table(iris$Species,cut(iris$Petal.Length,4))
 ```
 
+
 ## Quantile, range, mean
+
 
 ```{r}
 quantile(iris$Sepal.Length)
@@ -473,9 +563,11 @@ range(iris$Sepal.Length)
 mean(iris$Sepal.Length)
 ```
 
+
 ## Quantile, range, mean
 
 Si tienen `NA`
+
 
 ```{r error = TRUE}
 quantile(c(iris$Sepal.Length,NA))
@@ -483,9 +575,11 @@ range(c(iris$Sepal.Length,NA))
 mean(c(iris$Sepal.Length,NA))
 ```
 
+
 ## Quantile, range, mean
 
 Si tienen `NA`
+
 
 ```{r error = TRUE}
 quantile(c(iris$Sepal.Length,NA),na.rm = TRUE)
@@ -494,7 +588,9 @@ mean(c(iris$Sepal.Length,NA),na.rm = TRUE)
 ```
 
 
+
 ## Gráficos (base)
+
 
 ```{r eval=FALSE}
 par(mfrow=c(2,2))
@@ -504,7 +600,9 @@ plot(sort(iris$Sepal.Length))
 hist(iris$Sepal.Width)
 ```
 
+
 ## Gráficos (base)
+
 
 ```{r echo=FALSE,fig.width=10}
 par(mfrow=c(2,2))
@@ -513,6 +611,7 @@ boxplot(iris[, c('Sepal.Length', 'Sepal.Width')])
 plot(sort(iris$Sepal.Length))
 hist(iris$Sepal.Width)
 ```
+
 
 <!-- # 5 Funciones -->
 

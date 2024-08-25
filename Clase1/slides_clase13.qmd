@@ -22,8 +22,9 @@ format:
 ::: incremental
 1. Sintaxis de R
 2. Tipos de datos básicos: `numeric, character, logical`
-3. Tipos de datos derivados: `factor, faltantes, date, time`
-4. Estructuras de datos básicos: `vector,matrix, data.frame, list`
+3. Estructuras de datos básicos: `vector`
+4. Tipos de datos derivados: `factor, faltantes, date, time`
+5. Estructuras de datos básicos: `matrix`, `data.frame`
 :::  
 
 # 0. Antes de partir {background-color="grey" }
@@ -53,6 +54,7 @@ format:
       - Descargar una IDE, aconsejo [RStudio](https://rstudio.com/)
 2. En la nube
     - Posit Cloud [https://posit.cloud/](https://posit.cloud/)
+    - Google Colab [https://colab.google/](https://colab.google/)
 3. En las diapos de clase utilizando `]`
 
 ## Explorando RStudio {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
@@ -132,6 +134,22 @@ ls()
 ```
 
 # 2. Tipos de datos básicos {background-color='orange'}
+
+## Tipos de datos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+Tipos de datos:  
+- Numéricos: integer y double  
+- Caracter  
+- Lógicos  
+- Complejos  
+- Raw  
+:::
+::: {.column width="50%}
+![](img/r-programming-data-types.png)
+:::
+:::
 
 ## Numeric: integer o double {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
@@ -317,78 +335,23 @@ FALSE + 1
 :::
 :::
 
-# 3. Tipos de datos derivados {background-color='lightblue'}
+# 3. Estructura de datos {background-color='darkgreen'}
 
-## Valores faltantes (NA: Not Available) {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
-
-
-El análisis de datos faltantes es muy importante en análisis de datos
-
-```{r}
-#| echo: true
-f <-  c(NA, 3, 2, NA)
-f
-sum(is.na(f)) #contar cuantos NAs tiene el vector f
-is.na(f) # busca en f los NAs, TRUE en la posicion que hay, FALSE en otro caso
-TRUE + FALSE + FALSE + TRUE
-```
-
-## Date-time {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
-
-```{r}
-#| echo: true
-d <- as.Date('2020-08-27')
-d
-class(d)
-
-d2 <- as.POSIXct('2020-08-27 10:30:20', tz='America/Santiago')
-d2
-class(d2)
-```
-
-## Date-time {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
-
-```{r}
-#| echo: true
-d - d2
-as.POSIXct(d) -d2 #<<
-d2
-d - as.Date(d2)
-```
-
-## Factor {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
-
-Las funciones as.________, convierten un tipo de dato a otro
-
-```{r}
-#| echo: true
-x <-c(5,3,9,3,5,3,8,9,3,8,9)
-y <- as.factor(x)
-y
-```
---
+## Estructuras de datos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
 ::: {.columns}
-
-::: {.column widt=50%}
-```{r}
-#| echo: true
-as.numeric(y)
-as.numeric(as.character(y))
-```
+::: {.column width="50%"}
+Estructuras de datos:  
+- `vectores`  
+- matrices  
+- arrays  
+- data.frame  
+- listas  
 :::
-
-::: {.column widt=50%}
-
-
-```{r}
-#| echo: true
-levels(y)
-```
+::: {.column width="50%"}
+![](img/estructuras_datos_R.png)
 :::
 :::
-
-# 4. Estructura de datos {background-color='darkgreen'}
 
 ## Vectores {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
@@ -492,20 +455,6 @@ length(month.name)
 :::
 :::
 
-## Character vector {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
-
-Los vectores tienen atributos (metadata)
-
-```{r}
-#| echo: true
-x <- c(a=1, b=2, c=3)
-x
-
-attributes(x)
-
-attr(x,'names')
-```
-
 ## Character vector: algunas funciones {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
 Regular expresion (regex) pueden utilizarse para buscar texto por un patrón usamos `grep`.
@@ -517,6 +466,91 @@ grep(pattern='a',month.name)
 ```
 
 Para más información sobre regex vaya a [regexr.com](https://regexr.com/)
+
+## Vectores con atributos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Los vectores `pueden` tener atributos (metadata)
+
+```{r}
+#| echo: true
+x <- c(a=1, b=2, c=3)
+x
+
+attributes(x)
+
+attr(x,'names')
+```
+
+# 4. Tipos de datos derivados {background-color='lightblue'}
+
+## Valores faltantes (NA: Not Available) {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+El análisis de datos faltantes es muy importante en análisis de datos
+
+```{r}
+#| echo: true
+f <-  c(NA, 3, 2, NA)
+f
+sum(is.na(f)) #contar cuantos NAs tiene el vector f
+is.na(f) # busca en f los NAs, TRUE en la posicion que hay, FALSE en otro caso
+TRUE + FALSE + FALSE + TRUE
+```
+
+## Date-time {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+d <- as.Date('2020-08-27')
+d
+class(d)
+
+d2 <- as.POSIXct('2020-08-27 10:30:20', tz='America/Santiago')
+d2
+class(d2)
+```
+
+## Date-time {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+```{r}
+#| echo: true
+d - d2
+as.POSIXct(d) -d2 #<<
+d2
+d - as.Date(d2)
+```
+
+## Factor {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+
+Las funciones as.________, convierten un tipo de dato a otro
+
+```{r}
+#| echo: true
+x <-c(5,3,9,3,5,3,8,9,3,8,9)
+y <- as.factor(x)
+y
+```
+--
+
+::: {.columns}
+
+::: {.column widt=50%}
+```{r}
+#| echo: true
+as.numeric(y)
+as.numeric(as.character(y))
+```
+:::
+
+::: {.column widt=50%}
+
+
+```{r}
+#| echo: true
+levels(y)
+```
+:::
+:::
+
 
 ## Factor {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
@@ -535,27 +569,21 @@ v
 attributes(v)
 ```
 
-## List: es un tipo de vector {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
+# 5. Estructura de datos {background-color='darkgreen'}
 
-
-Muy importante!! Permite mezlar diferentes tipos de datos
+## Estructuras de datos {background-image="../img//R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true" .smaller}
 
 ::: {.columns}
-
-::: {.column widt=50%}
-```{r}
-#| echo: true
-l <- list(c(1,3,5),'a',TRUE)
-l
-```
+::: {.column width="50%"}
+Estructuras de datos:  
+- vectores  
+- `matrices`  
+- `arrays`  
+- `data.frame`  
+- listas  
 :::
-
-
-::: {.column widt=50%}
-```{r}
-#| echo: true
-list(l,f)
-```
+::: {.column width="50%"}
+![](img/estructuras_datos_R.png)
 :::
 :::
 

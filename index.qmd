@@ -25,7 +25,7 @@ I) Unidad 1:Introducción al uso de R.
     1) [Presentación curso](Clase1/slides_clase11.html)  
     2) [Introducción a `R`](Clase1/slides_clase12.html)   
     3) [Tipos y estructuras de datos](Clase1/slides_clase13.html)
-<!--     4) [Manipulación de datos](Clase2/slides_clase21.html) -->
+    4) [Manipulación de datos](Clase2/slides_clase21.html)
 <!-- II) Unidad 2: Manejo de datos espaciales en R -->
 <!--     5) [Introducción al análisis espacial con R](Clase3/slides_clase31.html) -->
 <!--     6) [Datos Espaciales en R](Clase3/slides_clase32.html) -->
