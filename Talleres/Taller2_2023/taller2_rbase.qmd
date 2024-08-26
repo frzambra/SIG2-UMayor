@@ -3,7 +3,7 @@ title: "Taller 2: Ejercicios R base"
 subtitle: "Uso Avanzado de Sistemas de Información Geográfica"
 institute: "Escuela de Ingeniería en Medio Ambiente, Universidad Mayor"
 author: "Dr. Francisco Zambrano"
-date: "2023-09-08"
+date: "2024-09-02"
 lang: "es"
 execute:
   echo: false
@@ -64,7 +64,7 @@ x < 7
 
 9. Del vector que se genera con el siguiente script:
 
-```{r}
+```{r, echo = TRUE}
 v <- runif(40,0,100)
 ```
 
@@ -82,6 +82,7 @@ Extraiga los elementos que son menores que 50 y guardelos en el objeto `v_menor_
 4. Cree una matriz de 5 por 5 con los números del 1 al 25 y asignela al objeto `mat2`. La primera fila debe tener los numero del 1 al 5.
 
 5. Usando indexación, tome una subsección de `mat2` del ejercicio anterior que se ve así:  
+
 [1] [7,8]  
 [2] [12,13]
 
@@ -89,7 +90,7 @@ Extraiga los elementos que son menores que 50 y guardelos en el objeto `v_menor_
 
 7. El siguiente código crea en R la matriz de 5×5 que se muestra a continuación.
 
-```{r}
+```{r, echo = TRUE}
 m = rbind(c(11,12,13,14,15),
             c(21,22,23,24,25),
             c(31,32,33,34,35),
@@ -98,7 +99,7 @@ m = rbind(c(11,12,13,14,15),
 m
 ```
 
-Usando lo anterior, escriba código R para generar las siguientes submatrices de m:
+Usando lo anterior, escriba código en R para generar las siguientes submatrices de m:
 
   - la submatriz de elementos en las filas 3, 4 o 5 y en las columnas 1 o 2
 
@@ -135,13 +136,12 @@ df <- data.frame(numeros = v1,
 iris$Sepal.Length
 ```
 
-4. Extraer las filas 3 y 5 con las columnas 1 y 3 de el `data.frame` `mtcars`.
+4. Extraer las filas 3 y 5 con las columnas 1 y 3 del `data.frame` `mtcars`.
 
 ```{r}
 #iris es el data.frame dado, es decir cualquier data.frame
 iris[c(3,5),c(1,3)]
 ```
-
 
 5. Eliminar dos columna por nombre de el `data.frame` `mtcars`.
 
