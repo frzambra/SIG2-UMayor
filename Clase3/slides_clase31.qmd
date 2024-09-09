@@ -5,13 +5,14 @@ format:
   revealjs:
     slide-number: true
     title-block-banner: true
-    logo: "logo_hemera.jpg"
-    footer: "IMSE1017|2-2023"
+    logo: ../img/logo_hemera_2024.png
+    css: ../logo.css
+    footer: "IMSD1025|2-2024"
     theme: default
     echo: true
 ---
 
-## Contenidos
+## Contenidos {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ::: incremental
 1.  Un poco de historia de `R-Spatial`
@@ -21,11 +22,11 @@ format:
     iii) Principales paquetes `R-Spatial`
 :::
 
-## 1. Evolución de paquetes espaciales
+## 1. Evolución de paquetes espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ![](../img/spatial_packages.png)
 
-## 2. Antecedentes {.smaller}
+## 2. Antecedentes {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ::: incremental
 -   Desde los inicios de `R` se han desarrollado paquetes para análisis de datos geoespaciales.
@@ -57,7 +58,7 @@ format:
 
 ![](../img/classess_sp.png){width="800px"}
 
-## 3. Paquetes de R-Spatial
+## 3. Paquetes de R-Spatial {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### {sp}
 
@@ -65,7 +66,7 @@ format:
 
 ------------------------------------------------------------------------
 
-## 3. Paquetes de R-Spatial
+## 3. Paquetes de R-Spatial {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### {rgeos}
 
@@ -75,13 +76,13 @@ format:
 
 -   publicada el 2011 `(Bivand and Rundel, 2020)`
 
-## Paquetes de R-Spatial
+## Paquetes de R-Spatial {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 -   `{sf}` publicado 2016 da soporte para [`Simple Feature`](https://en.wikipedia.org/wiki/Simple_Features) `(Pebesma, 2018)`
 
 ![](../img/sf_image.jpg){width="65%" fig-align="center"}
 
-## 3. Paquetes de R-Spatial
+## 3. Paquetes de R-Spatial {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### {raster}
 
@@ -94,7 +95,7 @@ format:
 
 ![](../img//raster_classess.png)
 
-## 3. Paquetes de R-Spatial
+## 3. Paquetes de R-Spatial {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### ¿Qué está pasando ahora en el mundo `r-spatial`?
 

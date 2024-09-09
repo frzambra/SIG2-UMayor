@@ -8,7 +8,7 @@
 <link href="slides_clase32_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="slides_clase32_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="slides_clase32_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.361">
+  <meta name="generator" content="quarto-1.4.555">
 
   <meta name="author" content="Dr.&nbsp;Francisco Zambrano">
   <title>Datos Espaciales en R</title>
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -96,6 +96,7 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="slides_clase32_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../logo.css">
   <link href="slides_clase32_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides_clase32_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="slides_clase32_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -221,7 +222,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -401,7 +403,7 @@ Dr.&nbsp;Francisco Zambrano
 </div>
 
 </section>
-<section id="contenidos" class="slide level2">
+<section id="contenidos" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Contenidos</h2>
 <div>
 <div class="columns">
@@ -409,13 +411,8 @@ Dr.&nbsp;Francisco Zambrano
 <ul>
 <li class="fragment"><p>Datos Espaciales en <img data-src="https://www.r-project.org/Rlogo.png" width="50"></p>
 <ul>
-<li class="fragment"><p>Datos vectoriales</p></li>
-<li class="fragment"><p>Datos raster</p></li>
-</ul></li>
-<li class="fragment"><p>Cargar y guardar datos espaciales</p>
-<ul>
-<li class="fragment"><p>Vectoriales</p></li>
-<li class="fragment"><p>Rasters</p></li>
+<li class="fragment"><p>Datos vectoriales: {sf}</p></li>
+<li class="fragment"><p>Datos raster: {terra}</p></li>
 </ul></li>
 </ul>
 </div><div class="column fragment" style="width:50%;">
@@ -429,7 +426,7 @@ Dr.&nbsp;Francisco Zambrano
 <h1>1. Datos espaciales en <img data-src="https://www.r-project.org/Rlogo.png" width="50"></h1>
 
 </section>
-<section id="tipos-de-dato-espaciales" class="slide level2 smaller">
+<section id="tipos-de-dato-espaciales" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Tipos de dato espaciales</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -443,57 +440,57 @@ Dr.&nbsp;Francisco Zambrano
 </div>
 <p><strong>Simple representación de datos espaciales</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>name <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb1-2"><a href="#cb1-2"></a>longitude <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">116.7</span>, <span class="sc">-</span><span class="fl">120.4</span>, <span class="sc">-</span><span class="fl">116.7</span>, <span class="sc">-</span><span class="fl">113.5</span>, <span class="sc">-</span><span class="fl">115.5</span>,</span>
-<span id="cb1-3"><a href="#cb1-3"></a>               <span class="sc">-</span><span class="fl">120.8</span>, <span class="sc">-</span><span class="fl">119.5</span>, <span class="sc">-</span><span class="fl">113.7</span>, <span class="sc">-</span><span class="fl">113.7</span>, <span class="sc">-</span><span class="fl">110.7</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>latitude <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">45.3</span>, <span class="fl">42.6</span>, <span class="fl">38.9</span>, <span class="fl">42.1</span>, <span class="fl">35.7</span>, <span class="fl">38.9</span>,</span>
-<span id="cb1-5"><a href="#cb1-5"></a>              <span class="fl">36.2</span>, <span class="dv">39</span>, <span class="fl">41.6</span>, <span class="fl">36.9</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>stations <span class="ot">&lt;-</span> <span class="fu">cbind</span>(longitude, latitude)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># datos simulados de precipitación</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>precip <span class="ot">&lt;-</span> <span class="fu">round</span>((<span class="fu">runif</span>(<span class="fu">length</span>(latitude))<span class="sc">*</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>name <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb1-2"><a href=""></a>longitude <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">116.7</span>, <span class="sc">-</span><span class="fl">120.4</span>, <span class="sc">-</span><span class="fl">116.7</span>, <span class="sc">-</span><span class="fl">113.5</span>, <span class="sc">-</span><span class="fl">115.5</span>,</span>
+<span id="cb1-3"><a href=""></a>               <span class="sc">-</span><span class="fl">120.8</span>, <span class="sc">-</span><span class="fl">119.5</span>, <span class="sc">-</span><span class="fl">113.7</span>, <span class="sc">-</span><span class="fl">113.7</span>, <span class="sc">-</span><span class="fl">110.7</span>)</span>
+<span id="cb1-4"><a href=""></a>latitude <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">45.3</span>, <span class="fl">42.6</span>, <span class="fl">38.9</span>, <span class="fl">42.1</span>, <span class="fl">35.7</span>, <span class="fl">38.9</span>,</span>
+<span id="cb1-5"><a href=""></a>              <span class="fl">36.2</span>, <span class="dv">39</span>, <span class="fl">41.6</span>, <span class="fl">36.9</span>)</span>
+<span id="cb1-6"><a href=""></a>stations <span class="ot">&lt;-</span> <span class="fu">cbind</span>(longitude, latitude)</span>
+<span id="cb1-7"><a href=""></a><span class="co"># datos simulados de precipitación</span></span>
+<span id="cb1-8"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb1-9"><a href=""></a>precip <span class="ot">&lt;-</span> <span class="fu">round</span>((<span class="fu">runif</span>(<span class="fu">length</span>(latitude))<span class="sc">*</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-representación-de-datos-espaciales" class="slide level2 smaller">
+<section id="simple-representación-de-datos-espaciales" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple representación de datos espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>psize <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> precip<span class="sc">/</span><span class="dv">500</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">plot</span>(stations, <span class="at">cex=</span>psize, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">'red'</span>, <span class="at">main=</span><span class="st">'Precipitation'</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># add names to plot</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">text</span>(stations, name, <span class="at">pos=</span><span class="dv">4</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># add a legend</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>, <span class="dv">1000</span>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a>legend.psize <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">+</span>breaks<span class="sc">/</span><span class="dv">500</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span>breaks, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">pt.cex=</span>legend.psize, <span class="at">col=</span><span class="st">'red'</span>, <span class="at">bg=</span><span class="st">'gray'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>psize <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> precip<span class="sc">/</span><span class="dv">500</span></span>
+<span id="cb2-2"><a href=""></a><span class="fu">plot</span>(stations, <span class="at">cex=</span>psize, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">'red'</span>, <span class="at">main=</span><span class="st">'Precipitation'</span>)</span>
+<span id="cb2-3"><a href=""></a><span class="co"># add names to plot</span></span>
+<span id="cb2-4"><a href=""></a><span class="fu">text</span>(stations, name, <span class="at">pos=</span><span class="dv">4</span>)</span>
+<span id="cb2-5"><a href=""></a><span class="co"># add a legend</span></span>
+<span id="cb2-6"><a href=""></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>, <span class="dv">1000</span>)</span>
+<span id="cb2-7"><a href=""></a>legend.psize <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">+</span>breaks<span class="sc">/</span><span class="dv">500</span></span>
+<span id="cb2-8"><a href=""></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span>breaks, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">pt.cex=</span>legend.psize, <span class="at">col=</span><span class="st">'red'</span>, <span class="at">bg=</span><span class="st">'gray'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-representación-de-datos-espaciales-1" class="slide level2 smaller">
+<section id="simple-representación-de-datos-espaciales-1" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple representación de datos espaciales</h2>
 
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
-<section id="simple-representación-de-datos-espaciales-2" class="slide level2 smaller">
+<section id="simple-representación-de-datos-espaciales-2" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple representación de datos espaciales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>lon <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">116.8</span>, <span class="sc">-</span><span class="fl">114.2</span>, <span class="sc">-</span><span class="fl">112.9</span>, <span class="sc">-</span><span class="fl">111.9</span>, <span class="sc">-</span><span class="fl">114.2</span>, <span class="sc">-</span><span class="fl">115.4</span>, <span class="sc">-</span><span class="fl">117.7</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a>lat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">41.3</span>, <span class="fl">42.9</span>, <span class="fl">42.4</span>, <span class="fl">39.8</span>, <span class="fl">37.6</span>, <span class="fl">38.3</span>, <span class="fl">37.6</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(lon, lat)</span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">plot</span>(stations, <span class="at">main=</span><span class="st">'Precipitation'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">polygon</span>(x, <span class="at">col=</span><span class="st">'blue'</span>, <span class="at">border=</span><span class="st">'light blue'</span>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="fu">lines</span>(stations, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">points</span>(x, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">20</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">points</span>(stations, <span class="at">cex=</span>psize, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">'red'</span>, <span class="at">main=</span><span class="st">'Precipitation'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>lon <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">116.8</span>, <span class="sc">-</span><span class="fl">114.2</span>, <span class="sc">-</span><span class="fl">112.9</span>, <span class="sc">-</span><span class="fl">111.9</span>, <span class="sc">-</span><span class="fl">114.2</span>, <span class="sc">-</span><span class="fl">115.4</span>, <span class="sc">-</span><span class="fl">117.7</span>)</span>
+<span id="cb3-2"><a href=""></a>lat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">41.3</span>, <span class="fl">42.9</span>, <span class="fl">42.4</span>, <span class="fl">39.8</span>, <span class="fl">37.6</span>, <span class="fl">38.3</span>, <span class="fl">37.6</span>)</span>
+<span id="cb3-3"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(lon, lat)</span>
+<span id="cb3-4"><a href=""></a><span class="fu">plot</span>(stations, <span class="at">main=</span><span class="st">'Precipitation'</span>)</span>
+<span id="cb3-5"><a href=""></a><span class="fu">polygon</span>(x, <span class="at">col=</span><span class="st">'blue'</span>, <span class="at">border=</span><span class="st">'light blue'</span>)</span>
+<span id="cb3-6"><a href=""></a><span class="fu">lines</span>(stations, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb3-7"><a href=""></a><span class="fu">points</span>(x, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb3-8"><a href=""></a><span class="fu">points</span>(stations, <span class="at">cex=</span>psize, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">'red'</span>, <span class="at">main=</span><span class="st">'Precipitation'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-representación-de-datos-espaciales-3" class="slide level2 smaller">
+<section id="simple-representación-de-datos-espaciales-3" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple representación de datos espaciales</h2>
 
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
-<section id="simple-representación-de-datos-espaciales-4" class="slide level2 smaller">
+<section id="simple-representación-de-datos-espaciales-4" class="slide level2 smaller" data-background-image="../img/R_logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple representación de datos espaciales</h2>
 <p>Podemos almacenar datos espaciales en un <code>data.frame</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>wst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(longitude, latitude, name, precip)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>wst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>wst <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(longitude, latitude, name, precip)</span>
+<span id="cb4-2"><a href=""></a>wst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   longitude latitude name precip
 1     -116.7     45.3    A    721
@@ -514,7 +511,7 @@ Dr.&nbsp;Francisco Zambrano
 <h1>2. Datos espaciales vectoriales</h1>
 
 </section>
-<section id="simple-feature-sf" class="slide level2 smaller">
+<section id="simple-feature-sf" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code></h2>
 <ul>
 <li><p>Utilizaremos <code>{sf}</code></p></li>
@@ -526,7 +523,7 @@ Dr.&nbsp;Francisco Zambrano
 <p><strong>Simple Feature:</strong> se refiere a un estándar formal (ISO 19125-1: 2004) que describe cómo los objetos en el mundo real se pueden representar en computadoras, con énfasis en la geometría espacial de estos objetos.</p>
 </blockquote>
 </section>
-<section id="simple-feature-sf-dimensiones" class="slide level2 smaller">
+<section id="simple-feature-sf-dimensiones" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Dimensiones</h2>
 <ul>
 <li><p>Todas las geometrias (puntos, lineas, polígonos) están formadas por puntos.</p></li>
@@ -539,7 +536,7 @@ Dr.&nbsp;Francisco Zambrano
 </ul></li>
 </ul>
 </section>
-<section id="simple-feature-sf-dimensiones-1" class="slide level2 smaller">
+<section id="simple-feature-sf-dimensiones-1" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Dimensiones</strong></h2>
 <ul>
 <li><p>Cuatro casos posibles:</p>
@@ -551,10 +548,10 @@ Dr.&nbsp;Francisco Zambrano
 </ul></li>
 </ul>
 </section>
-<section id="simple-feature-sf-1" class="slide level2 smaller">
+<section id="simple-feature-sf-1" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code></h2>
 <p><strong>Tipos de geometrías</strong></p>
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 60%">
 <col style="width: 40%">
@@ -597,7 +594,7 @@ Dr.&nbsp;Francisco Zambrano
 </tbody>
 </table>
 </section>
-<section id="simple-feature-sf-clases" class="slide level2 smaller">
+<section id="simple-feature-sf-clases" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clases</strong></h2>
 <p><code>Geometria</code> -&gt; <code>list-column</code> (tipo de dato)</p>
 <p><code>Atributos</code> -&gt; <code>data.frame</code></p>
@@ -610,14 +607,14 @@ Dr.&nbsp;Francisco Zambrano
 <li><p><code>sfg</code>: la geometría de la entidad de cada <code>simple feature</code> individual</p></li>
 </ul>
 </section>
-<section id="simple-feature-sf-clase-sf" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sf" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sf</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb6-2"><a href="#cb6-2"></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb6-2"><a href=""></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `nc' from data source 
-  `/home/francisco/R/x86_64-pc-linux-gnu-library/4.3/sf/shape/nc.shp' 
+  `/home/francisco/R/x86_64-pc-linux-gnu-library/4.4/sf/shape/nc.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 100 features and 14 fields
 Geometry type: MULTIPOLYGON
@@ -627,26 +624,26 @@ Geodetic CRS:  NAD27</code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sf-1" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sf-1" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sf</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">plot</span>(nc[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">plot</span>(nc[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
-<section id="simple-feature-sf-clase-sf-2" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sf-2" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sf</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">class</span>(nc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">class</span>(nc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sf"         "data.frame"</code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sf-3" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sf-3" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sf</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">lapply</span>(<span class="fu">attributes</span>(nc),<span class="st">'head'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">lapply</span>(<span class="fu">attributes</span>(nc),<span class="st">'head'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$names
 [1] "AREA"      "PERIMETER" "CNTY_"     "CNTY_ID"   "NAME"      "FIPS"     
@@ -667,10 +664,10 @@ Levels: constant aggregate identity</code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sf-4" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sf-4" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sf</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">print</span>(nc[<span class="dv">9</span><span class="sc">:</span><span class="dv">15</span>], <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">print</span>(nc[<span class="dv">9</span><span class="sc">:</span><span class="dv">15</span>], <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 100 features and 6 fields
 Geometry type: MULTIPOLYGON
@@ -685,19 +682,19 @@ First 3 features:
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sf-5" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sf-5" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sf</code></strong></h2>
 
 <img data-src="../img/sf_xfig.png" class="r-stretch"><p><i style="color:green">VERDE: Simple Feature individual, atributos + geometría </i><br>
 <i style="color:blue">AZUL: geometría (objeto de clase <code>sfg</code>) </i><br>
 <i style="color:red">ROJO: Simple Feature <code>list-column</code> (<code>sfc</code>) </i></p>
 </section>
-<section id="estructura-datos-espaciales-vectoriales-con-sf" class="slide level2 smaller">
+<section id="estructura-datos-espaciales-vectoriales-con-sf" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Estructura datos espaciales vectoriales con {sf}</h2>
 <p><code>sfc</code> (simple feature list-column)</p>
-<h3 class="smaller" id="simple-feature-sf-clase-sfc">Simple Feature <code>{sf}</code>: <strong>Clase <code>sfc</code></strong></h3>
+<h3 class="smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true" id="simple-feature-sf-clase-sfc">Simple Feature <code>{sf}</code>: <strong>Clase <code>sfc</code></strong></h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>(nc_geom <span class="ot">&lt;-</span> <span class="fu">st_geometry</span>(nc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>(nc_geom <span class="ot">&lt;-</span> <span class="fu">st_geometry</span>(nc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Geometry set for 100 features 
 Geometry type: MULTIPOLYGON
@@ -708,35 +705,35 @@ First 5 geometries:</code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfc-1" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfc-1" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sfc</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">class</span>(nc_geom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">class</span>(nc_geom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sfc_MULTIPOLYGON" "sfc"             </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>nc_geom[[<span class="dv">1</span>]]</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">class</span>(nc_geom[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>nc_geom[[<span class="dv">1</span>]]</span>
+<span id="cb19-2"><a href=""></a><span class="fu">class</span>(nc_geom[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "XY"           "MULTIPOLYGON" "sfg"         </code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfc-2" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfc-2" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: <strong>Clase <code>sfc</code></strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">plot</span>(nc_geom[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">plot</span>(nc_geom[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
-<section id="simple-feature-sf-clase-sfc-3" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfc-3" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfc</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">names</span>(<span class="fu">attributes</span>(nc_geom))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">names</span>(<span class="fu">attributes</span>(nc_geom))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "n_empty"   "crs"       "class"     "precision" "bbox"     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">attr</span>(nc_geom,<span class="st">'crs'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">attr</span>(nc_geom,<span class="st">'crs'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: NAD27 
@@ -758,7 +755,7 @@ GEOGCRS["NAD27",
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <p><code>sfg</code> (simple feature geometry) guarda la geometría de un a entidad individual, ej. un punto, una linea o polígono</p>
 <p>Está implementada en en tipos de datos nativos de R (numeric, matrix, list), siguiendo la siguiente regla:</p>
@@ -768,80 +765,80 @@ GEOGCRS["NAD27",
 <li>cualquier otro grupo es un <code>list</code></li>
 </ol>
 </section>
-<section id="simple-feature-sf-clase-sfg-1" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-1" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)))</span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)))</span>
+<span id="cb26-2"><a href=""></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 'XY' num [1:2] 1 2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)))</span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)))</span>
+<span id="cb28-2"><a href=""></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 'XYZ' num [1:3] 1 2 3</code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg-2" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-2" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">"XYM"</span>))</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">"XYM"</span>))</span>
+<span id="cb30-2"><a href=""></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 'XYM' num [1:3] 1 2 3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)))</span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>(x <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)))</span>
+<span id="cb32-2"><a href=""></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 'XYZM' num [1:4] 1 2 3 4</code></pre>
 </div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg-3" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-3" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">st_zm</span>(x, <span class="at">drop =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">"ZM"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">st_zm</span>(x, <span class="at">drop =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">"ZM"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg-4" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-4" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>p <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fl">3.2</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="fl">4.6</span>), <span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">4.4</span>), <span class="fu">c</span>(<span class="fl">3.5</span>,<span class="fl">3.8</span>), <span class="fu">c</span>(<span class="fl">3.4</span>,<span class="fl">3.6</span>), <span class="fu">c</span>(<span class="fl">3.9</span>,<span class="fl">4.5</span>))</span>
-<span id="cb35-2"><a href="#cb35-2"></a>(mp <span class="ot">&lt;-</span> <span class="fu">st_multipoint</span>(p))</span>
-<span id="cb35-3"><a href="#cb35-3"></a>s1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>))</span>
-<span id="cb35-4"><a href="#cb35-4"></a>(ls <span class="ot">&lt;-</span> <span class="fu">st_linestring</span>(s1))</span>
-<span id="cb35-5"><a href="#cb35-5"></a>s2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fl">0.2</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="fl">0.2</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">4.8</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">4.8</span>))</span>
-<span id="cb35-6"><a href="#cb35-6"></a>s3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">4.4</span>), <span class="fu">c</span>(<span class="fl">0.6</span>,<span class="dv">5</span>))</span>
-<span id="cb35-7"><a href="#cb35-7"></a>(mls <span class="ot">&lt;-</span> <span class="fu">st_multilinestring</span>(<span class="fu">list</span>(s1,s2,s3)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>p <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fl">3.2</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="fl">4.6</span>), <span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">4.4</span>), <span class="fu">c</span>(<span class="fl">3.5</span>,<span class="fl">3.8</span>), <span class="fu">c</span>(<span class="fl">3.4</span>,<span class="fl">3.6</span>), <span class="fu">c</span>(<span class="fl">3.9</span>,<span class="fl">4.5</span>))</span>
+<span id="cb35-2"><a href=""></a>(mp <span class="ot">&lt;-</span> <span class="fu">st_multipoint</span>(p))</span>
+<span id="cb35-3"><a href=""></a>s1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>))</span>
+<span id="cb35-4"><a href=""></a>(ls <span class="ot">&lt;-</span> <span class="fu">st_linestring</span>(s1))</span>
+<span id="cb35-5"><a href=""></a>s2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fl">0.2</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="fl">0.2</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">4.8</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">4.8</span>))</span>
+<span id="cb35-6"><a href=""></a>s3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">4.4</span>), <span class="fu">c</span>(<span class="fl">0.6</span>,<span class="dv">5</span>))</span>
+<span id="cb35-7"><a href=""></a>(mls <span class="ot">&lt;-</span> <span class="fu">st_multilinestring</span>(<span class="fu">list</span>(s1,s2,s3)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg-5" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-5" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))</span>
-<span id="cb36-2"><a href="#cb36-2"></a>p2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb36-3"><a href="#cb36-3"></a>pol <span class="ot">&lt;-</span><span class="fu">st_polygon</span>(<span class="fu">list</span>(p1,p2))</span>
-<span id="cb36-4"><a href="#cb36-4"></a>p3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>))</span>
-<span id="cb36-5"><a href="#cb36-5"></a>p4 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fl">3.3</span>,<span class="fl">0.3</span>), <span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">0.3</span>), <span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">0.8</span>), <span class="fu">c</span>(<span class="fl">3.3</span>,<span class="fl">0.8</span>), <span class="fu">c</span>(<span class="fl">3.3</span>,<span class="fl">0.3</span>))[<span class="dv">5</span><span class="sc">:</span><span class="dv">1</span>,]</span>
-<span id="cb36-6"><a href="#cb36-6"></a>p5 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb36-7"><a href="#cb36-7"></a>(mpol <span class="ot">&lt;-</span> <span class="fu">st_multipolygon</span>(<span class="fu">list</span>(<span class="fu">list</span>(p1,p2), <span class="fu">list</span>(p3,p4), <span class="fu">list</span>(p5))))</span>
-<span id="cb36-8"><a href="#cb36-8"></a>(gc <span class="ot">&lt;-</span> <span class="fu">st_geometrycollection</span>(<span class="fu">list</span>(mp, mpol, ls)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>p1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb36-2"><a href=""></a>p2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb36-3"><a href=""></a>pol <span class="ot">&lt;-</span><span class="fu">st_polygon</span>(<span class="fu">list</span>(p1,p2))</span>
+<span id="cb36-4"><a href=""></a>p3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>))</span>
+<span id="cb36-5"><a href=""></a>p4 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fl">3.3</span>,<span class="fl">0.3</span>), <span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">0.3</span>), <span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">0.8</span>), <span class="fu">c</span>(<span class="fl">3.3</span>,<span class="fl">0.8</span>), <span class="fu">c</span>(<span class="fl">3.3</span>,<span class="fl">0.3</span>))[<span class="dv">5</span><span class="sc">:</span><span class="dv">1</span>,]</span>
+<span id="cb36-6"><a href=""></a>p5 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb36-7"><a href=""></a>(mpol <span class="ot">&lt;-</span> <span class="fu">st_multipolygon</span>(<span class="fu">list</span>(<span class="fu">list</span>(p1,p2), <span class="fu">list</span>(p3,p4), <span class="fu">list</span>(p5))))</span>
+<span id="cb36-8"><a href=""></a>(gc <span class="ot">&lt;-</span> <span class="fu">st_geometrycollection</span>(<span class="fu">list</span>(mp, mpol, ls)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg-6" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-6" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">plot</span>(mp,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'MULTIPOINT'</span>)</span>
-<span id="cb37-3"><a href="#cb37-3"></a><span class="fu">plot</span>(ls,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'LINESTRING'</span>)</span>
-<span id="cb37-4"><a href="#cb37-4"></a><span class="fu">plot</span>(mls,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'MULTILINESTRING'</span>)</span>
-<span id="cb37-5"><a href="#cb37-5"></a><span class="fu">plot</span>(pol,<span class="at">col =</span> <span class="st">'gray'</span>,<span class="at">border=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'POLIGON'</span>)</span>
-<span id="cb37-6"><a href="#cb37-6"></a><span class="fu">plot</span>(mpol,<span class="at">col =</span> <span class="st">'gray'</span>,<span class="at">border=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'MULTIPOLIGON'</span>)</span>
-<span id="cb37-7"><a href="#cb37-7"></a><span class="fu">plot</span>(gc,<span class="at">col =</span> <span class="st">'gray'</span>,<span class="at">border=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'GEOMETRY'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb37-2"><a href=""></a><span class="fu">plot</span>(mp,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'MULTIPOINT'</span>)</span>
+<span id="cb37-3"><a href=""></a><span class="fu">plot</span>(ls,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'LINESTRING'</span>)</span>
+<span id="cb37-4"><a href=""></a><span class="fu">plot</span>(mls,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'MULTILINESTRING'</span>)</span>
+<span id="cb37-5"><a href=""></a><span class="fu">plot</span>(pol,<span class="at">col =</span> <span class="st">'gray'</span>,<span class="at">border=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'POLIGON'</span>)</span>
+<span id="cb37-6"><a href=""></a><span class="fu">plot</span>(mpol,<span class="at">col =</span> <span class="st">'gray'</span>,<span class="at">border=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'MULTIPOLIGON'</span>)</span>
+<span id="cb37-7"><a href=""></a><span class="fu">plot</span>(gc,<span class="at">col =</span> <span class="st">'gray'</span>,<span class="at">border=</span><span class="st">'red'</span>,<span class="at">main =</span> <span class="st">'GEOMETRY'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="simple-feature-sf-clase-sfg-7" class="slide level2 smaller">
+<section id="simple-feature-sf-clase-sfg-7" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Simple Feature <code>{sf}</code>: Clase <code>sfg</code></h2>
 
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section></section>
@@ -881,8 +878,8 @@ GEOGCRS["NAD27",
 <section id="crear-un-spatraster" class="slide level2 smaller">
 <h2>Crear un <code>SpatRaster</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb38-2"><a href="#cb38-2"></a>(r <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">ncol=</span><span class="dv">10</span>, <span class="at">nrow=</span><span class="dv">10</span>, <span class="at">xmax=</span><span class="sc">-</span><span class="dv">80</span>, <span class="at">xmin=</span><span class="sc">-</span><span class="dv">150</span>, <span class="at">ymin=</span><span class="dv">20</span>, <span class="at">ymax=</span><span class="dv">60</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">library</span>(terra)</span>
+<span id="cb38-2"><a href=""></a>(r <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">ncol=</span><span class="dv">10</span>, <span class="at">nrow=</span><span class="dv">10</span>, <span class="at">xmax=</span><span class="sc">-</span><span class="dv">80</span>, <span class="at">xmin=</span><span class="sc">-</span><span class="dv">150</span>, <span class="at">ymin=</span><span class="dv">20</span>, <span class="at">ymax=</span><span class="dv">60</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
@@ -896,8 +893,8 @@ coord. ref. : lon/lat WGS 84 </code></pre>
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>El objeto <code>r</code> solo tiene el esqueleto del raster, pero aún no tiene valores</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncell</span>(r)</span>
-<span id="cb40-2"><a href="#cb40-2"></a>r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncell</span>(r)</span>
+<span id="cb40-2"><a href=""></a>r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
@@ -915,8 +912,8 @@ max value   :   100 </code></pre>
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>El objeto <code>r</code> solo tiene el esqueleto del raster, pero aún no tiene valores</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">plot</span>(r)</span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">text</span>(r,<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">plot</span>(r)</span>
+<span id="cb42-2"><a href=""></a><span class="fu">text</span>(r,<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
@@ -924,8 +921,8 @@ max value   :   100 </code></pre>
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>También le podria asignar otros valores, por ejemplo el número de celda</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncell</span>(r)</span>
-<span id="cb43-2"><a href="#cb43-2"></a>r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncell</span>(r)</span>
+<span id="cb43-2"><a href=""></a>r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
@@ -943,8 +940,8 @@ max value   :   100 </code></pre>
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>También le podria asignar otros valores, por ejemplo el número de celda</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">plot</span>(r) </span>
-<span id="cb45-2"><a href="#cb45-2"></a><span class="fu">text</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">plot</span>(r) </span>
+<span id="cb45-2"><a href=""></a><span class="fu">text</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
@@ -952,10 +949,10 @@ max value   :   100 </code></pre>
 <h2>Crear un <code>SpatRaster</code> multi-capa</h2>
 <p>Puedes creart un objeto multi-capa usando la función <code>c</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>r2 <span class="ot">&lt;-</span> r <span class="sc">*</span> r</span>
-<span id="cb46-2"><a href="#cb46-2"></a>r3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(r)</span>
-<span id="cb46-3"><a href="#cb46-3"></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(r,r2,r3)</span>
-<span id="cb46-4"><a href="#cb46-4"></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>r2 <span class="ot">&lt;-</span> r <span class="sc">*</span> r</span>
+<span id="cb46-2"><a href=""></a>r3 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(r)</span>
+<span id="cb46-3"><a href=""></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(r,r2,r3)</span>
+<span id="cb46-4"><a href=""></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 10, 10, 3  (nrow, ncol, nlyr)
@@ -972,7 +969,7 @@ max values  :   100, 10000,    10 </code></pre>
 <section id="crear-un-spatraster-multi-capa-1" class="slide level2 smaller">
 <h2>Crear un <code>SpatRaster</code> multi-capa</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">plot</span>(s) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">plot</span>(s) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section></section>
@@ -990,12 +987,12 @@ max values  :   100, 10000,    10 </code></pre>
 <section id="vectoriales-1" class="slide level2 smaller">
 <h2>Vectoriales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb49-2"><a href="#cb49-2"></a>filename <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>)</span>
-<span id="cb49-3"><a href="#cb49-3"></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(filename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb49-2"><a href=""></a>filename <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>)</span>
+<span id="cb49-3"><a href=""></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(filename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `nc' from data source 
-  `/home/francisco/R/x86_64-pc-linux-gnu-library/4.3/sf/shape/nc.shp' 
+  `/home/francisco/R/x86_64-pc-linux-gnu-library/4.4/sf/shape/nc.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 100 features and 14 fields
 Geometry type: MULTIPOLYGON
@@ -1003,7 +1000,7 @@ Dimension:     XY
 Bounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
 Geodetic CRS:  NAD27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">st_write</span>(nc, <span class="st">"nc.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">st_write</span>(nc, <span class="st">"nc.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Layer nc in dataset nc.shp already exists:
 use either append=TRUE to append to layer or append=FALSE to overwrite layer</code></pre>
@@ -1016,11 +1013,11 @@ use either append=TRUE to append to layer or append=FALSE to overwrite layer</co
 <section id="vectoriales-2" class="slide level2 smaller">
 <h2>Vectoriales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>filename <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>)</span>
-<span id="cb54-2"><a href="#cb54-2"></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(filename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>filename <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>)</span>
+<span id="cb54-2"><a href=""></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(filename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `nc' from data source 
-  `/home/francisco/R/x86_64-pc-linux-gnu-library/4.3/sf/shape/nc.shp' 
+  `/home/francisco/R/x86_64-pc-linux-gnu-library/4.4/sf/shape/nc.shp' 
   using driver `ESRI Shapefile'
 Simple feature collection with 100 features and 14 fields
 Geometry type: MULTIPOLYGON
@@ -1028,7 +1025,7 @@ Dimension:     XY
 Bounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
 Geodetic CRS:  NAD27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">st_write</span>(nc, <span class="st">"nc.shp"</span>, <span class="at">delete_layer =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="fu">st_write</span>(nc, <span class="st">"nc.shp"</span>, <span class="at">delete_layer =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Deleting layer `nc' using driver `ESRI Shapefile'
 Writing layer `nc' to data source `nc.shp' using driver `ESRI Shapefile'
@@ -1040,17 +1037,17 @@ Writing 100 features with 14 fields and geometry type Multi Polygon.</code></pre
 <h2>Vectoriales</h2>
 <p>Drivers soportados por <code>GDAL</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>?st_drivers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>?st_drivers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Listar las capas presentes en un archivo</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">st_layers</span>(<span class="fu">system.file</span>(<span class="st">"osm/overpass.osm"</span>, <span class="at">package=</span><span class="st">"sf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="fu">st_layers</span>(<span class="fu">system.file</span>(<span class="st">"osm/overpass.osm"</span>, <span class="at">package=</span><span class="st">"sf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Driver: OSM 
 Available layers:
         layer_name       geometry_type features fields crs_name
 1           points               Point       NA     10   WGS 84
-2            lines         Line String       NA     10   WGS 84
+2            lines         Line String       NA      9   WGS 84
 3 multilinestrings   Multi Line String       NA      4   WGS 84
 4    multipolygons       Multi Polygon       NA     25   WGS 84
 5  other_relations Geometry Collection       NA      4   WGS 84</code></pre>
@@ -1079,9 +1076,9 @@ Available layers:
 <h3 id="leer">Leer</h3>
 <p>La función <code>rast</code> se puede utilizar sobre un archvio de una capa o multi-capa</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb61-2"><a href="#cb61-2"></a>f <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"external/rlogo.grd"</span>, <span class="at">package=</span><span class="st">"raster"</span>)</span>
-<span id="cb61-3"><a href="#cb61-3"></a>(r <span class="ot">&lt;-</span> <span class="fu">rast</span>(f))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">library</span>(terra)</span>
+<span id="cb61-2"><a href=""></a>f <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"external/rlogo.grd"</span>, <span class="at">package=</span><span class="st">"raster"</span>)</span>
+<span id="cb61-3"><a href=""></a>(r <span class="ot">&lt;-</span> <span class="fu">rast</span>(f))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 77, 101, 3  (nrow, ncol, nlyr)
@@ -1100,7 +1097,7 @@ max values  : 255,   255,  255 </code></pre>
 <h2>Rasters</h2>
 <h3 id="leer-1">Leer</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">plot</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a><span class="fu">plot</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-35-1.png" width="960" class="r-stretch"></section>
@@ -1109,8 +1106,8 @@ max values  : 255,   255,  255 </code></pre>
 <h3 id="leer-archivos-locales">Leer archivos locales</h3>
 <p>Notar que <code>r</code> es un <code>SpatRaster</code> de tres capas (bandas). Podemos extraer sólo una banda.</p>
 <p>La segunda banda ::: {.cell}</p>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>r2 <span class="ot">&lt;-</span> r[[<span class="dv">2</span>]]</span>
-<span id="cb64-2"><a href="#cb64-2"></a>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>r2 <span class="ot">&lt;-</span> r[[<span class="dv">2</span>]]</span>
+<span id="cb64-2"><a href=""></a>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 77, 101, 1  (nrow, ncol, nlyr)
@@ -1131,16 +1128,16 @@ max value   :   255 </code></pre>
 <p><code>/vsizip</code>, <code>/vsitar</code>, <code>/vsicurl</code></p>
 <p>Por ejemplo, abrir el producto de precipitación mensual del mes de septiembre año 2021 del producto CHIRPS v2.0 que está almacenado en formato COG (cloud opimized geotiff)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_pentad/cogs/'</span></span>
-<span id="cb66-2"><a href="#cb66-2"></a>name <span class="ot">&lt;-</span> <span class="st">'chirps-v2.0.2023.07.6.cog'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>url <span class="ot">&lt;-</span> <span class="st">'https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_pentad/cogs/'</span></span>
+<span id="cb66-2"><a href=""></a>name <span class="ot">&lt;-</span> <span class="st">'chirps-v2.0.2023.07.6.cog'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="rasters-5" class="slide level2 smaller">
 <h2>Rasters</h2>
 <h3 id="leer-archivos-httpftp-1">Leer archivos HTTP/FTP</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">paste0</span>(<span class="st">'/vsicurl/'</span>,url,name))</span>
-<span id="cb67-2"><a href="#cb67-2"></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">paste0</span>(<span class="st">'/vsicurl/'</span>,url,name))</span>
+<span id="cb67-2"><a href=""></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-38-1.png" width="1152" class="r-stretch"></section>
@@ -1148,9 +1145,9 @@ max value   :   255 </code></pre>
 <h2>Rasters</h2>
 <h3 id="en-chile">En Chile</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">crop</span>(x,<span class="fu">ext</span>(<span class="sc">-</span><span class="fl">75.6443953112</span>, <span class="sc">-</span><span class="fl">55.61183</span>, <span class="sc">-</span><span class="fl">66.95992</span>, <span class="sc">-</span><span class="fl">17.5800118954</span>))</span>
-<span id="cb68-2"><a href="#cb68-2"></a>x3 <span class="ot">&lt;-</span> <span class="fu">app</span>(x2, <span class="at">fun =</span> <span class="cf">function</span>(x){ x[x<span class="sc">&lt;</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span>; <span class="fu">return</span>(x)})</span>
-<span id="cb68-3"><a href="#cb68-3"></a><span class="fu">plot</span>(x3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>x2 <span class="ot">&lt;-</span> <span class="fu">crop</span>(x,<span class="fu">ext</span>(<span class="sc">-</span><span class="fl">75.6443953112</span>, <span class="sc">-</span><span class="fl">55.61183</span>, <span class="sc">-</span><span class="fl">66.95992</span>, <span class="sc">-</span><span class="fl">17.5800118954</span>))</span>
+<span id="cb68-2"><a href=""></a>x3 <span class="ot">&lt;-</span> <span class="fu">app</span>(x2, <span class="at">fun =</span> <span class="cf">function</span>(x){ x[x<span class="sc">&lt;</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span>; <span class="fu">return</span>(x)})</span>
+<span id="cb68-3"><a href=""></a><span class="fu">plot</span>(x3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-39-1.png" width="384" class="r-stretch"></section>
@@ -1164,11 +1161,13 @@ max value   :   255 </code></pre>
 <li><p><code>overwrite = TRUE</code> para sobrescribir el archivo</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>x <span class="ot">&lt;-</span> <span class="fu">writeRaster</span>(x3, <span class="at">filename =</span> <span class="st">'output.tif'</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">writeRaster</span>(x3, <span class="at">filename =</span> <span class="st">'output.tif'</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-<img src="logo_hemera.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
-<p>IMSE1017|2-2022</p>
+<div class="quarto-auto-generated-content">
+<p><img src="../img/logo_hemera_2024.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>IMSD1025|2-2024</p>
+</div>
 </div>
 </section></section>
     </div>
@@ -1197,7 +1196,6 @@ max value   :   255 </code></pre>
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1496,10 +1494,27 @@ max value   :   255 </code></pre>
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1509,8 +1524,17 @@ max value   :   255 </code></pre>
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1524,7 +1548,11 @@ max value   :   255 </code></pre>
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

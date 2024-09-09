@@ -8,13 +8,14 @@ format:
       #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
       #data-background-size: "contain"
     title-block-banner: true
-    logo: "logo_hemera.jpg"
-    footer: "IMSE1017|2-2022"
+    logo: ../img/logo_hemera_2024.png
+    css: ../logo.css
+    footer: "IMSD1025|2-2024"
     theme: default
     echo: true
 ---
 
-## Contenidos 
+## Contenidos {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ::: {.incremental}
 
@@ -23,16 +24,10 @@ format:
 ::: {.column width="50%"}
 - Datos Espaciales en ![](https://www.r-project.org/Rlogo.png){width="50px"}
 
-    - Datos vectoriales
+    - Datos vectoriales: {sf}
 
-    - Datos raster
+    - Datos raster: {terra}
 
-- Cargar y guardar datos espaciales
-  
-    - Vectoriales
-    
-    - Rasters
-  
 :::
 
 ::: {.column width="50%" .fragment}
@@ -45,7 +40,7 @@ format:
 
 # 1.  Datos espaciales en ![](https://www.r-project.org/Rlogo.png){width="50px"} {background-color='brown'}
 
-## Tipos de dato espaciales {.smaller}
+## Tipos de dato espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ::: columns
 
@@ -74,7 +69,7 @@ precip <- round((runif(length(latitude))*10)^3)
 ```
 
 
-## Simple representación de datos espaciales {.smaller}
+## Simple representación de datos espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r eval=FALSE}
 psize <- 1 + precip/500
@@ -87,7 +82,7 @@ legend.psize <- 1+breaks/500
 legend("topright", legend=breaks, pch=20, pt.cex=legend.psize, col='red', bg='gray')
 ```
 
-## Simple representación de datos espaciales {.smaller}
+## Simple representación de datos espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r echo=FALSE,eval=TRUE,fig.height=6}
 psize <- 1 + precip/500
@@ -100,7 +95,7 @@ legend.psize <- 1+breaks/500
 legend("topright", legend=breaks, pch=20, pt.cex=legend.psize, col='red', bg='gray')
 ```
 
-## Simple representación de datos espaciales {.smaller}
+## Simple representación de datos espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r eval=FALSE}
 lon <- c(-116.8, -114.2, -112.9, -111.9, -114.2, -115.4, -117.7)
@@ -113,7 +108,7 @@ points(x, cex=2, pch=20)
 points(stations, cex=psize, pch=20, col='red', main='Precipitation')
 ```
 
-## Simple representación de datos espaciales {.smaller}
+## Simple representación de datos espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r echo=FALSE,fig.height=6}
 lon <- c(-116.8, -114.2, -112.9, -111.9, -114.2, -115.4, -117.7)
@@ -126,7 +121,7 @@ points(x, cex=2, pch=20)
 points(stations, cex=psize, pch=20, col='red', main='Precipitation')
 ```
 
-## Simple representación de datos espaciales {.smaller}
+## Simple representación de datos espaciales {.smaller background-image="../img/R_logo.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 Podemos almacenar datos espaciales en un `data.frame`
 
@@ -138,7 +133,7 @@ wst
 # 2.  Datos espaciales vectoriales {background-color='grey'}
 
 
-## Simple Feature `{sf}` {.smaller}
+## Simple Feature `{sf}` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 
 - Utilizaremos `{sf}`  
@@ -151,7 +146,7 @@ wst
 >__Simple Feature:__ se refiere a un estándar formal (ISO 19125-1: 2004) que describe cómo los objetos en el mundo real se pueden representar en computadoras, con énfasis en la geometría espacial de estos objetos.
 
 
-## Simple Feature `{sf}`: Dimensiones {.smaller}
+## Simple Feature `{sf}`: Dimensiones {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 - Todas las geometrias (puntos, lineas, polígonos) están formadas por puntos.
 
@@ -165,7 +160,7 @@ wst
 
   - coordinada `M` medición asociada con el punto (ej, tiempo en que fue medido)
   
-## Simple Feature `{sf}`: __Dimensiones__ {.smaller}
+## Simple Feature `{sf}`: __Dimensiones__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 - Cuatro casos posibles:
 
@@ -177,7 +172,7 @@ wst
 
   - 4D : `XYZM`
 
-## Simple Feature `{sf}` {.smaller}
+## Simple Feature `{sf}` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 __Tipos de geometrías__
 
@@ -192,7 +187,7 @@ __Tipos de geometrías__
 | `GEOMETRYCOLLECTION`  | grupo de geometrías de cualquier tipo  |
 
 
-## Simple Feature `{sf}`: __Clases__ {.smaller}
+## Simple Feature `{sf}`: __Clases__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 `Geometria` -> `list-column` (tipo de dato)
 
@@ -207,38 +202,38 @@ Como `{sf}` almacena las `Simple Features`. Las tres tipos de datos utilizados p
 
   - `sfg`: la geometría de la entidad de cada `simple feature` individual
 
-## Simple Feature `{sf}`: __Clase `sf`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sf`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 library(sf)
 nc <- st_read(system.file("shape/nc.shp", package="sf"))
 ```      
 
-## Simple Feature `{sf}`: __Clase `sf`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sf`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r fig.height=5}
 plot(nc[1])
 ```   
 
-## Simple Feature `{sf}`: __Clase `sf`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sf`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 class(nc)
 ```   
 
-## Simple Feature `{sf}`: __Clase `sf`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sf`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 lapply(attributes(nc),'head')
 ```     
 
-## Simple Feature `{sf}`: __Clase `sf`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sf`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 print(nc[9:15], n = 3)
 ```     
 
-## Simple Feature `{sf}`: __Clase `sf`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sf`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ![](../img/sf_xfig.png)
 
@@ -246,17 +241,17 @@ print(nc[9:15], n = 3)
 <i style="color:blue">AZUL:  geometría (objeto de clase `sfg`)  </i>  
 <i style="color:red">ROJO: Simple Feature `list-column` (`sfc`) </i>
 
-## Estructura datos espaciales vectoriales con {sf} {.smaller}
+## Estructura datos espaciales vectoriales con {sf} {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 `sfc` (simple feature list-column)
 
-### Simple Feature `{sf}`: __Clase `sfc`__ {.smaller}
+### Simple Feature `{sf}`: __Clase `sfc`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 (nc_geom <- st_geometry(nc))
 ```
 
-## Simple Feature `{sf}`: __Clase `sfc`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sfc`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 class(nc_geom)
@@ -264,20 +259,20 @@ nc_geom[[1]]
 class(nc_geom[[1]])
 ```
 
-## Simple Feature `{sf}`: __Clase `sfc`__ {.smaller}
+## Simple Feature `{sf}`: __Clase `sfc`__ {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r fig.height=6}
 plot(nc_geom[[1]])
 ```
 
-## Simple Feature `{sf}`: Clase `sfc` {.smaller}
+## Simple Feature `{sf}`: Clase `sfc` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r fig.height=6}
 names(attributes(nc_geom))
 attr(nc_geom,'crs')
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 `sfg` (simple feature geometry) guarda la geometría de un a entidad individual, ej. un punto, una linea o polígono
 
@@ -287,7 +282,7 @@ Está implementada en en tipos de datos nativos de R (numeric, matrix, list), si
 2. un grupo de puntos, e.j. un `LINESTRING` o un anillo de un `POLYGON` es un `matrix` y cada fila de la `matrix` es un `POINT`
 3. cualquier otro grupo es un `list`
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 (x <- st_point(c(1,2)))
@@ -296,7 +291,7 @@ str(x)
 str(x)
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 (x <- st_point(c(1,2,3), "XYM"))
@@ -305,13 +300,13 @@ str(x)
 str(x)
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 st_zm(x, drop = TRUE, what = "ZM")
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 p <- rbind(c(3.2,4), c(3,4.6), c(3.8,4.4), c(3.5,3.8), c(3.4,3.6), c(3.9,4.5))
@@ -324,7 +319,7 @@ s3 <- rbind(c(0,4.4), c(0.6,5))
 
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
@@ -337,7 +332,7 @@ p5 <- rbind(c(3,3), c(4,2), c(4,3), c(3,3))
 (gc <- st_geometrycollection(list(mp, mpol, ls)))
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r eval = FALSE}
 par(mfrow=c(2,3))
@@ -350,7 +345,7 @@ plot(gc,col = 'gray',border='red',main = 'GEOMETRY')
 
 ```
 
-## Simple Feature `{sf}`: Clase `sfg` {.smaller}
+## Simple Feature `{sf}`: Clase `sfg` {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r echo=FALSE,fig.height=6,fig.width=10}
 par(mfrow=c(2,3))
