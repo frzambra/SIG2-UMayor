@@ -360,7 +360,7 @@ plot(gc,col = 'gray',border='red',main = 'GEOMETRY')
 
 # 3.  Datos espaciales raster {background-color='#EBF8B8'}
 
-## ¿Con qué vamos a trabajas? {.smaller}
+## ¿Con qué vamos a trabajas? {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 1. Vamos a utilizar el paquete `{terra}`
 
@@ -370,13 +370,13 @@ plot(gc,col = 'gray',border='red',main = 'GEOMETRY')
 
 4. Similar es lo que pasa con `{stars}`, no obstante el futuro de `r-spatial` será con `{stars}`, `{terra}` y `{sf}`
 
-##  {terra} {.smaller}
+##  {terra} {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 El paquete `{terra}` tiene funciones para crear, leer, manipular y guardar datos raster.
 
 Las clase definida por `{terra}` es `SpatRaster`
 
-##  {terra} {.smalller}
+##  {terra} {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 - representa un raster multi-capa
 - siempre almacena los parametros fundamentales que describen la geometria
@@ -386,14 +386,14 @@ Las clase definida por `{terra}` es `SpatRaster`
   - adicionalmente guarda información del archivo en donde se almacenan los valores del raster.
   - O, si no existe el archvio es por que `SpatRaster` lo puede almacenar en memoria.
 
-## Crear un `SpatRaster` {.smaller}
+## Crear un `SpatRaster` {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r}
 library(terra)
 (r <- rast(ncol=10, nrow=10, xmax=-80, xmin=-150, ymin=20, ymax=60))
 ```
 
-## Crear un `SpatRaster` {.smaller}
+## Crear un `SpatRaster` {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 El objeto `r` solo tiene el esqueleto del raster, pero aún no tiene valores
 
@@ -403,7 +403,7 @@ r
 
 ```
 
-## Crear un `SpatRaster` {.smaller}
+## Crear un `SpatRaster` {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 El objeto `r` solo tiene el esqueleto del raster, pero aún no tiene valores
 
@@ -412,7 +412,7 @@ plot(r)
 text(r,digits = 2)
 ```
 
-## Crear un `SpatRaster` {.smaller}
+## Crear un `SpatRaster` {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 También le podria asignar otros valores, por ejemplo el número de celda
 
@@ -421,7 +421,7 @@ values(r) <- 1:ncell(r)
 r
 ```
 
-## Crear un `SpatRaster` {.smaller}
+## Crear un `SpatRaster` {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 También le podria asignar otros valores, por ejemplo el número de celda
 
@@ -430,7 +430,7 @@ plot(r)
 text(r)
 ```
 
-## Crear un `SpatRaster` multi-capa {.smaller}
+## Crear un `SpatRaster` multi-capa {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 Puedes creart un objeto multi-capa usando la función `c`
 
@@ -441,7 +441,7 @@ s <- c(r,r2,r3)
 s
 ```
 
-## Crear un `SpatRaster` multi-capa {.smaller}
+## Crear un `SpatRaster` multi-capa {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r,fig.height=6,fig.width=10}
 plot(s) 
@@ -449,13 +449,13 @@ plot(s)
 
 # 4. Leer y guardar datos espaciales en R {background-color='blue'}
 
-## Vectoriales {.smaller}
+## Vectoriales {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 Usando `{sf}`   
   - leer: `st_read`, `read_sf`    
   - guardar: `st_write`, `write_sf`   
 
-## Vectoriales {.smaller}
+## Vectoriales  {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r, error = TRUE}
 library(sf)
@@ -464,8 +464,7 @@ nc <- st_read(filename)
 st_write(nc, "nc.shp")
 ```
 
----
-## Vectoriales {.smaller}
+## Vectoriales  {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ```{r, error = TRUE}
 filename <- system.file("shape/nc.shp", package="sf")
@@ -473,7 +472,7 @@ nc <- st_read(filename)
 st_write(nc, "nc.shp", delete_layer = TRUE)
 ```
 
-## Vectoriales {.smaller}
+## Vectoriales  {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 Drivers soportados por `GDAL`
 
@@ -488,7 +487,7 @@ st_layers(system.file("osm/overpass.osm", package="sf"))
 
 ```
 
-## Vectoriales {.smaller} {.smaller}
+## Vectoriales  {.smaller background-image="../img/logo_sf.gif" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### CRUD (create, read, update, delete)
 
@@ -501,13 +500,13 @@ Los siguientes argumentos
 - `delete_dsn=TRUE` borra el archvivo si existe. Utilizar con cuidado!
 
 
-## Rasters {.smaller}
+## Rasters  {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 Con `{terra}`   
   - leer: `rast`    
   - guardar: `writeRaster`    
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### Leer
 
@@ -519,7 +518,7 @@ f <- system.file("external/rlogo.grd", package="raster")
 (r <- rast(f))
 ```
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### Leer
 
@@ -527,7 +526,7 @@ f <- system.file("external/rlogo.grd", package="raster")
 plot(r)
 ```
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### Leer archivos locales
 
@@ -539,7 +538,7 @@ r2 <- r[[2]]
 r2
 ```
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### Leer archivos HTTP/FTP
 
@@ -554,7 +553,7 @@ url <- 'https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_pentad/cogs/'
 name <- 'chirps-v2.0.2023.07.6.cog'
 ```
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### Leer archivos HTTP/FTP
 
@@ -563,7 +562,7 @@ x <- rast(paste0('/vsicurl/',url,name))
 plot(x)
 ```
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### En Chile
 
@@ -573,7 +572,7 @@ x3 <- app(x2, fun = function(x){ x[x<0] <- NA; return(x)})
 plot(x3)
 ```
 
-## Rasters {.smaller}
+## Rasters {.smaller background-image="../img/logo_terra.png" background-position="97.5% 2.5%" background-size="7.5%" layout="true"}
 
 ### Guardar
 

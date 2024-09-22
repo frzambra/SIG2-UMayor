@@ -847,7 +847,7 @@ GEOGCRS["NAD27",
 <h1>3. Datos espaciales raster</h1>
 
 </section>
-<section id="con-qué-vamos-a-trabajas" class="slide level2 smaller">
+<section id="con-qué-vamos-a-trabajas" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>¿Con qué vamos a trabajas?</h2>
 <ol type="1">
 <li><p>Vamos a utilizar el paquete <code>{terra}</code></p></li>
@@ -856,12 +856,12 @@ GEOGCRS["NAD27",
 <li><p>Similar es lo que pasa con <code>{stars}</code>, no obstante el futuro de <code>r-spatial</code> será con <code>{stars}</code>, <code>{terra}</code> y <code>{sf}</code></p></li>
 </ol>
 </section>
-<section id="terra" class="slide level2 smaller">
+<section id="terra" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>{terra}</h2>
 <p>El paquete <code>{terra}</code> tiene funciones para crear, leer, manipular y guardar datos raster.</p>
 <p>Las clase definida por <code>{terra}</code> es <code>SpatRaster</code></p>
 </section>
-<section id="terra-1" class="slide level2 smalller">
+<section id="terra-1" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>{terra}</h2>
 <ul>
 <li>representa un raster multi-capa</li>
@@ -875,7 +875,7 @@ GEOGCRS["NAD27",
 </ul></li>
 </ul>
 </section>
-<section id="crear-un-spatraster" class="slide level2 smaller">
+<section id="crear-un-spatraster" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">library</span>(terra)</span>
@@ -889,7 +889,7 @@ coord. ref. : lon/lat WGS 84 </code></pre>
 </div>
 </div>
 </section>
-<section id="crear-un-spatraster-1" class="slide level2 smaller">
+<section id="crear-un-spatraster-1" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>El objeto <code>r</code> solo tiene el esqueleto del raster, pero aún no tiene valores</p>
 <div class="cell">
@@ -908,7 +908,7 @@ max value   :   100 </code></pre>
 </div>
 </div>
 </section>
-<section id="crear-un-spatraster-2" class="slide level2 smaller">
+<section id="crear-un-spatraster-2" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>El objeto <code>r</code> solo tiene el esqueleto del raster, pero aún no tiene valores</p>
 <div class="cell">
@@ -917,7 +917,7 @@ max value   :   100 </code></pre>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
-<section id="crear-un-spatraster-3" class="slide level2 smaller">
+<section id="crear-un-spatraster-3" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>También le podria asignar otros valores, por ejemplo el número de celda</p>
 <div class="cell">
@@ -936,7 +936,7 @@ max value   :   100 </code></pre>
 </div>
 </div>
 </section>
-<section id="crear-un-spatraster-4" class="slide level2 smaller">
+<section id="crear-un-spatraster-4" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code></h2>
 <p>También le podria asignar otros valores, por ejemplo el número de celda</p>
 <div class="cell">
@@ -945,7 +945,7 @@ max value   :   100 </code></pre>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
-<section id="crear-un-spatraster-multi-capa" class="slide level2 smaller">
+<section id="crear-un-spatraster-multi-capa" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code> multi-capa</h2>
 <p>Puedes creart un objeto multi-capa usando la función <code>c</code></p>
 <div class="cell">
@@ -966,7 +966,7 @@ max values  :   100, 10000,    10 </code></pre>
 </div>
 </div>
 </section>
-<section id="crear-un-spatraster-multi-capa-1" class="slide level2 smaller">
+<section id="crear-un-spatraster-multi-capa-1" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Crear un <code>SpatRaster</code> multi-capa</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">plot</span>(s) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -978,13 +978,13 @@ max values  :   100, 10000,    10 </code></pre>
 <h1>4. Leer y guardar datos espaciales en R</h1>
 
 </section>
-<section id="vectoriales" class="slide level2 smaller">
+<section id="vectoriales" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Vectoriales</h2>
 <p>Usando <code>{sf}</code><br>
 - leer: <code>st_read</code>, <code>read_sf</code><br>
 - guardar: <code>st_write</code>, <code>write_sf</code></p>
 </section>
-<section id="vectoriales-1" class="slide level2 smaller">
+<section id="vectoriales-1" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Vectoriales</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">library</span>(sf)</span>
@@ -1010,7 +1010,7 @@ use either append=TRUE to append to layer or append=FALSE to overwrite layer</co
 </div>
 </div>
 </section>
-<section id="vectoriales-2" class="slide level2 smaller">
+<section id="vectoriales-2" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Vectoriales</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>filename <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package=</span><span class="st">"sf"</span>)</span>
@@ -1033,7 +1033,7 @@ Writing 100 features with 14 fields and geometry type Multi Polygon.</code></pre
 </div>
 </div>
 </section>
-<section id="vectoriales-3" class="slide level2 smaller">
+<section id="vectoriales-3" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Vectoriales</h2>
 <p>Drivers soportados por <code>GDAL</code></p>
 <div class="cell">
@@ -1054,8 +1054,8 @@ Available layers:
 </div>
 </div>
 </section>
-<section id="vectoriales-.smaller" class="slide level2 smaller">
-<h2>Vectoriales {.smaller}</h2>
+<section id="vectoriales-4" class="slide level2 smaller" data-background-image="../img/logo_sf.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
+<h2>Vectoriales</h2>
 <h3 id="crud-create-read-update-delete">CRUD (create, read, update, delete)</h3>
 <p><code>GDAL</code> proporciona CRUD (st_read,read_st,st_write,write_st)</p>
 <p>Los siguientes argumentos</p>
@@ -1065,13 +1065,13 @@ Available layers:
 <li><code>delete_dsn=TRUE</code> borra el archvivo si existe. Utilizar con cuidado!</li>
 </ul>
 </section>
-<section id="rasters" class="slide level2 smaller">
+<section id="rasters" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <p>Con <code>{terra}</code><br>
 - leer: <code>rast</code><br>
 - guardar: <code>writeRaster</code></p>
 </section>
-<section id="rasters-1" class="slide level2 smaller">
+<section id="rasters-1" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="leer">Leer</h3>
 <p>La función <code>rast</code> se puede utilizar sobre un archvio de una capa o multi-capa</p>
@@ -1093,7 +1093,7 @@ max values  : 255,   255,  255 </code></pre>
 </div>
 </div>
 </section>
-<section id="rasters-2" class="slide level2 smaller">
+<section id="rasters-2" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="leer-1">Leer</h3>
 <div class="cell">
@@ -1101,11 +1101,12 @@ max values  : 255,   255,  255 </code></pre>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-35-1.png" width="960" class="r-stretch"></section>
-<section id="rasters-3" class="slide level2 smaller">
+<section id="rasters-3" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="leer-archivos-locales">Leer archivos locales</h3>
 <p>Notar que <code>r</code> es un <code>SpatRaster</code> de tres capas (bandas). Podemos extraer sólo una banda.</p>
-<p>La segunda banda ::: {.cell}</p>
+<p>La segunda banda</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>r2 <span class="ot">&lt;-</span> r[[<span class="dv">2</span>]]</span>
 <span id="cb64-2"><a href=""></a>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1119,9 +1120,9 @@ name        : green
 min value   :     0 
 max value   :   255 </code></pre>
 </div>
-<p>:::</p>
+</div>
 </section>
-<section id="rasters-4" class="slide level2 smaller">
+<section id="rasters-4" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="leer-archivos-httpftp">Leer archivos HTTP/FTP</h3>
 <p>Terra usa <code>GDAL</code> que tiene soporte para Virtual File Systems.</p>
@@ -1132,7 +1133,7 @@ max value   :   255 </code></pre>
 <span id="cb66-2"><a href=""></a>name <span class="ot">&lt;-</span> <span class="st">'chirps-v2.0.2023.07.6.cog'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="rasters-5" class="slide level2 smaller">
+<section id="rasters-5" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="leer-archivos-httpftp-1">Leer archivos HTTP/FTP</h3>
 <div class="cell">
@@ -1141,7 +1142,7 @@ max value   :   255 </code></pre>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-38-1.png" width="1152" class="r-stretch"></section>
-<section id="rasters-6" class="slide level2 smaller">
+<section id="rasters-6" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="en-chile">En Chile</h3>
 <div class="cell">
@@ -1151,7 +1152,7 @@ max value   :   255 </code></pre>
 
 </div>
 <img data-src="slides_clase32_files/figure-revealjs/unnamed-chunk-39-1.png" width="384" class="r-stretch"></section>
-<section id="rasters-7" class="slide level2 smaller">
+<section id="rasters-7" class="slide level2 smaller" data-background-image="../img/logo_terra.png" data-background-position="97.5% 2.5%" data-background-size="7.5%" data-layout="true">
 <h2>Rasters</h2>
 <h3 id="guardar">Guardar</h3>
 <p>Use la función <code>writeRaster</code> para guardar datos raster.</p>

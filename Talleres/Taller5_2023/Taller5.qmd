@@ -1,5 +1,5 @@
 ---
-title: "Taller 5 (IMSE1017)"
+title: "Taller 5 (IMSD1025)"
 subtitle: "Datos raster con {terra}"
 author: 'Dr. Francisco Zambrano'
 format: 
@@ -64,7 +64,7 @@ Debe guardar el script con el nombre `taller4.R`. Los archivos los debe subir en
 
 ## Fecha de entrega
 
-Viernes 10 de noviembre hasta las 10:00am
+Viernes 30 de octubre hasta las 08:30am
 
 ## Referencias
 
@@ -109,7 +109,7 @@ r <- rast(nrow=3,ncol=3,nlyr=3)
 values(r) <- c(1:9,10:18,19:27)
 ```
 
-5.- (20pts) Haga la suma de las tres capas de él raster de la pregunta anterior. Guarde el resultado en un nuevo raster. Hagua un plot del raster y muestre los valores en cada celda.
+5.- (20pts) Haga la suma de las tres capas de él raster de la pregunta anterior. Guarde el resultado en un nuevo raster. Cree un plot del raster y muestre los valores en cada celda.
 
 ```{r}
 
