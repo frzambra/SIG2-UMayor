@@ -42,8 +42,8 @@ library(sf)
 
 Los datos con los que debe trabajar son:
 
-1.- Canales nacionales: capas de los canales de riego  
-2.- Division comunal: capa con los límites comunales de Chile  
+1.- Canales nacionales: capas de los canales de riego\
+2.- Division comunal: capa con los límites comunales de Chile\
 3.- Estaciones Chile: capa con la ubicación de las estaciones climáticas en Chile.
 
 Los puede descargar desde [acá](https://drive.google.com/file/d/1vDrP4LL-YvO7Dyk0YuO5ILvEHXAeWon1/view?usp=sharing)
@@ -62,7 +62,7 @@ Debeŕa utilizar RStudio para crear un script, en donde resolverá cada uno de l
 }
 ```
 
-Debe guardar el script con el nombre `taller6.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Evaluaciones -> Taller 6 `
+Debe guardar el script con el nombre `taller6.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Evaluaciones -> Taller 6`
 
 ## Fecha de entrega
 
@@ -196,13 +196,14 @@ st_write(dos_comunas,'../../data/dos_comunas.gpkg',append = TRUE)
 
 Pruebe las operaciones con los circulos `x` e `y`
 
-- st_difference(x,y)  
-- st_difference(y,x)
-- st_union(x,y)
-- st_intersection(x,y)
-- st_sym_difference(x,y)
+-   st_difference(x,y)\
+-   st_difference(y,x)
+-   st_union(x,y)
+-   st_intersection(x,y)
+-   st_sym_difference(x,y)
 
 ![](https://r.geocompx.org/05-geometry-operations_files/figure-html/venn-clip-1.png)
+
 ```{r}
 b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
 b = st_buffer(b, dist = 1) 
@@ -227,4 +228,3 @@ plot(obj4)
 obj5 <- st_sym_difference(x,y)
 plot(obj5)
 ```
-

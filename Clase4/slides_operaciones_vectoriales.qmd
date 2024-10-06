@@ -8,8 +8,8 @@ format:
       #data-background-image: "https://media.giphy.com/media/GldXiKXeO7hpczEHxt/giphy.gif"
       #data-background-size: "contain"
     title-block-banner: true
-    logo: "logo_hemera.jpg"
-    footer: "IMSE1017|2-2022"
+    logo: ../img/logo_hemera_2024.png
+    css: ../logo.css
     theme: default
     echo: true
 ---
