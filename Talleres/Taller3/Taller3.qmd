@@ -1,5 +1,5 @@
 ---
-title: "Taller 3 (IMSE1017)"
+title: "Taller 4 (IMSD1025|2-2024)"
 subtitle: "Datos vectoriales con {sf}"
 author: 'Dr. Francisco Zambrano'
 format: 
@@ -31,7 +31,7 @@ Para instalar los paquetes debe realizar lo siguiente:
 #| eval: false
 
 # instala los paquetes
-install.packages(c('sf','terra'))
+install.packages(c('sf'))
 
 # carga los paqutes en el entorno de R y permite utilizar 
 # las funciones adicionales que contienen
@@ -62,13 +62,13 @@ Debe guardar el script con el nombre `taller3_grupo_{número_grupo}.R`. Los arch
 
 ## Fecha de entrega
 
-Viernes 21 de octubre hasta las 8:00am
+Viernes 23 de septiembre hasta las 8:30am
 
 ## Ejercicios
 
 ### Ejercicio 1 (10pts)
 
-Cree un objeto `sfg` de tipo punto de dos, tres y cuatro dimensiones. Utilicé las coordenadas de latitud -36.25 y longitud -72.65 una elevación de 200 metros y una direccción de 90°. Revise la estructura del objeto creado utilizando la función `str`
+Cree un objeto `sfg` de tipo punto de dos, tres y cuatro dimensiones. Utilicé las coordenadas de latitud -34.55 y longitud -70.25 una elevación de 200 metros y una direccción de 90°. Revise la estructura del objeto creado utilizando la función `str`
 
 ```{r}
 library(sf)
