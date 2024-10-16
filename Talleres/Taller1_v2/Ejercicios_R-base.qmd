@@ -6,8 +6,8 @@ author: "Dr. Francisco Zambrano"
 date: "2024-08-19"
 lang: "es"
 execute:
-  echo: false
-  eval: false
+  echo: true
+  eval: true
 format:
   html:
     number-sections: true
@@ -82,6 +82,7 @@ Escriba un script en R para resolver lo siguiente:
 1.  Crear un vector de un tipo y una longitud específicos. Cree vectores de tipos numéricos, complejos, lógicos y de caracteres de longitud 10.
 
 ```{r}
+# Alternativa 1
 x <- vector("numeric", 5)
 x
 c <- vector("complex", 5)
@@ -90,6 +91,16 @@ l <- vector("logical", 5)
 l
 chr <- vector("character", 5)
 chr
+
+# Alternativa 2
+# vector numérico
+v1 <- 1:10
+#vector lógico
+v2 <- c(TRUE, FALSE, TRUE, TRUE)
+#vector complejo
+v3 <- c(1+1i,2-3i,4+1i)
+#vector de caracter
+v4 <- c('a','z','d','t')
 ```
 
 2. Sumar dos vectores de tipo entero y longitud 5.

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Dr. Francisco Zambrano">
 
-<title>Taller 2: Ejercicios R base</title>
+<title>Taller 4: Datos vectoriales con {sf}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3087,13 +3087,12 @@ vertical-align: -.125em;
    
   <ul>
   <li><a href="#descripción" id="toc-descripción" class="nav-link active" data-scroll-target="#descripción"><span class="header-section-number">1</span> Descripción</a></li>
-  <li><a href="#qué-debe-entregar" id="toc-qué-debe-entregar" class="nav-link" data-scroll-target="#qué-debe-entregar"><span class="header-section-number">2</span> ¿Qué debe entregar?</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3</span> Ejercicios</a>
-  <ul class="collapse">
-  <li><a href="#vectores" id="toc-vectores" class="nav-link" data-scroll-target="#vectores"><span class="header-section-number">3.1</span> Vectores</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">3.2</span> Matrices</a></li>
-  <li><a href="#data.frames" id="toc-data.frames" class="nav-link" data-scroll-target="#data.frames"><span class="header-section-number">3.3</span> Data.frames</a></li>
-  </ul></li>
+  <li><a href="#objetivo-del-taller" id="toc-objetivo-del-taller" class="nav-link" data-scroll-target="#objetivo-del-taller"><span class="header-section-number">2</span> Objetivo del taller</a></li>
+  <li><a href="#instalar-y-cargar-sf" id="toc-instalar-y-cargar-sf" class="nav-link" data-scroll-target="#instalar-y-cargar-sf"><span class="header-section-number">3</span> Instalar y cargar {sf}</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4</span> Data</a></li>
+  <li><a href="#fecha-de-entrega" id="toc-fecha-de-entrega" class="nav-link" data-scroll-target="#fecha-de-entrega"><span class="header-section-number">5</span> Fecha de entrega</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">6</span> Referencias</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">7</span> Ejercicios</a></li>
   </ul>
 </nav>
 </div>
@@ -3101,7 +3100,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Taller 2: Ejercicios R base</h1>
+<h1 class="title">Taller 4: Datos vectoriales con {sf}</h1>
 <p class="subtitle lead">Uso Avanzado de Sistemas de Información Geográfica</p>
 </div>
 
@@ -3126,7 +3125,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2 de septiembre de 2024</p>
+      <p class="date">16 de septiembre de 2024</p>
     </div>
   </div>
   
@@ -3140,654 +3139,128 @@ vertical-align: -.125em;
 
 <section id="descripción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Descripción</h1>
-<p>A continuación hay una serie de ejercicios que debe resolver utilizando `<code>R</code>`. El objetivo es comenzar a trabajar con los tipos de datos, estructuras e indexación en R.</p>
+<p>En la primera parte del curso se familiarizó con R (R Core Team 2023), las principales estructuras de datos, como realizar indexación, conoció algunas funciones y pudo realizar algunos gráficos básicos; utilizando R base. Ahora, en el curso hemos empezado a trabajar en R con datos geoespaciales de tipo vectoriales y raster. Para manejar datos vectoriales utilizamos {sf} (Pebesma 2018) y para datos de tipo raster {terra}(Hijmans 2023). En este taller trabajaremos con {sf}.</p>
 </section>
-<section id="qué-debe-entregar" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> ¿Qué debe entregar?</h1>
-<p>Debeŕá utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (<code>#</code>) para la descripción del ejercicio e incorporar cualquier texto que ayude a entender lo realizado. A modo de ejemplo:</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejercicio 1:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># comentario explicando lo que se hace</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  Aca va el script que resuelve el ejericio <span class="dv">1</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="objetivo-del-taller" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Objetivo del taller</h1>
+<p>Familiarizarce con {sf} para crear datos vectoriales, asignarles SRC, transformar los SRC, leer y guardar archivos vectoriales desde/hacia el disco, y explorar la estructura de las capas.</p>
 </section>
-<section id="ejercicios" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Ejercicios</h1>
-<section id="vectores" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="vectores"><span class="header-section-number">3.1</span> Vectores</h2>
-<ol type="1">
-<li>Considere el vector: x = (4,6,5,7,10,9,4,15). ¿Cuál es el resultado de?: x &lt; 7 ?</li>
-</ol>
+<section id="instalar-y-cargar-sf" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Instalar y cargar {sf}</h1>
+<p>Hasta el momento en el curso hemos trabajado con los paquetes que vienen inculidos en R base (stats, graphics, grDevices, utils, datasets, methods y base). Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en R, por lo que deberá instalarlos y cargarlos en R. En este taller trabajaremos con {sf} para poder manejar datos espaciales vectoriales.</p>
+<p>Para instala y cargar {sf} debe realizar lo siguiente:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">15</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&lt;</span> <span class="dv">7</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Considere los dos vectores p = (3, 5, 6, 8) y q = (3, 3, 3). ¿Cuál es el resultado de p+q? ¿Qué pasa cuando se suman vectores con diferente cantidad de elementos?</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> q</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instala {sf}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;sf&#39;</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in p + q: longitud de objeto mayor no es múltiplo de la longitud de uno
-menor</code></pre>
+<pre><code>Installing package into &#39;/home/francisco/R/x86_64-pc-linux-gnu-library/4.2&#39;
+(as &#39;lib&#39; is unspecified)</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  6  8  9 11</code></pre>
-</div>
-</div>
-<p>Cuando se suman vectores con diferentes cantidad de elementos, R transforma el vector con menor cantidad de elementos en un vector reciclado, en el que se completa el vector, repitiendo sus valores, hasta alcanzar la longitud del vector de mayor dimensión.</p>
-<ol start="3" type="1">
-<li>Considere los dos vectores, x = (4,6,5,7,10,9,4,15) e y = (0,10,1,8,2,3,4,1). ¿Cuál es el resultado de <code>x*y</code>?</li>
-</ol>
-<div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">15</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span>y</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cargar {sf} en el entorno de R para poder utilizar </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># las funciones adicionales para manejo de datos vectoriales que contiene</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  0 60  5 56 20 27 16 15</code></pre>
-</div>
-</div>
-<ol start="4" type="1">
-<li>Considere los dos vectores a = (1,2,4,5,6) y b = (3,2,4,1,9). ¿Cuál es el resultado de <code>cbind(a,b)</code>?</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>) </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">9</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(a,b)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     a b
-[1,] 1 3
-[2,] 2 2
-[3,] 4 4
-[4,] 5 1
-[5,] 6 9</code></pre>
-</div>
-</div>
-<ol start="5" type="1">
-<li>Considere los dos vectores, a, b a = (10,2,4,15) y b = (3,12,4,11). ¿Cuál es el resultado de <code>rbind(a,b)</code>?</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">15</span>) </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">12</span>,<span class="dv">4</span>,<span class="dv">11</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(a,b)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [,1] [,2] [,3] [,4]
-a   10    2    4   15
-b    3   12    4   11</code></pre>
-</div>
-</div>
-<ol start="6" type="1">
-<li>Determine cuantos elementos tiene el vector <code>letters</code></li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(letters)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 26</code></pre>
-</div>
-</div>
-<ol start="7" type="1">
-<li>Del vector <code>letters</code> extraiga las letras <code>a</code>, <code>o</code> y <code>w</code> usando indexación.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>letters[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">15</span>,<span class="dv">23</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;a&quot; &quot;o&quot; &quot;w&quot;</code></pre>
-</div>
-</div>
-<ol start="8" type="1">
-<li>Considere el siguiente vector v = (9, 4, 3, 76, 43, 22). Usando indexación extraiga el 2do y 4to elemento.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">76</span>, <span class="dv">43</span>, <span class="dv">22</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>v[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  4 76</code></pre>
-</div>
-</div>
-<ol start="9" type="1">
-<li>Del vector que se genera con el siguiente script:</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">40</span>,<span class="dv">0</span>,<span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Extraiga los elementos que son menores que 50 y guardelos en el objeto <code>v_menor_50</code>.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>v[v <span class="sc">&lt;</span> <span class="dv">50</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 42.8995340 47.4255573 34.4473721 22.9585296 33.6727317 30.7095920
- [7]  3.7269012 16.6878478 26.5160671 46.1068226 16.8642265  0.2356896
-[13] 40.1832674 14.7788069 40.1600465 40.5028888 37.2049366 14.9948251
-[19] 29.8556960 42.9306198 27.1912646 27.1127355 11.9014985</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.11.1, GDAL 3.6.2, PROJ 9.1.1; sf_use_s2() is TRUE</code></pre>
 </div>
 </div>
 </section>
-<section id="matrices" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="matrices"><span class="header-section-number">3.2</span> Matrices</h2>
-<ol type="1">
-<li>Cree 2 vectores A y B, donde A es (1,2,3) y B es (4,5,6). Con estos vectores,</li>
-</ol>
-<ul>
-<li>use la función cbind() o rbind() para crear una matriz de 2 por 3 a partir de los vectores.</li>
-</ul>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(A,B)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [,1] [,2] [,3]
-A    1    2    3
-B    4    5    6</code></pre>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Cree una matriz de 3 por 3 que consta de los números del 1 al 9. Cree esta matriz usando 1:9 y especificando el argumento nrow en la llamada a la función Matrix().</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,<span class="at">nrow =</span> <span class="dv">3</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]    1    4    7
-[2,]    2    5    8
-[3,]    3    6    9</code></pre>
-</div>
-</div>
-<ol start="3" type="1">
-<li>Confirme que la matriz anterior es efectivamente una matriz usando la función <code>is.matrix()</code></li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(m)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-</div>
-<ol start="4" type="1">
-<li>Cree una matriz de 5 por 5 con los números del 1 al 25 y asignela al objeto <code>mat2</code>. La primera fila debe tener los numero del 1 al 5.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mat2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,<span class="at">ncol=</span><span class="dv">5</span>,<span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mat2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4] [,5]
-[1,]    1    2    3    4    5
-[2,]    6    7    8    9   10
-[3,]   11   12   13   14   15
-[4,]   16   17   18   19   20
-[5,]   21   22   23   24   25</code></pre>
-</div>
-</div>
-<ol start="5" type="1">
-<li>Usando indexación, tome una subsección de <code>mat2</code> del ejercicio anterior que se ve así:</li>
-</ol>
-<p>[1] [7,8]<br>
-[2] [12,13]</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mat2[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2]
-[1,]    7    8
-[2,]   12   13</code></pre>
-</div>
-</div>
-<ol start="6" type="1">
-<li>Determine la suma de todos los elementos de <code>mat2</code></li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(mat2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 325</code></pre>
-</div>
-</div>
-<ol start="7" type="1">
-<li>El siguiente código crea en R la matriz de 5×5 que se muestra a continuación.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>),</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">23</span>,<span class="dv">24</span>,<span class="dv">25</span>),</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="dv">31</span>,<span class="dv">32</span>,<span class="dv">33</span>,<span class="dv">34</span>,<span class="dv">35</span>),</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="dv">41</span>,<span class="dv">42</span>,<span class="dv">43</span>,<span class="dv">44</span>,<span class="dv">45</span>),</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="dv">51</span>,<span class="dv">52</span>,<span class="dv">53</span>,<span class="dv">54</span>,<span class="dv">55</span>))</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4] [,5]
-[1,]   11   12   13   14   15
-[2,]   21   22   23   24   25
-[3,]   31   32   33   34   35
-[4,]   41   42   43   44   45
-[5,]   51   52   53   54   55</code></pre>
-</div>
-</div>
-<p>Usando lo anterior, escriba código en R para generar las siguientes submatrices de m:</p>
-<ul>
-<li>la submatriz de elementos en las filas 3, 4 o 5 y en las columnas 1 o 2</li>
-</ul>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>m[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2]
-[1,]   31   32
-[2,]   41   42
-[3,]   51   52</code></pre>
-</div>
-</div>
-<ul>
-<li>la submatriz formada al eliminar las columnas 2 y 4</li>
-</ul>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>m[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3]
-[1,]   11   12   13
-[2,]   21   22   23
-[3,]   31   32   33
-[4,]   41   42   43
-[5,]   51   52   53</code></pre>
-</div>
-</div>
-<ul>
-<li>la submatriz de filas cuyo primer elemento de columna tiene un valor par</li>
-</ul>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>m[,<span class="sc">!</span>(m[<span class="dv">1</span>,] <span class="sc">%%</span> <span class="dv">2</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2]
-[1,]   12   14
-[2,]   22   24
-[3,]   32   34
-[4,]   42   44
-[5,]   52   54</code></pre>
-</div>
-</div>
+<section id="data" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Data</h1>
+<p>Se proporcionan capas vectoriales con los que deberá trabajar en el taller, estas corresponden a estaciones de calidad de aire y capas de biodiversidad, ubicados en Chile.</p>
+<p>El archivo comprimido (.zip) que contiene los archivos los debe descargar desde acá.</p>
+<p>¿Qué debe entregar?</p>
+<p>Deberá utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (#) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:</p>
+<p>Debe guardar el script con el nombre taller4.R. Los archivos los debe subir en el campus virtual en la sección Actividades -&gt; Evaluaciones -&gt; Talleres -&gt; Taller4</p>
 </section>
-<section id="data.frames" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="data.frames"><span class="header-section-number">3.3</span> Data.frames</h2>
-<ol type="1">
-<li>Crear un <code>data.frame</code> vacío.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>data frame with 0 columns and 0 rows</code></pre>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Crear un <code>data.frame</code> a partir de cuatro vectores dados de tipo entero, double, caracter y lógico.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>,<span class="st">&#39;d&#39;</span>,<span class="st">&#39;e&#39;</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>v3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>)</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>v4 <span class="ot">&lt;-</span> month.name[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">numeros =</span> v1,</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">letras =</span> v2,</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">logicos =</span> v3,</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">meses =</span> v4)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<ol start="3" type="1">
-<li>Extraer una columna específica de el <code>data.frame</code> <code>iris</code> usando el nombre de la columna.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#iris es el data.frame dado, es decir cualquier data.frame</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Length</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1
- [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0
- [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5
- [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1
- [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5
- [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3
-[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2
-[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8
-[145] 6.7 6.7 6.3 6.5 6.2 5.9</code></pre>
-</div>
-</div>
-<ol start="4" type="1">
-<li>Extraer las filas 3 y 5 con las columnas 1 y 3 del <code>data.frame</code> <code>mtcars</code>.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#iris es el data.frame dado, es decir cualquier data.frame</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>iris[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Sepal.Length Petal.Length
-3          4.7          1.3
-5          5.0          1.4</code></pre>
-</div>
-</div>
-<ol start="5" type="1">
-<li>Eliminar dos columna por nombre de el <code>data.frame</code> <code>mtcars</code>.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#iris es el data.frame dado, es decir cualquier data.frame</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Length <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#para una sola columna</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>iris[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#para eliminar más de una</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<ol start="6" type="1">
-<li>Agregar una nueva columna al <code>data.frame</code> <code>iris</code>.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>nueva_columna <span class="ot">&lt;-</span> <span class="dv">150</span><span class="sc">:</span><span class="dv">1</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<ol start="7" type="1">
-<li>Ordenar el <code>data.frame</code> <code>iris</code> por las columns <code>Sepal.Length</code> y <code>Sepal.Width</code>.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;iris&quot;</span>) <span class="co">#carga el data.frame iris original</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>iris_sub <span class="ot">&lt;-</span> iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,] <span class="co">#considera solo los 5 primeras filas de iris</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">order</span>(iris_sub<span class="sc">$</span>Sepal.Length,iris_sub<span class="sc">$</span>Sepal.Width) <span class="co">#ordena por las variables Sepal.Length y Sepal.Width del data.frame iris y devuelve la posición de los elementos ordenados</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>iris_sub[pos,] <span class="co">#luego puedo hacer indexación con el vector con las posiciones ordenadas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-4          4.6         3.1          1.5         0.2  setosa
-3          4.7         3.2          1.3         0.2  setosa
-2          4.9         3.0          1.4         0.2  setosa
-5          5.0         3.6          1.4         0.2  setosa
-1          5.1         3.5          1.4         0.2  setosa</code></pre>
-</div>
-</div>
-<ol start="8" type="1">
-<li>Para el set de datos <code>airquality</code>, reemplazar los valores <code>NA</code> de la columna <code>Ozone</code> con 3 de la columna <code>Solar.R</code> con 99.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">a=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="cn">NA</span>,<span class="dv">4</span>,<span class="dv">8</span>),<span class="at">b =</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="cn">NA</span>,<span class="cn">NA</span>))</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>df[<span class="fu">is.na</span>(df)] <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co">#is.na pregunta que elementos son NA en df, a esos se le asigna el valor 3</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  a b
-1 1 3
-2 2 a
-3 3 b
-4 4 3
-5 8 3</code></pre>
-</div>
-</div>
-<ol start="9" type="1">
-<li>Cambiar más de un nombre de columna de un <code>data.frame</code> dado.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>exam_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">&#39;Anastasia&#39;</span>, <span class="st">&#39;Dima&#39;</span>, <span class="st">&#39;Katherine&#39;</span>, <span class="st">&#39;James&#39;</span>, <span class="st">&#39;Emily&#39;</span>, <span class="st">&#39;Michael&#39;</span>, <span class="st">&#39;Matthew&#39;</span>, <span class="st">&#39;Laura&#39;</span>, <span class="st">&#39;Kevin&#39;</span>, <span class="st">&#39;Jonas&#39;</span>),</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="dv">9</span>, <span class="fl">16.5</span>, <span class="dv">12</span>, <span class="dv">9</span>, <span class="dv">20</span>, <span class="fl">14.5</span>, <span class="fl">13.5</span>, <span class="dv">8</span>, <span class="dv">19</span>),</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">attempts =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="dv">1</span>),</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualify =</span> <span class="fu">c</span>(<span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>)</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>exam_data <span class="co">#data.frame original</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>        name score attempts qualify
-1  Anastasia  12.5        1     yes
-2       Dima   9.0       NA      no
-3  Katherine  16.5        2     yes
-4      James  12.0       NA      no
-5      Emily   9.0        2      no
-6    Michael  20.0       NA     yes
-7    Matthew  14.5        1     yes
-8      Laura  13.5       NA      no
-9      Kevin   8.0        2      no
-10     Jonas  19.0        1     yes</code></pre>
-</div>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cambia mas de un nombre de columna del data.frame original</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(exam_data)[<span class="fu">which</span>(<span class="fu">names</span>(exam_data) <span class="sc">==</span> <span class="st">&quot;name&quot;</span>)] <span class="ot">=</span> <span class="st">&quot;student_name&quot;</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(exam_data)[<span class="fu">which</span>(<span class="fu">names</span>(exam_data) <span class="sc">==</span> <span class="st">&quot;score&quot;</span>)] <span class="ot">=</span> <span class="st">&quot;avg_score&quot;</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>exam_data</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>   student_name avg_score attempts qualify
-1     Anastasia      12.5        1     yes
-2          Dima       9.0       NA      no
-3     Katherine      16.5        2     yes
-4         James      12.0       NA      no
-5         Emily       9.0        2      no
-6       Michael      20.0       NA     yes
-7       Matthew      14.5        1     yes
-8         Laura      13.5       NA      no
-9         Kevin       8.0        2      no
-10        Jonas      19.0        1     yes</code></pre>
-</div>
-</div>
-<ol start="10" type="1">
-<li>Cuente el número de valores NA en las columnas del <code>data.frame</code> <code>airquality</code>.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>exam_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">&#39;Anastasia&#39;</span>, <span class="st">&#39;Dima&#39;</span>, <span class="st">&#39;Katherine&#39;</span>, <span class="st">&#39;James&#39;</span>, <span class="st">&#39;Emily&#39;</span>, <span class="st">&#39;Michael&#39;</span>, <span class="st">&#39;Matthew&#39;</span>, <span class="st">&#39;Laura&#39;</span>, <span class="st">&#39;Kevin&#39;</span>, <span class="st">&#39;Jonas&#39;</span>),</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="dv">9</span>, <span class="fl">16.5</span>, <span class="dv">12</span>, <span class="dv">9</span>, <span class="dv">20</span>, <span class="fl">14.5</span>, <span class="fl">13.5</span>, <span class="dv">8</span>, <span class="dv">19</span>),</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">attempts =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="dv">1</span>),</span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualify =</span> <span class="fu">c</span>(<span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>)</span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>exam_data</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>        name score attempts qualify
-1  Anastasia  12.5        1     yes
-2       Dima   9.0       NA      no
-3  Katherine  16.5        2     yes
-4      James  12.0       NA      no
-5      Emily   9.0        2      no
-6    Michael  20.0       NA     yes
-7    Matthew  14.5        1     yes
-8      Laura  13.5       NA      no
-9      Kevin   8.0        2      no
-10     Jonas  19.0        1     yes</code></pre>
-</div>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#El número de NA en la columna `attempts`</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(exam_data<span class="sc">$</span>attempts))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-</div>
-<ol start="11" type="1">
-<li>Cree un <code>data.frame</code> utilizando dos vectores dados y muestre.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">30</span>)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">30</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">30</span>,<span class="dv">30</span>)</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>ab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(a,b)</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="co"># muestra elementos duplicados</span></span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="fu">duplicated</span>(ab)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE</code></pre>
-</div>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co">#muestra filas únicas de los data.frame</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(ab)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>   a  b
-1 10 10
-2 20 30
-4 10 20
-5 40  0
-6 50 50
-8 30 30</code></pre>
-</div>
-</div>
-<ol start="12" type="1">
-<li>Llame al conjunto de datos (incorporado) <code>airquality</code>. Elimine las variables ‘Solar.R’ y ‘Wind’ y muestre el <code>data.frame</code>.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> airquality</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Ozone Solar.R Wind Temp Month Day
-1    41     190  7.4   67     5   1
-2    36     118  8.0   72     5   2
-3    12     149 12.6   74     5   3
-4    18     313 11.5   62     5   4
-5    NA      NA 14.3   56     5   5
-6    28      NA 14.9   66     5   6</code></pre>
-</div>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#eliminar las columnas Solar.R y Wind</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>data[,<span class="fu">c</span>(<span class="st">&quot;Solar.R&quot;</span>)]<span class="ot">=</span><span class="cn">NULL</span></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>data[,<span class="fu">c</span>(<span class="st">&quot;Wind&quot;</span>)]<span class="ot">=</span><span class="cn">NULL</span></span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Ozone Temp Month Day
-1    41   67     5   1
-2    36   72     5   2
-3    12   74     5   3
-4    18   62     5   4
-5    NA   56     5   5
-6    28   66     5   6</code></pre>
-</div>
-</div>
-<ol start="13" type="1">
-<li>Escriba un programa R para llamar al conjunto de datos (integrado) <code>airquality</code>. ¿Comprueba si es un <code>data.frame</code> o no? Ordene todo el <code>data.frame</code> por la primera y segunda columna. (ver <code>?order</code>)</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> airquality</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Ozone Solar.R Wind Temp Month Day
-1    41     190  7.4   67     5   1
-2    36     118  8.0   72     5   2
-3    12     149 12.6   74     5   3
-4    18     313 11.5   62     5   4
-5    NA      NA 14.3   56     5   5
-6    28      NA 14.9   66     5   6</code></pre>
-</div>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;data.frame&quot;</code></pre>
-</div>
-<details class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ordena por la primera y segunda columna</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> data[<span class="fu">order</span>(data[,<span class="dv">1</span>],data[,<span class="dv">2</span>]),]</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(result)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Ozone Solar.R Wind Temp Month Day
-21      1       8  9.7   59     5  21
-23      4      25  9.7   61     5  23
-18      6      78 18.4   57     5  18
-76      7      48 14.3   80     7  15
-147     7      49 10.3   69     9  24
-11      7      NA  6.9   74     5  11</code></pre>
-</div>
-</div>
+<section id="fecha-de-entrega" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Fecha de entrega</h1>
+<p>Lunes 23 de septiembre hasta las 08:30am</p>
 </section>
+<section id="referencias" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Referencias</h1>
+<p>Hijmans, Robert J. 2023. terra: Spatial Data Analysis. https://CRAN.R-project.org/package=terra.</p>
+<p>Pebesma, Edzer. 2018. «Simple Features for R: Standardized Support for Spatial Vector Data». The R Journal 10 (1): 439-46. https://doi.org/10.32614/RJ-2018-009.</p>
+<p>R Core Team. 2023. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. https://www.R-project.org/.</p>
+</section>
+<section id="ejercicios" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Ejercicios</h1>
+<p>1- (10pts) Cree un objeto sfg de tipo punto de dos, tres y cuatro dimensiones. Utilicé las coordenadas de latitud -36.25 y longitud -72.65 una elevación de 200 metros y una direccción de 90°. Revise la estructura del objeto creado utilizando la función str.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>punto <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">72.65</span>,<span class="sc">-</span><span class="fl">36.25</span>,<span class="dv">200</span>,<span class="dv">90</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(punto)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> &#39;XYZM&#39; num [1:4] -72.7 -36.2 200 90</code></pre>
+</div>
+</div>
+<p>2- (20pts) Utilice las siguientes coordenadas para crear los siguientes tipos de objetos sfg:</p>
+<pre><code>MULTIPOINT
+LINESTRING</code></pre>
+<p>Verifique que la clase y geometría del objeto es la correspondiente y haga un plot de cada objeto.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">latitud =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">33.38991</span>,<span class="sc">-</span><span class="fl">33.38959</span>,<span class="sc">-</span><span class="fl">33.38929</span>,<span class="sc">-</span><span class="fl">33.38893</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">70.63500</span>,<span class="sc">-</span><span class="fl">70.63468</span>,<span class="sc">-</span><span class="fl">70.63435</span>,<span class="sc">-</span><span class="fl">70.63396</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)    </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mp <span class="ot">&lt;-</span>  <span class="fu">st_multipoint</span>(<span class="fu">as.matrix</span>(df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>]))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mp)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;XY&quot;         &quot;MULTIPOINT&quot; &quot;sfg&quot;       </code></pre>
+</div>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ls <span class="ot">&lt;-</span> <span class="fu">st_linestring</span>(<span class="fu">as.matrix</span>(df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>]))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mp)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAACmlBMVEUAAAABAQECAgIDAwMEBAQFBQUGBgYHBwcICAgJCQkLCwsMDAwNDQ0ODg4PDw8RERESEhITExMVFRUXFxcYGBgZGRkaGhobGxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQnJycpKSkqKiorKystLS0uLi4vLy8wMDAxMTEyMjI0NDQ1NTU2NjY3Nzc4ODg5OTk6Ojo7Ozs9PT0+Pj4/Pz9AQEBBQUFCQkJDQ0NERERFRUVGRkZISEhKSkpMTExNTU1OTk5PT09QUFBRUVFTU1NUVFRVVVVWVlZXV1dYWFhZWVlaWlpcXFxdXV1eXl5fX19gYGBhYWFiYmJjY2NlZWVnZ2doaGhpaWlqampsbGxtbW1ubm5wcHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+BgYGCgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6QkJCTk5OWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWmpqaoqKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vMzMzNzc3Ozs7Pz8/Q0NDS0tLT09PU1NTV1dXW1tbZ2dna2trb29vc3Nze3t7g4ODh4eHi4uLj4+Pk5OTl5eXm5ubp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///+I63gsAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAXHElEQVR4nO3d+7umVV3H8TWDiCNIoFCiqZVCamaeQlPMQyfK0rCUtMwQT6RGlIfETEsLTU3TDKw8pqJGmqfMDlpWGkIqmI4OM/9LMhxmL5hnHz7s515r3ffr9dN9XxfX9Xx/ejPsPZ+HcgiASGl9AMCoBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICSuzTF/3i2U9//dWtz4BmBJTQZ36sHHb8C/e3PgUaEVAylx1fTv6VS9588SP3lIf+b+tjoA0BJfKxfeXJXzn89JG7lbMO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Z/lAw1tgJf1cmjECekE5b8Pbc8tzml0Cq+nn4owR0CeVjb96f1N5QrNLYKXLjy3Pa30D0xojoD9f3rjh7S3lp5tdAiv9+d7ntz6BiY0R0PPKiza8XVSe0eoQ2MTXWx/A1MYI6F+XMw7e/HLw/uXShrcA3GiMgH7ze8qf3vzypnLqNxreAnCjMQJ66JJyx8tvfPzICeW1TW8BuMEgAT30y+X2h79G5MsvOK6c0/oYgOuNEtAD5+0px9zvkfc7pux5ph0S0IVRAnro0Ecfe1wp5bjH/H3rQwBuME5ADx265hPv+fjXWh8BcJORAgrQFQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChD6f1Sq8JCQ+08AAAAAAElFTkSuQmCC" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>3- (20pts) Utilice las siguientes coordenadas para crear un objeto sfg de tipo MULTILINESTRING que contenga dos lineas. Verifique que la clase y geometría del objeto es la correspondiente y haga un plot de cada objeto.</p>
+<p>df &lt;- data.frame( linea = c(rep(‘linea_1’,4),rep(‘linea_2’,4)), latitud = c(-33.38991,-33.38959,-33.38929,-33.38893, -33.38943,-33.38911,-33.38883,-33.38846), longitud = c(-70.63500,-70.63468,-70.63435,-70.63396, -70.63566,-70.63531,-70.63500,-70.63461) )</p>
+<p>4- (20pts) Utilice las coordenadas en el data.frame df_pol para crear un objeto sfg de tipo POLYGON. Verifique que la clase y geometría del objeto es la correspondiente y haga un plot de cada objeto</p>
+<p>df_pol &lt;- data.frame( latitud = c(-33.38943,-33.38911,-33.38959,-33.38991), longitud = c(-70.63566,-70.63531,-70.63468,-70.63500) )</p>
+<p>5- (20pts) Utilice las coordenadas en el data.frame df_mpol para crear un objeto sfg de tipo MULTIPOLYGON que contenga dos polygonos. Verifique que la clase y geometría del objeto es la correspondiente y haga un plot de cada objeto.</p>
+<p>df_mpol &lt;- data.frame( poligono = c(rep(‘poligono_1’,4),rep(‘poligono_2’,4)), latitud = c(-33.38943,-33.38911,-33.38959,-33.38991, -33.38883,-33.38846,-33.38893,-33.38929), longitud = c(-70.63566,-70.63531,-70.63468,-70.63500, -70.63500,-70.63461,-70.63396,-70.63435) )</p>
+<p>6- (20pts) Junte todas las geometrias anteriores en un objteo sfg de tipo GEOMETRY COLLECTION. Verifique que la clase y geometría del objeto es la correspondiente y haga un plot de cada objeto</p>
+<p>7- (20pts) Utilice las función st_sfc para convertir los objetos sfg en tipo sfc (salvo para la geometry collection), luego utilice la función st_sf para crear un objeto sf que contenga todas las geometrias. Agregue una columna nombre_geometria a los atributos en donde se identifique el tipo de geometria (ej, multipoligono, multilinea, multipuntos,etc).</p>
+<p>Simple feature collection with 5 features and 1 field Geometry type: GEOMETRY Dimension: XY Bounding box: xmin: -33.38991 ymin: -70.63566 xmax: -33.38846 ymax: -70.63396 CRS: NA geometry nombre_geometria 1 MULTIPOINT ((-33.38991 -70…. multipunto 2 LINESTRING (-33.38991 -70.6… linea 3 MULTILINESTRING ((-33.38991… multilinea 4 POLYGON ((-33.38943 -70.635… polígono 5 MULTIPOLYGON (((-33.38943 -… multipolígono</p>
+<p>8- (30pts) Las coordenadas siguientes corresponden a los puntos de ubicación de algunas estaciones meteorológicas automáticas (EMAs) en la región Metropolitana. Cree un objeto de tipo punto sfg para cada fila. Convierta todos los puntos en un objeto sfc y luego en un sf (revise la función st_as_sf).</p>
+<p>df &lt;- data.frame( latitud = c(-33.70, -33.07, -33.12,-33.67, -33.70, -33.65, -33.67, -33.66, -33.86, -33.21), longitud = c(-71.37, -70.75, -70.83, -70.58, -70.70, -71.1, -70.92, -70.76, -70.63, -70.71) )</p>
+<p>Agregue una columna nombre_ema como atributo con los nombres de acuerdo al siguiente vector:</p>
+<p>nombres_emas &lt;- c(“San Diego”, “Huechúnb Ex Lampa”, “Til til”, “Pirque”, “Buin”, “Melipilla”, “Talagante”, “Lo Herrera”, “Huelquen”, “Colina”)</p>
+<p>9- (20pts) Al objeto sf anterior asígnele el sistema de referencia de coordenadas (SRC) geográficas, datum WGS84. Luego cree otro objeto en donde se transforme el SRC del objeto anterior a coordenadas UTM huso 19 Sur, datum WGS84.</p>
+<p>10- (30pts) Cargue las capas vectoriales que debe descargar de la sección datos. Para cada una de las capas, indique:</p>
+<pre><code>tipo de geometría
+cantidad de variables y observaciones
+sistema de referencia de coordenadas y código EPSG</code></pre>
+<p>11- (20pts) Transforme el sistema de referencia de coordenadas (SRC) de cada una de las capas al que corresponde al código EPSG:4326.</p>
+<p>12- (30pts) Para la capa biodi_snaspe_2021 seleccione las áreas protegidas ubicadas en la región Metropolitana. Muestre el data.frame para las geometrias seleccionadas, para ellas seleccione las columnas de categoria y nom_unidad. Guarde el resultado en un archivo .csv llamado areas_protegidad_RM.csv. Guárdelo con configuración latina.</p>
+<p>13- (20pts) Guarde la capa resultante anterior en el disco en formato geopackage con el nombre areas_protegidad_RM.gpkg.</p>
 </section>
 
 </main>

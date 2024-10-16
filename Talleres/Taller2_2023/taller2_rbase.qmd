@@ -6,14 +6,14 @@ author: "Dr. Francisco Zambrano"
 date: "2024-09-02"
 lang: "es"
 execute:
-  echo: false
-  eval: false
+  echo: true
+  eval: true
 format:
   html:
     number-sections: true
     number-depth: 3
     smooth-scroll: true
-    code-fold: show
+    code-fold: true
     toc: true
     html-math-method: katex
     self-contained: true
@@ -50,17 +50,61 @@ x < 7
 
 2. Considere los dos vectores p = (3, 5, 6, 8) y q = (3, 3, 3). ¿Cuál es el resultado de p+q? ¿Qué pasa cuando se suman vectores con diferente cantidad de elementos?
 
+```{r}
+p <- c(3, 5, 6, 8)
+q <- c(3, 3, 3)
+p + q
+```
+
+Cuando se suman vectores con diferentes cantidad de elementos, R transforma el vector con menor cantidad de elementos en un vector reciclado, en el que se completa el vector, repitiendo sus valores, hasta alcanzar la longitud del vector de mayor dimensión.
+
+
 3. Considere los dos vectores, x = (4,6,5,7,10,9,4,15) e y = (0,10,1,8,2,3,4,1). ¿Cuál es el resultado de `x*y`?
+
+```{r}
+x <- c(4,6,5,7,10,9,4,15)
+y <- c(0,10,1,8,2,3,4,1)
+
+x*y
+```
 
 4. Considere los dos vectores a = (1,2,4,5,6) y b = (3,2,4,1,9). ¿Cuál es el resultado de `cbind(a,b)`?
 
+```{r}
+a <- c(1,2,4,5,6) 
+b <- c(3,2,4,1,9)
+cbind(a,b)
+```
+
 5. Considere los dos vectores, a, b a = (10,2,4,15) y b = (3,12,4,11). ¿Cuál es el resultado de `rbind(a,b)`?
+
+```{r}
+a <- c(10,2,4,15) 
+b <- c(3,12,4,11)
+rbind(a,b)
+```
 
 6. Determine cuantos elementos tiene el vector `letters`
 
+```{r}
+length(letters)
+```
+
+
 7. Del vector `letters` extraiga las letras `a`, `o` y `w` usando indexación.
 
+
+```{r}
+letters[c(1,15,23)]
+```
+
+
 8. Considere el siguiente vector v = (9, 4, 3, 76, 43, 22). Usando indexación extraiga el 2do y 4to elemento.
+
+```{r}
+v <- c(9, 4, 3, 76, 43, 22)
+v[c(2,4)]
+```
 
 9. Del vector que se genera con el siguiente script:
 
@@ -70,23 +114,57 @@ v <- runif(40,0,100)
 
 Extraiga los elementos que son menores que 50 y guardelos en el objeto `v_menor_50`.
 
+```{r}
+v[v < 50]
+```
+
 ## Matrices
 
 1. Cree 2 vectores A y B, donde A es (1,2,3) y B es (4,5,6). Con estos vectores,
 - use la función cbind() o rbind() para crear una matriz de 2 por 3 a partir de los vectores. 
 
+```{r}
+A <- c(1,2,3)
+B <- c(4,5,6)
+rbind(A,B)
+```
+
 2. Cree una matriz de 3 por 3 que consta de los números del 1 al 9. Cree esta matriz usando  1:9 y especificando el argumento nrow en la llamada a la función Matrix(). 
+
+```{r}
+m <- matrix(1:9,nrow = 3)
+m
+```
 
 3. Confirme que la matriz anterior es efectivamente una matriz usando la función `is.matrix()`
 
+```{r}
+is.matrix(m)
+```
+
 4. Cree una matriz de 5 por 5 con los números del 1 al 25 y asignela al objeto `mat2`. La primera fila debe tener los numero del 1 al 5.
+
+```{r}
+
+mat2 <- matrix(1:25,ncol=5,byrow = TRUE)
+mat2
+```
 
 5. Usando indexación, tome una subsección de `mat2` del ejercicio anterior que se ve así:  
 
 [1] [7,8]  
 [2] [12,13]
 
+```{r}
+mat2[2:3,2:3]
+```
+
 6. Determine la suma de todos los elementos de `mat2`
+
+```{r}
+sum(mat2)
+```
+
 
 7. El siguiente código crea en R la matriz de 5×5 que se muestra a continuación.
 
@@ -102,10 +180,23 @@ m
 Usando lo anterior, escriba código en R para generar las siguientes submatrices de m:
 
   - la submatriz de elementos en las filas 3, 4 o 5 y en las columnas 1 o 2
+  
+```{r}
+m[3:5,1:2]
+```
+  
 
   - la submatriz formada al eliminar las columnas 2 y 4
 
+```{r}
+m[,1:3]
+```
+
   - la submatriz de filas cuyo primer elemento de columna tiene un valor par 
+
+```{r}
+m[,!(m[1,] %% 2)]
+```
 
 ## Data.frames
 
@@ -193,7 +284,7 @@ colnames(exam_data)[which(names(exam_data) == "score")] = "avg_score"
 exam_data
 ```
 
-10. Cuente el número de valores NA en las columnas el `data.frame` `airquality`.
+10. Cuente el número de valores NA en las columnas del `data.frame` `airquality`.
 
 ```{r}
 exam_data <- data.frame(

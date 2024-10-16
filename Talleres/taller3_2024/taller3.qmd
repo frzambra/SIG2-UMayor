@@ -1,0 +1,165 @@
+---
+title: "Taller 3: Manipulación de datos en R"
+subtitle: "Uso Avanzado de Sistemas de Información Geográfica"
+institute: "Escuela de Ingeniería en Medio Ambiente, Universidad Mayor"
+author: "Dr. Francisco Zambrano"
+date: "2024-09-16"
+lang: "es"
+execute:
+  echo: true
+  eval: true
+format:
+  html:
+    number-sections: true
+    number-depth: 3
+    smooth-scroll: true
+    code-fold: true
+    toc: true
+    html-math-method: katex
+    self-contained: true
+---
+
+# ¿Qué debe entregar?
+
+Debeŕá utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (#) para la descripción del ejercicio e incorporar cualquier texto que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+Código
+
+# Ejercicio 1:
+# comentario explicando lo que se hace
+ 
+  Aca va el script que resuelve el ejericio 1
+
+```
+
+
+
+# Ejercicios:
+
+
+1- Cargue cada uno de los archivos delimitados por coma (.csv) en un objeto en R con el nombre del archivo sin considerar la extensión (.csv)
+
+```{r}
+paises <- read.csv2('../data/paises.csv')
+atmosfera <- read.csv2('../data/atmosfera.csv')
+aviones <- read.csv2('../data/clima.csv')
+clima <- read.csv2('../data/clima.csv')
+
+
+```
+
+2- ¿A qué tipo de estructura de datos corresponde cada uno de los objetos?
+
+```{r}
+class(paises)
+class(atmosfera)
+class(aviones)
+class(clima)
+```
+
+3- ¿Cuántas variables y observaciones tiene cada uno de los objetos?
+
+```{r}
+#variables
+ncol(paises)
+ncol(atmosfera)
+ncol(aviones)
+ncol(clima)
+
+#observaciones
+nrow(paises)
+nrow(atmosfera)
+nrow(aviones)
+nrow(clima)
+```
+
+4- ¿A qué tipo de datos corresponde cada una de las variables en cada objeto?
+
+```{r}
+str(paises)
+str(atmosfera)
+str(aviones)
+str(clima)
+
+```
+
+
+5- Respecto al objeto "paises", utilizando indexación seleccione sólo las observaciones que corresponden al país de Chile. Guarde el resultado en el objeto "paises_chile".
+
+```{r}
+#forma 1
+paises_chile <- paises[paises$pais == 'Chile',]
+
+#forma 2
+paises_chile2 <- subset(paises,pais == 'Chile')
+
+#comprueba si son lo mismo
+
+identical(paises_chile,paises_chile2)
+```
+
+
+6- Respecto al objeto "paises_chile", haga un gráfico de puntos y lineas en donde se pueda visualizar la variación de la esperanza de vida a través de los años. Los títulos de los ejes debe corresponder a "años" y "esperanza de vida".-
+
+```{r}
+plot(paises_chile$anio,paises_chile$esperanza_de_vida,type='b',
+     xlab= 'Años',ylab = 'Esperanza de Vida')
+```
+
+
+7- ¿Cuál es la esperanza de vida en Chile al año 2007?
+```{r}
+paises_chile[paises_chile$anio == 2007,]$esperanza_de_vida
+```
+
+
+8- ¿Cómo es la esperanza de vida en Chile en comparación con Argentina para el año 2007?
+
+```{r}
+paises[paises$pais %in% c('Chile','Argentina') & paises$anio == 2007,c(1,4)]
+```
+
+
+9- Respecto al objeto "atmosfera", grafique los puntos de longitud vs latitud.
+
+```{r}
+plot(atmosfera$longitud,atmosfera$latitud)
+```
+
+
+10- Respecto al objeto "atmosfera", si es necesario transforme la variable "temperatura" a gardos celsius.
+
+```{r}
+atmosfera$temperatura <- atmosfera$temperatura -273.15
+```
+
+
+11- Respecto al objeto clima, calcule la temperatura promedio del mes de diciembre del año 2013 en grados celsius, para cada aeropuerto. ¿Qué aeropuerto de Nueva York tiene la mayor y cuál la menor temperatura?
+
+```{r}
+#temperatura a °Celcisu
+
+clima$temperatura <- (clima$temperatura-32)*5/9
+aggregate(clima['temperatura'],by = list(origen = clima$origen),mean,na.rm = TRUE)
+```
+
+
+12- Respecto al objeto clima, ¿en qué meses se dan temperatura menores a -7°C?
+
+```{r}
+
+unique(clima[clima$temperatura < -7,]$mes)
+```
+
+
+13- Haga un subconjunto de los datos de clima que considere a las variables "origen", "anio", "mes", "dia", "hora" y "temperatura". La temperatura debe estar en grados celsius. Seleccione las observaciones del mes de enero y febrero. Guarde el resultado en un archivo en formato ".csv" con nombre "clima_ene_feb.csv"
+
+```{r}
+#| eval: false
+clima_selec <- clima[clima$mes %in% 1:2,c('origen','anio','mes','dia','hora','temperatura')]
+write_csv2(clima_selec,'../data/clima_seleccion.csv')
+
+```
+

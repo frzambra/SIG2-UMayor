@@ -1,0 +1,200 @@
+---
+title: "Taller 6: Operaciones geométricas con datos vectoriales"
+subtitle: "Uso Avanzado de Sistemas de Información Geográfica"
+institute: "Escuela de Ingeniería en Medio Ambiente, Universidad Mayor"
+author: "Dr. Francisco Zambrano"
+date: "2024-10-11"
+lang: "es"
+execute:
+  echo: true
+  eval: true
+format:
+  html:
+    number-sections: true
+    number-depth: 3
+    smooth-scroll: true
+    code-fold: true
+    toc: true
+    html-math-method: katex
+    self-contained: true
+---
+
+
+# Objetivo del taller
+
+Trabajar con operaciones geométricas con datos vectoriales en `R` con el paquete `{sf}`
+
+
+# Paquetes R
+
+Hasta el momento hemos trabajado con los paquetes que vienen inculidos en R base. Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos. El paquete con el que trabajaremos este taller es `{sf}`, el cual nos permite trabajar con datos de tipo vectoriales.
+
+
+Para instalar los paquetes debe realizar lo siguiente:
+
+```{r}
+#| eval: false
+# instala los paquetes
+install.packages('sf')
+ 
+# carga los paqutes en el entorno de R y permite utilizar 
+# las funciones adicionales que contienen
+ 
+library(sf)
+
+```
+
+
+# Data
+
+
+Los datos con los que debe trabajar son:
+
+1- Division comunal: capa con los límites comunales de Chile.
+
+2- Estaciones Chile: capa con la ubicación de las estaciones climáticas en Chile.
+
+
+Los puede descargar desde [acá](https://drive.google.com/file/d/1vDrP4LL-YvO7Dyk0YuO5ILvEHXAeWon1/view?usp=sharing).
+
+
+¿Qué debe entregar?
+
+
+Debeŕa utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+ Aca va el script que resuelve el ejericio 1
+ 
+}
+```
+
+Debe guardar el script con el nombre "taller6.R". Los archivos los debe subir en el campus virtual en la sección "Actividades -> Evaluaciones -> Taller 6"
+
+
+Fecha de entrega
+
+
+Lunes 14 de octubre hasta las 08:30am
+
+
+# Ejercicios
+
+
+1.- Ejercicio 1 (40pts)
+
+
+-  Cargue el archivo vectorial de división comunal de Chile.
+
+-  Seleccione las comunas de "La Florida", "Queilén" y "Molina"
+
+-  Realice una simplificación de la geometria con una tolerancia de 200, 500 y 1000 metros y asigne los resultados a nuevos objetos de R.
+
+-  Cree un mapa con los resultados.
+
+```{r}
+library(sf)
+div_comunal <- read_sf('../data/capas/division_comunal')
+
+div_comunal_sub <- subset(div_comunal,NOM_COM %in% c("La Florida", "Queilén", "Molina"))
+
+div_comsub_sim200 <- st_simplify(div_comunal_sub,dTolerance = 200)
+div_comsub_sim500 <- st_simplify(div_comunal_sub,dTolerance = 500)
+div_comsub_sim1000 <- st_simplify(div_comunal_sub,dTolerance = 1000)
+
+par(mfrow = c(3,4))
+plot(div_comunal_sub$geometry[1],main = 'Geometría Original')
+plot(div_comsub_sim200$geometry[1],main = 'dTolerance  =200m')
+plot(div_comsub_sim500$geometry[1],main = 'dTolerance  =500m')
+plot(div_comsub_sim1000$geometry[1],main = 'dTolerance  =1000m')
+
+plot(div_comunal_sub$geometry[2],main = 'Geometría Original')
+plot(div_comsub_sim200$geometry[2],main = 'dTolerance  =200m')
+plot(div_comsub_sim500$geometry[2],main = 'dTolerance  =500m')
+plot(div_comsub_sim1000$geometry[2],main = 'dTolerance  =1000m')
+
+plot(div_comunal_sub$geometry[3],main = 'Geometría Original')
+plot(div_comsub_sim200$geometry[3],main = 'dTolerance  =200m')
+plot(div_comsub_sim500$geometry[3],main = 'dTolerance  =500m')
+plot(div_comsub_sim1000$geometry[3],main = 'dTolerance  =1000m')
+
+
+```
+
+2.- Ejercicio 2 (40pts)
+
+
+-  Seleccione la región Metropolitana del archivo vectorial de la división comunal de Chile y asigneselo al objeto "rm" .
+
+-  Calcule los centroides de cada una de las comunas y guardelo en un objeto llamado "centro_rm"
+
+- Seleccione los centroides de las comunas de la provincia de Santiago
+
+-  Cree un mapa en donde se pueda ver los límites de las comunas de la provincia de Santiago y los centroides de cada una.
+
+```{r}
+rm <- subset(div_comunal,NOM_REG == "Región Metropolitana de Santiago")
+
+centroides <- st_centroid(rm)
+
+cent_prov_santiago <- centroides[centroides$NOM_PROV == "Santiago",]
+
+prov_sant <- rm[rm$NOM_PROV == 'Santiago',]
+
+plot(st_geometry(prov_sant))
+plot(cent_prov_santiago,add = TRUE,col='red')
+
+```
+
+
+
+3.- Ejercicio 3 (40pts)
+
+
+Haga lo mismo que en el ejercicio 2 pero para la región de Los Ríos, pero en el caso de la provincia considere la de Valdivia.
+
+```{r}
+lr <- subset(div_comunal,NOM_REG == "Región de Los Ríos")
+centroides <- st_centroid(lr)
+
+cent_prov_valdivia <- centroides[centroides$NOM_PROV == "Valdivia",]
+
+prov_valdivia <- lr[lr$NOM_PROV == 'Valdivia',]
+
+plot(st_geometry(prov_valdivia))
+plot(cent_prov_valdivia,add = TRUE,col='red')
+```
+
+
+
+
+4.- Ejercicio 4 (40pts)
+
+-  Cargue el archivo vectorial de estaciones de Chile.
+
+-  Seleccione las estaciones que se encuentran en la región de O'Higgins.
+
+-  Cree un buffer de 500m alrededor de cada estación.
+
+- Seleccione los buffer de las estaciones que pertenecen a la institución INIA.
+
+```{r}
+estaciones <- read_sf('../data/capas/estaciones_chile')
+
+reg_ohg <- subset(div_comunal,NOM_REG == "Región del Libertador Bernardo O'Higgins")
+
+reg_ohg_geo <- st_transform(reg_ohg,st_crs(estaciones))
+estas_ohg <- st_intersection(estaciones,reg_ohg_geo)
+
+estas_buffer <- st_buffer(estas_ohg,500)
+
+estas_buffer_inia <- subset(estas_buffer,institucio == 'INIA')
+
+plot(estas_buffer_inia$geometry,col='red')
+```
+
