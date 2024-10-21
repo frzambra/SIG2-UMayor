@@ -290,3 +290,80 @@ c(nc$geometry[1],nc$geometry[10])
 st_union(nc$geometry[1],nc$geometry[10])
 ```
 
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+- La transformación afín es cualquier transformación que preserve las líneas y el paralelismo. 
+
+- Sin embargo, los ángulos o la longitud no necesariamente se conservan. 
+
+- Las transformaciones afines incluyen, entre otras, desplazamiento (traslación), escalado y rotación. 
+
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Desplazamiento**
+
+```{r}
+nz_sfc = st_geometry(nz)
+plot(nz_sfc)
+```
+
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Desplazamiento**
+
+Mover la geometría 100.000 en el eje Y (Norte, longitud)
+
+
+```{r}
+nz_shift = nz_sfc + c(0, 100000)
+
+plot(nz_sfc)
+plot(nz_shift,add = TRUE,col='red',alpha = .6)
+```
+
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Escalado**
+
+```{r}
+nz_centroid_sfc = st_centroid(nz_sfc) 
+nz_scale = (nz_sfc - nz_centroid_sfc) * 0.5 + nz_centroid_sfc
+plot(nz_sfc)
+plot(nz_scale,add = TRUE,col='red',alpha = .6)
+
+```
+
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Rotación**
+
+Necesita una matriz de rotación
+
+$$R =\begin{bmatrix}
+cos(\theta) & -\sin(\theta)\\
+sin(\theta) & cos(\theta)
+\end{bmatrix}$$
+
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Rotación**
+
+Función de rotación
+
+```{r}
+rotation = function(a){
+  r = a * pi / 180 #grados a radianes
+  matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow = 2, ncol = 2)
+} 
+```
+
+## 6. Transformación afín {.smaller .scrollable background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" background-position="97.5% 2.5%" background-size="7.5%"}
+
+**Rotación**
+
+```{r}
+nz_rotate = (nz_sfc - nz_centroid_sfc) * rotation(30) + nz_centroid_sfc
+plot(nz_sfc)
+plot(nz_rotate,add = TRUE,col='red',alpha = .6)
+```
+

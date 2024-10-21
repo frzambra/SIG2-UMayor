@@ -31,7 +31,7 @@ II) Unidad 2: Manejo de datos espaciales en R
     6) [Datos Espaciales en R](Clase3/slides_clase32.html)
     7) [Sistemas de Referencia de Coordenadas (SRC)](Clase4/slides_SRC.html) 
     8) [Operaciones Geométricas con datos vectoriales](Clase4/slides_operaciones_vectoriales.html)
-<!--     9) [Maipulación de datos raster](Clase5/slides_manipulacion_rasters.html) -->
+    9) [Maipulación de datos raster](Clase5/slides_manipulacion_rasters.html)
 <!--     10) [Creación de mapas con {tmap}](Clase6/slides_mapas_con_tmap.html) -->
     
 ## Talleres

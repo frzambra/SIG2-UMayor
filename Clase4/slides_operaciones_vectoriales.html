@@ -700,6 +700,82 @@ Bounding box:  xmin: -81.74107 ymin: 36.23436 xmax: -80.02406 ymax: 36.58965
 Geodetic CRS:  NAD27</code></pre>
 </div>
 </div>
+</section>
+<section id="transformación-afín" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<ul>
+<li><p>La transformación afín es cualquier transformación que preserve las líneas y el paralelismo.</p></li>
+<li><p>Sin embargo, los ángulos o la longitud no necesariamente se conservan.</p></li>
+<li><p>Las transformaciones afines incluyen, entre otras, desplazamiento (traslación), escalado y rotación.</p></li>
+</ul>
+</section>
+<section id="transformación-afín-1" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<p><strong>Desplazamiento</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>nz_sfc <span class="ot">=</span> <span class="fu">st_geometry</span>(nz)</span>
+<span id="cb36-2"><a href=""></a><span class="fu">plot</span>(nz_sfc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_operaciones_vectoriales_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
+<section id="transformación-afín-2" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<p><strong>Desplazamiento</strong></p>
+<p>Mover la geometría 100.000 en el eje Y (Norte, longitud)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a>nz_shift <span class="ot">=</span> nz_sfc <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100000</span>)</span>
+<span id="cb37-2"><a href=""></a></span>
+<span id="cb37-3"><a href=""></a><span class="fu">plot</span>(nz_sfc)</span>
+<span id="cb37-4"><a href=""></a><span class="fu">plot</span>(nz_shift,<span class="at">add =</span> <span class="cn">TRUE</span>,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">alpha =</span> .<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_operaciones_vectoriales_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
+<section id="transformación-afín-3" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<p><strong>Escalado</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>nz_centroid_sfc <span class="ot">=</span> <span class="fu">st_centroid</span>(nz_sfc) </span>
+<span id="cb38-2"><a href=""></a>nz_scale <span class="ot">=</span> (nz_sfc <span class="sc">-</span> nz_centroid_sfc) <span class="sc">*</span> <span class="fl">0.5</span> <span class="sc">+</span> nz_centroid_sfc</span>
+<span id="cb38-3"><a href=""></a><span class="fu">plot</span>(nz_sfc)</span>
+<span id="cb38-4"><a href=""></a><span class="fu">plot</span>(nz_scale,<span class="at">add =</span> <span class="cn">TRUE</span>,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">alpha =</span> .<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_operaciones_vectoriales_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
+<section id="transformación-afín-4" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<p><strong>Rotación</strong></p>
+<p>Necesita una matriz de rotación</p>
+<p><span class="math display">\[R =\begin{bmatrix}
+cos(\theta) &amp; -\sin(\theta)\\
+sin(\theta) &amp; cos(\theta)
+\end{bmatrix}\]</span></p>
+</section>
+<section id="transformación-afín-5" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<p><strong>Rotación</strong></p>
+<p>Función de rotación</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a>rotation <span class="ot">=</span> <span class="cf">function</span>(a){</span>
+<span id="cb39-2"><a href=""></a>  r <span class="ot">=</span> a <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span> <span class="co">#grados a radianes</span></span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">cos</span>(r), <span class="fu">sin</span>(r), <span class="sc">-</span><span class="fu">sin</span>(r), <span class="fu">cos</span>(r)), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb39-4"><a href=""></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="transformación-afín-6" class="slide level2 smaller scrollable" data-background-image="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>6. Transformación afín</h2>
+<p><strong>Rotación</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>nz_rotate <span class="ot">=</span> (nz_sfc <span class="sc">-</span> nz_centroid_sfc) <span class="sc">*</span> <span class="fu">rotation</span>(<span class="dv">30</span>) <span class="sc">+</span> nz_centroid_sfc</span>
+<span id="cb40-2"><a href=""></a><span class="fu">plot</span>(nz_sfc)</span>
+<span id="cb40-3"><a href=""></a><span class="fu">plot</span>(nz_rotate,<span class="at">add =</span> <span class="cn">TRUE</span>,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">alpha =</span> .<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides_operaciones_vectoriales_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <p><img src="../img/logo_hemera_2024.png" class="slide-logo"></p>
 <div class="footer footer-default">
