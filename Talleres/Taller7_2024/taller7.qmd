@@ -5,8 +5,9 @@ author: 'Dr. Francisco Zambrano'
 format: 
   html:
     number-sections: true
-    echo: true
+    echo: false
     eval: true
+    warning: false
     table-of-contents: true
 lang: es
 editor: source
@@ -127,5 +128,18 @@ plot(st_geometry(comonointer))
 limdes <- st_geometry(lim) +c(5000,5000)
 plot(st_geometry(lim))
 plot(limdes,col = 'red', add = TRUE)
+```
+
+6. Utilice transformación affine para rotar en 45° cada una de las comunas.
+
+```{r}
+rotation = function(a){
+  r = a * pi / 180 #grados a radianes
+  matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow = 2, ncol = 2)
+} 
+lim_sfc <- st_geometry(lim)
+lim_cent_sfc <- st_centroid(lim_sfc)
+lim_rot = (lim_sfc - lim_cent_sfc) * rotation(45) + lim_cent_sfc
+plot(lim_rot)
 ```
 
