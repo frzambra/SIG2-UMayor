@@ -54,7 +54,7 @@ library(sf)
 
 Se proporcionan capas vectoriales con los que deberá trabajar en el taller, estas corresponden a estaciones de calidad de aire y capas de biodiversidad, ubicados en Chile.
 
-El archivo comprimido (.zip) que contiene los archivos los debe descargar desde acá.
+El archivo comprimido (.zip) que contiene los archivos los debe descargar desde [acá](https://drive.google.com/file/d/13YYw8KDhEab3sLeMwOCcQ7Wk1WAUCojc/view?usp=sharing).
 
 
 ¿Qué debe entregar?
@@ -84,7 +84,7 @@ R Core Team. 2023. R: A Language and Environment for Statistical Computing. Vien
 1- (10pts) Cree un objeto sfg de tipo punto de dos, tres y cuatro dimensiones. Utilicé las coordenadas de latitud -36.25 y longitud -72.65 una elevación de 200 metros y una direccción de 90°. Revise la estructura del objeto creado utilizando la función str.
 
 ```{r}
-
+library(sf)
 punto <- st_point(c(-72.65,-36.25,200,90))
 str(punto)
 ```

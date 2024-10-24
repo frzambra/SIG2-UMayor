@@ -32,6 +32,8 @@ En la primera parte del curso se familiarizó con R [@R2023], las principales es
 + temp_chile.tif: datos de temperatura promedio mensual para chile (1990-2020)
 + prec_chile.tif: datos de precipitación acumulada mensual para chile (1990-2020)
 
+Descargar desde [acá](https://drive.google.com/drive/folders/1gXapUcoHkQxNBm0-WDBpmZxmMGSnbRob?usp=sharing)
+
 # Objetivo del taller
 
 Familiarizarce con `{terra}` para crear datos raster, asignarles SRC, transformar los SRC, leer y guardar archivos rasters desde/hacia el disco, y explorar su estructura.
