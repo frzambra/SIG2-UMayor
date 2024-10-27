@@ -19,6 +19,9 @@ format:
 ::: incremental
 1.  Subconjunto espaciales con datos raster
 2.  Algebra raster
+3.  Operaciones locales
+4.  Operaciones globales
+5.  Union de rasters (merge)
 :::
 
 # 1. Subconjunto espacial raster {background-color="orange"}
@@ -78,8 +81,24 @@ plot(clip,add = TRUE)
 
 Extraer desde el objeto `elev` los valores que se encuentran en la extensión del objeto `clip`
 ```{r}
-elev[clip]
+elev[clip] #como valores númericos
+
+elev_clip <- elev[clip,drop = FALSE]
+elev_clip
 ```
+
+## Subconjunto espacial {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+La función `crop` sirve para realizar `elev[clip,drop = FALSE]`
+
+```{r}
+elev_crop <- crop(elev,clip)
+par(mfrow = c(1,2))
+plot(elev_clip)
+plot(elev_crop)
+```
+
+
 
 ## Subconjunto espacial {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
@@ -100,7 +119,7 @@ elev[1:2,drop = FALSE]
 
 ## Subconjunto espacial {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
-Utilizando un raster con valores `NA` para ser utilizado como mascara
+Utilizando un raster con valores `lógicos` para ser utilizado como mascara
 
 ```{r}
 rmask <- elev
@@ -180,9 +199,8 @@ Muchas de las operaciones genéricas han sido implementadas
 -   Operadores lógicos: `>, >=, <, ==, !`
 -   Funciones como: `abs, round, ceiling, floor, trunc, sqrt, log, log10, exp, cos, sin, atan, tan, max, min, range, prod, sum, any, all`
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+##  3. Operaciones locales{.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
-### Operaciones locales
 ```{r}
 e1 <- elev + elev
 e2<- elev^2
@@ -195,7 +213,7 @@ plot(e3,main = 'log(elev)')
 plot(e4,main = 'elev > 5')
 ```
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+##  3. Operaciones locales{.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
 ### Reclasificación
 
@@ -206,7 +224,7 @@ rcl <- matrix(c(0, 12, 1, 12, 24, 2, 24, 36, 3), ncol = 3, byrow = TRUE)
 rcl
 ```
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+##  3. Operaciones locales{.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
 ### Reclasificación
 
@@ -217,7 +235,7 @@ plot(elev);text(elev)
 plot(recl);text(recl)
 ```
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+##  3. Operaciones locales{.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
 Funciones de resumen: `min`, `max`, `mean`, `prod`, `sum`, `Median`, `cv`, `range`, `any`, `all`, siempre devuelven un `SpatRaster`
 
@@ -227,8 +245,7 @@ names(mr) <- c('elev+elev','elev^2','log(elev)','elev > 5')
 plot(mr)
 ```
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
-
+##  3. Operaciones locales{.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 Funciones de resumen: `min`, `max`, `mean`, `prod`, `sum`, `Median`, `cv`, `range`, `any`, `all`, siempre devuelven un `SpatRaster`
 
 ```{r}
@@ -240,11 +257,9 @@ par(mfrow= c(1,4))
 plot(mr_mean);plot(mr_max);plot(mr_min);plot(mr_sum)
 ```
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+## 4. Operaciones globales {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
-### Operaciones globales
-
-Usar `global` para obtener un valor resumen de todo el raster. En general operaciones de estadística descriptiva.
+Usar la función `global` para obtener un valor resumen de todo el raster. En general operaciones de estadística descriptiva.
 
 ```{r}
 global(e1, 'mean')
@@ -254,9 +269,7 @@ global(e1, 'sum')
 
 ```
 
-## 2. Algebra raster {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
-
-### Operaciones globales
+## 4. Operaciones globales {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
 
 Cuando se aplica sobre un raster multicapa, devuleve el resultado de la función sobre cada capa del raster.
 
@@ -274,6 +287,61 @@ global(mr, 'sum')
 ```
 :::
 :::
+
+## 5. Unión de rasters (merge) {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Cuando tenemos dos o más raster de una misma área geográfica y queremos unirlos.
+
+
+```{r}
+r1 <- rast(xmin = 0, xmax=5,ymin=0,ymax=5,vals = 1:25,ncol=5,nrow = 5)
+r2 <- rast(xmin = 3, xmax=8,ymin=0,ymax=5,vals = 25:1,ncol=5, nrow = 5)
+par(mfrow = c(1,2))
+plot(r1);text(r1)
+plot(r2);text(r2)
+
+```
+
+## 5. Unión de rasters (merge) {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Cuando tenemos dos o más raster de una misma área geográfica y queremos unirlos.
+
+```{r}
+plot(r1,xlim = c(0,8));text(r1)
+plot(r2,add = TRUE);text(r2)
+```
+
+## 5. Unión de rasters (merge) {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+Para unirlos utilizamos la función `merge`. 
+
+* Los raster deben tener el mismo origen y resolución.
+
+* Los valores del primer raster se mantienen por defecto.
+
+
+```{r}
+m <- merge(r1,r2)
+plot(m);text(m)
+```
+
+## 5. Unión de rasters (merge) {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+* También podemos utilizar la función `mosaic`. 
+* `mosaic` permite definir una función para resolver en la zona de intersección, por defecto utiliza el promedio, pero se puede cambiar la función.
+* `mosaic` es más lento que `merge`,
+
+```{r}
+mos <- mosaic(r1,r2)
+plot(mos);text(mos)
+```
+
+## 5. Unión de rasters (merge) {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"}
+
+```{r}
+mos2 <- mosaic(r1,r2,fun='max')
+plot(mos2);text(mos2)
+```
 
 
 <!-- # 3. Funciones con {terra} {background-color="lightblue"} -->

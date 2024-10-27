@@ -43,6 +43,7 @@ II) Unidad 2: Manejo de datos espaciales en R
 5) [Taller 5: Manejo de datos raster con {terra}](Talleres/taller5_2024/taller5.html)
 6) [Taller 6: Operaciones geométricas con {sf}](Talleres/taller6_2024/taller6.html)
 7) [Taller 7: Operaciones geométricas con {sf}](Talleres/Taller7_2024/taller7.html)
+8) [Taller 8: Operaciones espaciales con datos raster {terra}](Talleres/taller8_2024/taller8.html)
 
 ## Proyecto Final (20%)
 

@@ -409,6 +409,9 @@ Dr.&nbsp;Francisco Zambrano
 <ol type="1">
 <li class="fragment">Subconjunto espaciales con datos raster</li>
 <li class="fragment">Algebra raster</li>
+<li class="fragment">Operaciones locales</li>
+<li class="fragment">Operaciones globales</li>
+<li class="fragment">Union de rasters (merge)</li>
 </ol>
 </div>
 </section>
@@ -477,21 +480,46 @@ Dr.&nbsp;Francisco Zambrano
 <h2>Subconjunto espacial</h2>
 <p>Extraer desde el objeto <code>elev</code> los valores que se encuentran en la extensión del objeto <code>clip</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>elev[clip]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>elev[clip] <span class="co">#como valores númericos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  elev
 1   18
 2   24</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>elev_clip <span class="ot">&lt;-</span> elev[clip,drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb10-2"><a href=""></a>elev_clip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 2, 1, 1  (nrow, ncol, nlyr)
+resolution  : 0.5, 0.5  (x, y)
+extent      : 1, 1.5, -0.5, 0.5  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+source(s)   : memory
+varname     : elev 
+name        : elev 
+min value   :   18 
+max value   :   24 </code></pre>
+</div>
 </div>
 </section>
 <section id="subconjunto-espacial-5" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>Subconjunto espacial</h2>
+<p>La función <code>crop</code> sirve para realizar <code>elev[clip,drop = FALSE]</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>elev_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(elev,clip)</span>
+<span id="cb12-2"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb12-3"><a href=""></a><span class="fu">plot</span>(elev_clip)</span>
+<span id="cb12-4"><a href=""></a><span class="fu">plot</span>(elev_crop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="subconjunto-espacial-6" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
 <h2>Subconjunto espacial</h2>
 <p><strong>Con indexación</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>elev[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>elev[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   elev
 1     1
@@ -510,7 +538,7 @@ Dr.&nbsp;Francisco Zambrano
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>elev[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>elev[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 1, 2, 1  (nrow, ncol, nlyr)
@@ -526,38 +554,25 @@ max value   :    2 </code></pre>
 </div>
 </div></div>
 </section>
-<section id="subconjunto-espacial-6" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>Subconjunto espacial</h2>
-<p>Utilizando un raster con valores <code>NA</code> para ser utilizado como mascara</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>rmask <span class="ot">&lt;-</span> elev</span>
-<span id="cb14-2"><a href=""></a><span class="fu">values</span>(rmask) <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>), <span class="dv">36</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb14-4"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
-<span id="cb14-5"><a href=""></a><span class="fu">plot</span>(rmask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
 <section id="subconjunto-espacial-7" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
 <h2>Subconjunto espacial</h2>
+<p>Utilizando un raster con valores <code>lógicos</code> para ser utilizado como mascara</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>em <span class="ot">&lt;-</span> elev[rmask,drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb15-2"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb15-3"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
-<span id="cb15-4"><a href=""></a><span class="fu">plot</span>(em);<span class="fu">text</span>(em)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>rmask <span class="ot">&lt;-</span> elev</span>
+<span id="cb17-2"><a href=""></a><span class="fu">values</span>(rmask) <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>), <span class="dv">36</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb17-4"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
+<span id="cb17-5"><a href=""></a><span class="fu">plot</span>(rmask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
-</div>
-<p>Utilizando un raster con valores <code>NA</code> para ser utilizado como mascara con la función <code>mask</code></p>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="subconjunto-espacial-8" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>Subconjunto espacial</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb16-2"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
-<span id="cb16-3"><a href=""></a><span class="fu">plot</span>(rmask,<span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>em <span class="ot">&lt;-</span> elev[rmask,drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb18-2"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb18-3"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
+<span id="cb18-4"><a href=""></a><span class="fu">plot</span>(em);<span class="fu">text</span>(em)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -566,33 +581,46 @@ max value   :    2 </code></pre>
 </div>
 </div>
 </div>
+<p>Utilizando un raster con valores <code>NA</code> para ser utilizado como mascara con la función <code>mask</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb19-2"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
+<span id="cb19-3"><a href=""></a><span class="fu">plot</span>(rmask,<span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="subconjunto-espacial-8" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<section id="subconjunto-espacial-9" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
 <h2>Subconjunto espacial</h2>
 <p>Utilizando un raster con valores <code>NA</code> para ser utilizado como mascara.</p>
 <p>Se puede utilizar la función <code>mask</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>rmask[<span class="fu">isFALSE</span>(rmask)] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co">#transforma FALSE to NA para aplicar mask</span></span>
-<span id="cb17-2"><a href=""></a>em <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev,rmask) </span>
-<span id="cb17-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb17-4"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
-<span id="cb17-5"><a href=""></a><span class="fu">plot</span>(em);<span class="fu">text</span>(em)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>rmask[<span class="fu">isFALSE</span>(rmask)] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co">#transforma FALSE to NA para aplicar mask</span></span>
+<span id="cb20-2"><a href=""></a>em <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev,rmask) </span>
+<span id="cb20-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb20-4"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
+<span id="cb20-5"><a href=""></a><span class="fu">plot</span>(em);<span class="fu">text</span>(em)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
-<section id="subconjunto-espacial-9" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
+<section id="subconjunto-espacial-10" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
 <h2>Subconjunto espacial</h2>
 <p>Se pueden crear mascaras con operaciones lógicas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>m <span class="ot">&lt;-</span> elev</span>
-<span id="cb18-2"><a href=""></a>m[m <span class="sc">&gt;</span><span class="dv">30</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb18-3"><a href=""></a>em2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev,m)</span>
-<span id="cb18-4"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb18-5"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
-<span id="cb18-6"><a href=""></a><span class="fu">plot</span>(em2);<span class="fu">text</span>(em2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>m <span class="ot">&lt;-</span> elev</span>
+<span id="cb21-2"><a href=""></a>m[m <span class="sc">&gt;</span><span class="dv">30</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb21-3"><a href=""></a>em2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev,m)</span>
+<span id="cb21-4"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb21-5"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
+<span id="cb21-6"><a href=""></a><span class="fu">plot</span>(em2);<span class="fu">text</span>(em2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section></section>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section id="algebra-raster" class="title-slide slide level1 center" data-background-color="grey">
 <h1>2. Algebra raster</h1>
@@ -620,29 +648,28 @@ max value   :    2 </code></pre>
 </ul>
 </div>
 </section>
-<section id="algebra-raster-3" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
-<h3 id="operaciones-locales">Operaciones locales</h3>
+<section id="operaciones-locales" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>3. Operaciones locales</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>e1 <span class="ot">&lt;-</span> elev <span class="sc">+</span> elev</span>
-<span id="cb19-2"><a href=""></a>e2<span class="ot">&lt;-</span> elev<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb19-3"><a href=""></a>e3 <span class="ot">&lt;-</span> <span class="fu">log</span>(elev)</span>
-<span id="cb19-4"><a href=""></a>e4 <span class="ot">&lt;-</span> elev <span class="sc">&gt;</span> <span class="dv">5</span></span>
-<span id="cb19-5"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>))</span>
-<span id="cb19-6"><a href=""></a><span class="fu">plot</span>(e1,<span class="at">main =</span> <span class="st">'elev+elev'</span>)</span>
-<span id="cb19-7"><a href=""></a><span class="fu">plot</span>(e2,<span class="at">main =</span> <span class="st">'elev^2'</span>)</span>
-<span id="cb19-8"><a href=""></a><span class="fu">plot</span>(e3,<span class="at">main =</span> <span class="st">'log(elev)'</span>)</span>
-<span id="cb19-9"><a href=""></a><span class="fu">plot</span>(e4,<span class="at">main =</span> <span class="st">'elev &gt; 5'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>e1 <span class="ot">&lt;-</span> elev <span class="sc">+</span> elev</span>
+<span id="cb22-2"><a href=""></a>e2<span class="ot">&lt;-</span> elev<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb22-3"><a href=""></a>e3 <span class="ot">&lt;-</span> <span class="fu">log</span>(elev)</span>
+<span id="cb22-4"><a href=""></a>e4 <span class="ot">&lt;-</span> elev <span class="sc">&gt;</span> <span class="dv">5</span></span>
+<span id="cb22-5"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>))</span>
+<span id="cb22-6"><a href=""></a><span class="fu">plot</span>(e1,<span class="at">main =</span> <span class="st">'elev+elev'</span>)</span>
+<span id="cb22-7"><a href=""></a><span class="fu">plot</span>(e2,<span class="at">main =</span> <span class="st">'elev^2'</span>)</span>
+<span id="cb22-8"><a href=""></a><span class="fu">plot</span>(e3,<span class="at">main =</span> <span class="st">'log(elev)'</span>)</span>
+<span id="cb22-9"><a href=""></a><span class="fu">plot</span>(e4,<span class="at">main =</span> <span class="st">'elev &gt; 5'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
-<section id="algebra-raster-4" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="operaciones-locales-1" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>3. Operaciones locales</h2>
 <h3 id="reclasificación">Reclasificación</h3>
 <p>Agrupamos los valores por un rango que define una clase y se le asigna un valor</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>rcl <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">2</span>, <span class="dv">24</span>, <span class="dv">36</span>, <span class="dv">3</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-2"><a href=""></a>rcl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>rcl <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">24</span>, <span class="dv">2</span>, <span class="dv">24</span>, <span class="dv">36</span>, <span class="dv">3</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href=""></a>rcl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]    0   12    1
@@ -651,75 +678,73 @@ max value   :    2 </code></pre>
 </div>
 </div>
 </section>
-<section id="algebra-raster-5" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
+<section id="operaciones-locales-2" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>3. Operaciones locales</h2>
 <h3 id="reclasificación-1">Reclasificación</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(elev, <span class="at">rcl =</span> rcl)</span>
-<span id="cb22-2"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb22-3"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
-<span id="cb22-4"><a href=""></a><span class="fu">plot</span>(recl);<span class="fu">text</span>(recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
-<section id="algebra-raster-6" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
-<p>Funciones de resumen: <code>min</code>, <code>max</code>, <code>mean</code>, <code>prod</code>, <code>sum</code>, <code>Median</code>, <code>cv</code>, <code>range</code>, <code>any</code>, <code>all</code>, siempre devuelven un <code>SpatRaster</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>mr <span class="ot">&lt;-</span> <span class="fu">c</span>(e1,e2,e3,e4) <span class="co">#raster multicapa</span></span>
-<span id="cb23-2"><a href=""></a><span class="fu">names</span>(mr) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'elev+elev'</span>,<span class="st">'elev^2'</span>,<span class="st">'log(elev)'</span>,<span class="st">'elev &gt; 5'</span>)</span>
-<span id="cb23-3"><a href=""></a><span class="fu">plot</span>(mr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(elev, <span class="at">rcl =</span> rcl)</span>
+<span id="cb25-2"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb25-3"><a href=""></a><span class="fu">plot</span>(elev);<span class="fu">text</span>(elev)</span>
+<span id="cb25-4"><a href=""></a><span class="fu">plot</span>(recl);<span class="fu">text</span>(recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section>
-<section id="algebra-raster-7" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
+<section id="operaciones-locales-3" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>3. Operaciones locales</h2>
 <p>Funciones de resumen: <code>min</code>, <code>max</code>, <code>mean</code>, <code>prod</code>, <code>sum</code>, <code>Median</code>, <code>cv</code>, <code>range</code>, <code>any</code>, <code>all</code>, siempre devuelven un <code>SpatRaster</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>mr_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(mr)</span>
-<span id="cb24-2"><a href=""></a>mr_max <span class="ot">&lt;-</span> <span class="fu">max</span>(mr)</span>
-<span id="cb24-3"><a href=""></a>mr_min <span class="ot">&lt;-</span> <span class="fu">min</span>(mr)</span>
-<span id="cb24-4"><a href=""></a>mr_sum <span class="ot">&lt;-</span> <span class="fu">sum</span>(mr)</span>
-<span id="cb24-5"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>))</span>
-<span id="cb24-6"><a href=""></a><span class="fu">plot</span>(mr_mean);<span class="fu">plot</span>(mr_max);<span class="fu">plot</span>(mr_min);<span class="fu">plot</span>(mr_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>mr <span class="ot">&lt;-</span> <span class="fu">c</span>(e1,e2,e3,e4) <span class="co">#raster multicapa</span></span>
+<span id="cb26-2"><a href=""></a><span class="fu">names</span>(mr) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'elev+elev'</span>,<span class="st">'elev^2'</span>,<span class="st">'log(elev)'</span>,<span class="st">'elev &gt; 5'</span>)</span>
+<span id="cb26-3"><a href=""></a><span class="fu">plot</span>(mr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
-<section id="algebra-raster-8" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
-<h3 id="operaciones-globales">Operaciones globales</h3>
-<p>Usar <code>global</code> para obtener un valor resumen de todo el raster. En general operaciones de estadística descriptiva.</p>
+<section id="operaciones-locales-4" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>3. Operaciones locales</h2>
+<p>Funciones de resumen: <code>min</code>, <code>max</code>, <code>mean</code>, <code>prod</code>, <code>sum</code>, <code>Median</code>, <code>cv</code>, <code>range</code>, <code>any</code>, <code>all</code>, siempre devuelven un <code>SpatRaster</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>mr_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(mr)</span>
+<span id="cb27-2"><a href=""></a>mr_max <span class="ot">&lt;-</span> <span class="fu">max</span>(mr)</span>
+<span id="cb27-3"><a href=""></a>mr_min <span class="ot">&lt;-</span> <span class="fu">min</span>(mr)</span>
+<span id="cb27-4"><a href=""></a>mr_sum <span class="ot">&lt;-</span> <span class="fu">sum</span>(mr)</span>
+<span id="cb27-5"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>))</span>
+<span id="cb27-6"><a href=""></a><span class="fu">plot</span>(mr_mean);<span class="fu">plot</span>(mr_max);<span class="fu">plot</span>(mr_min);<span class="fu">plot</span>(mr_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
+<section id="operaciones-globales" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>4. Operaciones globales</h2>
+<p>Usar la función <code>global</code> para obtener un valor resumen de todo el raster. En general operaciones de estadística descriptiva.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     mean
 elev   37</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'max'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'max'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     max
 elev  72</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'min'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'min'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     min
 elev   2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'sum'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">global</span>(e1, <span class="st">'sum'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sum
 elev 1332</code></pre>
 </div>
 </div>
 </section>
-<section id="algebra-raster-9" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
-<h2>2. Algebra raster</h2>
-<h3 id="operaciones-globales-1">Operaciones globales</h3>
+<section id="operaciones-globales-1" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>4. Operaciones globales</h2>
 <p>Cuando se aplica sobre un raster multicapa, devuleve el resultado de la función sobre cada capa del raster.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 mean
 elev+elev  37.0000000
@@ -727,7 +752,7 @@ elev^2    450.1666667
 log(elev)   2.6588804
 elev &gt; 5    0.8611111</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'max'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'max'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  max
 elev+elev   72.000000
@@ -738,7 +763,7 @@ elev &gt; 5     1.000000</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'min'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'min'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          min
 elev+elev   2
@@ -746,7 +771,7 @@ elev^2      1
 log(elev)   0
 elev &gt; 5    0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'sum'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">global</span>(mr, <span class="st">'sum'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  sum
 elev+elev  1332.00000
@@ -756,6 +781,67 @@ elev &gt; 5     31.00000</code></pre>
 </div>
 </div>
 </div></div>
+</section>
+<section id="unión-de-rasters-merge" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>5. Unión de rasters (merge)</h2>
+<p>Cuando tenemos dos o más raster de una misma área geográfica y queremos unirlos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>r1 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax=</span><span class="dv">5</span>,<span class="at">ymin=</span><span class="dv">0</span>,<span class="at">ymax=</span><span class="dv">5</span>,<span class="at">vals =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,<span class="at">ncol=</span><span class="dv">5</span>,<span class="at">nrow =</span> <span class="dv">5</span>)</span>
+<span id="cb44-2"><a href=""></a>r2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">xmin =</span> <span class="dv">3</span>, <span class="at">xmax=</span><span class="dv">8</span>,<span class="at">ymin=</span><span class="dv">0</span>,<span class="at">ymax=</span><span class="dv">5</span>,<span class="at">vals =</span> <span class="dv">25</span><span class="sc">:</span><span class="dv">1</span>,<span class="at">ncol=</span><span class="dv">5</span>, <span class="at">nrow =</span> <span class="dv">5</span>)</span>
+<span id="cb44-3"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb44-4"><a href=""></a><span class="fu">plot</span>(r1);<span class="fu">text</span>(r1)</span>
+<span id="cb44-5"><a href=""></a><span class="fu">plot</span>(r2);<span class="fu">text</span>(r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
+<section id="unión-de-rasters-merge-1" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>5. Unión de rasters (merge)</h2>
+<p>Cuando tenemos dos o más raster de una misma área geográfica y queremos unirlos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">plot</span>(r1,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">8</span>));<span class="fu">text</span>(r1)</span>
+<span id="cb45-2"><a href=""></a><span class="fu">plot</span>(r2,<span class="at">add =</span> <span class="cn">TRUE</span>);<span class="fu">text</span>(r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
+<section id="unión-de-rasters-merge-2" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>5. Unión de rasters (merge)</h2>
+<p>Para unirlos utilizamos la función <code>merge</code>.</p>
+<ul>
+<li><p>Los raster deben tener el mismo origen y resolución.</p></li>
+<li><p>Los valores del primer raster se mantienen por defecto.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>m <span class="ot">&lt;-</span> <span class="fu">merge</span>(r1,r2)</span>
+<span id="cb46-2"><a href=""></a><span class="fu">plot</span>(m);<span class="fu">text</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
+<section id="unión-de-rasters-merge-3" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>5. Unión de rasters (merge)</h2>
+<ul>
+<li>También podemos utilizar la función <code>mosaic</code>.</li>
+<li><code>mosaic</code> permite definir una función para resolver en la zona de intersección, por defecto utiliza el promedio, pero se puede cambiar la función.</li>
+<li><code>mosaic</code> es más lento que <code>merge</code>,</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>mos <span class="ot">&lt;-</span> <span class="fu">mosaic</span>(r1,r2)</span>
+<span id="cb47-2"><a href=""></a><span class="fu">plot</span>(mos);<span class="fu">text</span>(mos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
+<section id="unión-de-rasters-merge-4" class="slide level2 smaller scrollable" data-background-image="https://rspatial.github.io/terra/reference/figures/logo.png" data-background-position="97.5% 2.5%" data-background-size="7.5%">
+<h2>5. Unión de rasters (merge)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>mos2 <span class="ot">&lt;-</span> <span class="fu">mosaic</span>(r1,r2,<span class="at">fun=</span><span class="st">'max'</span>)</span>
+<span id="cb48-2"><a href=""></a><span class="fu">plot</span>(mos2);<span class="fu">text</span>(mos2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides_manipulacion_rasters_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 <!-- # 3. Funciones con {terra} {background-color="lightblue"} -->
 <!-- ## 3. Funciones con {terra} {.smaller .scrollable background-image="https://rspatial.github.io/terra/reference/figures/logo.png" background-position="97.5% 2.5%" background-size="7.5%"} -->
 <!-- ### Modificar objetos raster -->

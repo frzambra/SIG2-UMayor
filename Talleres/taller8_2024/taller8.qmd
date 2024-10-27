@@ -1,0 +1,183 @@
+---
+title: "Taller 8: Operaciones espaciales con datos raster {terra}"
+subtitle: "Uso Avanzado de Sistemas de Información Geográfica"
+institute: "Escuela de Ingeniería en Medio Ambiente, Universidad Mayor"
+author: "Dr. Francisco Zambrano"
+date: "2024-10-28"
+lang: "es"
+execute:
+  echo: false
+  eval: true
+format:
+  html:
+    number-sections: true
+    number-depth: 3
+    smooth-scroll: true
+    code-fold: true
+    toc: true
+    html-math-method: katex
+    self-contained: true
+---
+
+# Descripción
+
+
+En la primera parte del curso se familiarizó con R [@R2023], las principales estructuras de datos, como realizar indexación, conoció algunas funciones y pudo realizar algunos gráficos básicos; utilizando R base. Ahora, en el curso hemos empezado a trabajar en R con datos geoespaciales de tipo vectoriales y raster. Para manejar datos vectoriales utilizamos `{sf}` y para datos de tipo raster `{terra}`. En el taller anterior trabajo realizando operaciones geométricas con datos vectoriales. En este taller trabajaremos con operaciones espaciales con datos raster utilizando la libreria `{terra}`.
+
+# Objetivo del taller
+
+Manejar operaciones espaciales con datos raster utilizando la libreria `{terra}`.
+
+
+# Instalar y cargar {terra}
+
+Hasta el momento en el curso hemos trabajado con los paquetes que vienen inculidos en R base (stats, graphics, grDevices, utils, datasets, methods y base). Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos y cargarlos en R. En este taller trabajaremos con `{terra}` para poder manejar datos espaciales rasters.
+
+
+Para instala y cargar `{terra}` debe realizar lo siguiente:
+
+```{r}
+#| eval: false
+# instala {terra}
+install.packages('terra')
+ 
+# cargar {terra} en el entorno de R para poder utilizar 
+# las funciones adicionales para manejo de datos vectoriales que contiene
+ 
+library(terra)
+```
+
+# Data
+
+Para este taller se trabajará con los siguientes datos raster
+
++ `dem_chile.tif` : datos de elevación para chile
++ `temp_chile.tif`: datos de temperatura promedio mensual para chile (1990-2020). Tiene 12 capas que corresponden a los meses del año, cada capa corresponde al promedio de temperatura para 1990-2020 de la temperatura para cada mes (enero a diciembre).
++ `prec_chile.tif:` datos de precipitación acumulada mensual para chile (1990-2020). Tiene 12 capas que corresponden a los meses del año, cada capa corresponde a la precipitación acumualda mensual promedio para 1990-2020 (enero a diciembre).
+
+Descargar desde [acá](https://drive.google.com/drive/folders/1gXapUcoHkQxNBm0-WDBpmZxmMGSnbRob?usp=sharing)
+
+# ¿Qué debe entregar?
+
+Deberá utilizar RStudio para crear un script, en donde resolverá cada uno de los ejercicios. Debe utilizar los comentarios (`#`) para hacer una descripción del ejercicio e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+ Acá va el script que resuelve el ejericio 1
+  
+}
+```
+
+
+Debe guardar el script con el nombre `taller8.R`. Los archivos los debe subir en el campus virtual en la sección `Actividades -> Evaluaciones -> Talleres -> Taller5`
+
+
+# Fecha de entrega
+
+Lunes 28 de octubre hasta las 23:59pm
+
+
+# Ejercicios
+
+1. Cree una capa raster de mascara respecto a la extensión definida por:
++ longitud entre `72°53' 4"O`  y `71°0'26"O` 
++ latitudes `37° 11' 51"S` y `36° 0' 20"`
+
+```{r}
+library(terra)
+dem <- rast('../data/capas_raster/dem_chile.tif')
+rmask <- rast(xmin = -72.88441,ymin=-37.19762,xmax=-71.00730,ymax=-36.00556)
+values(rmask) <- 1:ncell(rmask)
+```
+
+2. Aplique la mascara anterior a los raster de elevación, precipitación y temperatura.
+
+```{r}
+temp <- rast('../data/capas_raster/temp_chile.tif')
+pre <- rast('../data/capas_raster/prec_chile.tif')
+dem_m <- dem[rmask,drop = FALSE]
+temp_m <- crop(temp,rmask)
+pre_m <- crop(pre,rmask)
+plot(dem_m)
+plot(temp_m)
+plot(pre_m)
+```
+
+3. Calcule la temperatura promedio anual y la precipitación acumulada anual, para los raster enmascarados de la pregunta anterior.
+
+```{r}
+temp_avg <- mean(temp_m)
+pre_acu <- sum(pre_m)
+plot(temp_avg)
+plot(pre_acu)
+```
+
+4. Utilizando el raster de elevación enmascarado para la extensión dada, cree una nueva mascara que considere las elevaciones entre 100 y 1500m
+
+```{r}
+mask_dem <- dem_m
+mask_dem[mask_dem < 100 | mask_dem > 1500] <- NA
+plot(mask_dem)
+```
+
+5. Aplique la mascara anterior a los raster resultantes del ejercicio 3 de precipitación y temperatura.
+
+```{r}
+pre_acu_mask <- mask(pre_acu,mask_dem)
+temp_avg_mask <- mask(temp_avg,mask_dem)
+par(mfrow = c(1,2))
+plot(pre_acu_mask)
+plot(temp_avg_mask)
+```
+
+6. Respecto al rastre de temperatura de la pregunta anterior. ¿Cuál es la temperatura máxima, promedio y mínima para la superficie que se encuentra entre los 100 y los 1500m de elevación? Escriba el script en R para solucionarlo.
+
+```{r}
+global(temp_avg_mask,'mean',na.rm = TRUE)
+global(temp_avg_mask,'min',na.rm = TRUE)
+global(temp_avg_mask,'max',na.rm = TRUE)
+```
+
+7. Cree un raster en que la precipitación (resultante de la pregunta 5) este reclasificada de acuerdo a los cuartiles (0-25%,25-50%,50-75%,75-100%).
+
+```{r}
+q <- quantile(values(pre_acu_mask),na.rm = TRUE)
+recl <- matrix(c(787,1054,1,1054,1156,2,1156,1265,3,1256,1483,4),ncol = 3,byrow = TRUE)
+pre_acu_recl <- classify(pre_acu_mask,recl)
+plot(pre_acu_recl)
+```
+
+8. Cree un nuevo raster como mascara definido por la extensión:
++ longitud entre `72°53' 4"O`  y `71°0'26"O` 
++ latitudes `36° 11' 51"S` y `35° 0' 20"`
+
+```{r}
+rmask2 <- rast(xmin = -72.88441,ymin=-36-11/60-51/3600,xmax=-71.00730,ymax=-35-20/3600)
+```
+
+ Aplique la mascara al raster de elevación
+ 
+```{r}
+dem_m2 <- crop(dem,rmask2)
+par(mfrow =c(1,2))
+plot(dem_m)
+plot(dem_m2)
+```
+ 
+9. Una los dos raster de elevación enmascarados, el del ejercicio anterior con el del ejercicio 2, en un solo raster. Utilice las funciones `merge` y `mosaic`.
+
+```{r}
+dem_merge <- merge(dem_m,dem_m2)
+dem_mosaic <- mosaic(dem_m,dem_m2)
+dem_mosaic[dem_mosaic < 0] <- NA
+par(mfrow = c(1,2))
+plot(dem_merge)
+plot(dem_mosaic)
+```
+
+
+
+
