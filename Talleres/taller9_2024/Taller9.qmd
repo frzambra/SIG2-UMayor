@@ -1,0 +1,171 @@
+---
+title: "Taller 9 (IMSE1017)"
+subtitle: "Visualización de mapas con {tmap}"
+institute: "Escuela de Ingeniería en Medio Ambiente, Universidad Mayor"
+author: "Dr. Francisco Zambrano"
+date: "2024-11-11"
+lang: "es"
+execute:
+  echo: false
+  eval: true
+format:
+  html:
+    number-sections: true
+    number-depth: 3
+    smooth-scroll: true
+    code-fold: true
+    toc: true
+    html-math-method: katex
+    self-contained: true
+---
+
+## Descripción
+
+En la primera parte del curso se familiarizó con R [@R2023], las principales estructuras de datos, como realizar indexación, conoció algunas funciones y pudo realizar algunos gráficos básicos; utilizando R base. Ahora, en el curso hemos empezado a trabajar en R con datos geoespaciales de tipo vectoriales y raster. Para manejar datos vectoriales utilizamos `{sf}` y para datos de tipo raster `{terra}`. Para visualizar mapas podemos utilizar las funciones base de `R`, pero también la librería `{tmap}`.
+
+## Objetivo del taller
+
+Visualización de mapas estáticos y dinámicos con `{tmap}`
+
+## Paquetes R
+
+Hasta el momento hemos trabajado con los paquetes que vienen inculidos en R base. Ahora empezaremos a trabajar con paquetes adicionales que no vienen instalados por defecto en `R`, por lo que deberá instalarlos. Los paquetes con los que trabajaremos este taller so `{terra}`, `{sf}` y `{tmap}` los que nos permitirán trabajar con datos raster, vectoriales y crear mapas. Además va a utilizar un paquete adicional el cual permite descargar a `R` datos raster de elevación `{elevatr}`.
+
+Para instalar los paquetes debe realizar lo siguiente:
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+# instala los paquetes
+install.packages(c('sf','terra','tmap','elevatr'))
+
+# carga los paqutes en el entorno de R y permite utilizar 
+# las funciones adicionales que contienen
+
+library(sf)
+library(terra)
+library(tmap)
+```
+
+## Data
+
+Trabajará con los datos vectoriales de la delimitación de `cuencas hidrográficas` y `estaciones meteorológicas`.
+
+## ¿Qué debe entregar?
+
+Debeŕa utilizar RStudio para crear un script, el cual permitira generar los mapas indicados. Debe utilizar los comentarios (`#`) para hacer una descripción e incorporar cualquier información que ayude a entender lo realizado. A modo de ejemplo:
+
+```{r}
+#| eval: false
+# Ejercicio 1:
+# comentario explicando lo que se hace
+{
+  Aca va el script que resuelve el ejericio 1
+  
+}
+```
+
+Debe guardar el script con el nombre `taller9.R`. Los archivos los debe subir en el campus virtual en la sección `Evaluaciones -> Taller 9`
+
+## Fecha de entrega
+
+Lunes 11 de noviembre hasta las 23:59am
+
+## Creación de modelo digital de elevación para una cuenca de Chile
+
+1.  Cargue los archivos vectoriales correspondientes a (20pts):
+
+-   `cuencas_chile`
+-   `estaciones_chile`
+
+```{r}
+library(sf)
+library(terra)
+estaciones <- read_sf('../data/estaciones_chile/estaciones_chile.shp')
+cuencas <- read_sf('../data/cuencas_Chile/Cuencas_BNA.shp')
+```
+
+2.  Seleccione la cuenca que utilizó en la evaluación 2 y asignela a un nuevo objeto en `R` (ej, cuenca\_{nombre_cuenca}) (30pts).
+
+```{r}
+cuenca_maipo <- cuencas[cuencas$NOM_CUEN == 'Rio Maipo',]
+```
+
+3.  Seleccione las estaciones climáticas que se encuentran en la cuenca utilizada y asígnela a un nuevo objeto en `R` (ej, estaciones\_{nombre_cuenca}) (40pts).
+
+```{r}
+cuenca_maipo <- st_transform(cuenca_maipo,4326)
+
+estas_maipo <- st_intersection(estaciones,cuenca_maipo)
+
+
+```
+
+4.  Descargue el raster de elevación utilizando el paquete `{elevatr}` y la función `get_elev_raster` (50pts)
+
+```{r}
+library(elevatr)
+dem <- get_elev_raster(cuenca_maipo,z = 9)
+```
+
+5.  Haga una mascara del dem para la cuenca asignada, elimine los espacios en blanco (40pts).
+
+```{r}
+dem_maipo <- trim(mask(dem,cuenca_maipo))
+```
+
+6.  Cree un hillshade (mapa de sombras) del dem. Para esto debe crear un raster de aspecto (dirección) y slope (pendiente) a partir de el `dem`. Debe utilizar las funciones de `{terra}` `terrain` y `shade` (70pts).
+
+```{r}
+dem_maipo <- rast(dem_maipo)
+slope = terrain(dem_maipo, v='slope',unit = 'radians')
+aspect = terrain(dem_maipo, v='aspect',unit = 'radians')
+hill = shade(slope, aspect)
+```
+
+7.  Utilice `{tmap}` para crear la visualización del hillshade. Asigne el mapa creado al objeto `mapa` (50pts)
+
+```{r}
+
+library(tmap)
+
+tmap_mode('plot')
+mapa <- tm_shape(hill) +
+  tm_raster(style = 'cont',palette = grey(0:100/100),legend.show = FALSE) +
+  tm_shape(dem_maipo) +
+  tm_raster(title= 'Elevación (m)', style ='cont',palette = rev(topo.colors(20)),alpha = .4) +
+  tm_graticules(lwd = .4,alpha = .6) +
+  tm_compass(position = c('right','top'))
+
+mapa
+```
+
+## Agregar límites de la cuenca y estaciones (80pts)
+
+1.  Cree un mapa de los bordes de la cuenca.
+2.  Agrege al mapa las estaciones que corresponden a la cuenca.
+3.  Una el mapa del punto anterior con el de los límites de la cuenca y las estaciones.
+4.  Transforme el mapa anterior en un mapa interactivo
+
+```{r}
+mapa2 <- tm_shape(cuenca_maipo) +
+  tm_borders() +
+  tm_shape(estas_maipo,size=3) +
+  tm_dots()
+
+mapa <- mapa+mapa2
+tmap_mode('view')
+mapa
+```
+
+## Export mapas creados (40pts)
+
+1.  Exporte el mapa estático creado como `mapa_estatico_{nombre_cuenca}.png`
+2.  Exporte el mapa interactivo creado como `mapa_interactivo_{nombre_cuenca}.png`
+
+```{r}
+#| message: false
+tmap_save(mapa,'../../img/mapa_hillshade.png')
+tmap_save(mapa,'../../img/mapa_hillshade.html')
+```
