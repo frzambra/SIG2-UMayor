@@ -86,7 +86,7 @@ estaciones <- read_sf('../data/estaciones_chile/estaciones_chile.shp')
 cuencas <- read_sf('../data/cuencas_Chile/Cuencas_BNA.shp')
 ```
 
-2.  Seleccione la cuenca que utilizó en la evaluación 2 y asignela a un nuevo objeto en `R` (ej, cuenca\_{nombre_cuenca}) (30pts).
+2.  Seleccione la cuenca del río Maipo y asígnela a un nuevo objeto en `R` (ej, cuenca\_{nombre_cuenca}) (30pts).
 
 ```{r}
 cuenca_maipo <- cuencas[cuencas$NOM_CUEN == 'Rio Maipo',]
@@ -102,7 +102,7 @@ estas_maipo <- st_intersection(estaciones,cuenca_maipo)
 
 ```
 
-4.  Descargue el raster de elevación utilizando el paquete `{elevatr}` y la función `get_elev_raster` (50pts)
+4.  Descargue el raster de elevación utilizando el paquete `{geodata}` y la función `elevation_30s` (50pts)
 
 ```{r}
 library(elevatr)
@@ -119,9 +119,9 @@ dem_maipo <- trim(mask(dem,cuenca_maipo))
 
 ```{r}
 dem_maipo <- rast(dem_maipo)
-slope = terrain(dem_maipo, v='slope',unit = 'radians')
-aspect = terrain(dem_maipo, v='aspect',unit = 'radians')
-hill = shade(slope, aspect)
+slope <- terrain(dem_maipo, v='slope',unit = 'radians')
+aspect <- terrain(dem_maipo, v='aspect',unit = 'radians')
+hill <- shade(slope, aspect)
 ```
 
 7.  Utilice `{tmap}` para crear la visualización del hillshade. Asigne el mapa creado al objeto `mapa` (50pts)
@@ -162,7 +162,7 @@ mapa
 ## Export mapas creados (40pts)
 
 1.  Exporte el mapa estático creado como `mapa_estatico_{nombre_cuenca}.png`
-2.  Exporte el mapa interactivo creado como `mapa_interactivo_{nombre_cuenca}.png`
+2.  Exporte el mapa interactivo creado como `mapa_interactivo_{nombre_cuenca}.html`
 
 ```{r}
 #| message: false
