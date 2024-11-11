@@ -46,19 +46,6 @@ II) Unidad 2: Manejo de datos espaciales en R
 8) [Taller 8: Operaciones espaciales con datos raster {terra}](Talleres/taller8_2024/taller8.html)
 9) [Taller 9: Visualización de mapas con {tmap}](Talleres/taller9_2024/Taller9.html)
 
-## Proyecto Final (20%)
-
-<!-- - [Preparación de datos para MDE](proyecto_final/proyecto_final.html) -->
-
-<!-- 
-2) [Taller 2: Datos climáticos en R](Talleres/Taller2/Taller2.html)
-3) [Taller 3: Datos vectoriales con {sf}](Talleres/Taller3/Taller3.html)
-4) [Taller 4: Operaciones geométricas con {sf}](Talleres/Taller4/Taller4.html)
-5) [Taller 5: Datos raster con {terra}](Talleres/Taller5/Taller5.html)
-6) [Taller 6: Creación de mapas con {tmap}](Talleres/Taller6/Taller6.html)
-7) [Taller recuperativo: R como SIG](Talleres/Taller_recuperativo/Taller_recuperativo.html)
--->
-
 ## Evaluaciones
 
 <!-- 1) Evaluación 1: -->
