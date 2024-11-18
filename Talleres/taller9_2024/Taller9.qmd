@@ -6,7 +6,7 @@ author: "Dr. Francisco Zambrano"
 date: "2024-11-11"
 lang: "es"
 execute:
-  echo: false
+  echo: true
   eval: true
 format:
   html:

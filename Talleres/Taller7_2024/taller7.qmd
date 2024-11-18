@@ -5,7 +5,7 @@ author: 'Dr. Francisco Zambrano'
 format: 
   html:
     number-sections: true
-    echo: false
+    echo: true
     eval: true
     warning: false
     table-of-contents: true
