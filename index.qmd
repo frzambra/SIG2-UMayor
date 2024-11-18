@@ -46,6 +46,10 @@ II) Unidad 2: Manejo de datos espaciales en R
 8) [Taller 8: Operaciones espaciales con datos raster {terra}](Talleres/taller8_2024/taller8.html)
 9) [Taller 9: Visualización de mapas con {tmap}](Talleres/taller9_2024/Taller9.html)
 
+## Evaluaciones anteriores
+
+1) [Evaluación 2 2023](Evaluaciones/Eva2_2023/Eva2.html)
+
 ## Evaluaciones
 
 <!-- 1) Evaluación 1: -->
@@ -58,6 +62,7 @@ II) Unidad 2: Manejo de datos espaciales en R
 <!-- 2) [Evaluación 2](Evaluaciones/Eva2_2023/Eva2.html) -->
 <!-- 3) [Evaluación recuperativa](Evaluaciones/Eva_recu_2023/Eva_recu.html) -->
 <!-- 4) [Examen](Evaluaciones/Examen_2023/examen.html) -->
+
 
 ## Material
 
