@@ -49,6 +49,11 @@ cent_sfc_32719 <- st_transform(cent_sfc,32719)
 
 #clacula el buffer de 30km
 buf_30km <- st_buffer(cent_sfc_32719,dist = 30000)
+
+poligono_sfc <- st_sfc(poligono,crs=4326)
+poligono_sfc_32719 <- st_transform(poligono_sfc,32719)
+plot(poligono_sfc_32719)
+plot(buf_30km,add = TRUE)
 ```
 
 ## Pregunta 3
@@ -67,9 +72,11 @@ plot(buf_30km_tras,add = TRUE)
 
 Aplique las operaciones de corte de forma que:
 
-    + al polígono se le pueda extraer la superficie que corresponde al buffer.
-    + se obtenga la geometría del área común entre el polígono y el buffer 
-    + se junten en una geometría el polígono con el buffer
+```         
++ al polígono se le pueda extraer la superficie que corresponde al buffer.
++ se obtenga la geometría del área común entre el polígono y el buffer 
++ se junten en una geometría el polígono con el buffer
+```
 
 Nota: Para cada una de las operaciones anteriores, haga un plot.
 
@@ -87,7 +94,7 @@ plot(uni)
 
 ## Pregunta 5
 
-Descargue un raster de elevación con resolución de ~100 metros para el polígono de P1. Utilice la librería {geodata} y la función “elevation_3s”. Haga un plot de la elevación y del polígono.
+Descargue un raster de elevación con resolución de \~100 metros para el polígono de P1. Utilice la librería {geodata} y la función “elevation_3s”. Haga un plot de la elevación y del polígono.
 
 ```{r}
 # install.packages('geodata')
@@ -159,9 +166,9 @@ tmap_save(mapa,'mapa_interactivo.html')
 
 Cargue el raster multicapa con los datos de temperatura mensual promedio (1990-2020) para Chile. Los debe descargar desde acá. Utilice la tercera geometría de la pregunta 4 (4c) para aplicar las operaciones raster locales y globales, según corresponda:
 
-  + calcular el promedio de temperatura anual para cada pixel de la geometria (4c)
-  + calcular el máximo de la temperatura anual para cada pixel de la geometria (4c)
-  + calcular el promedio de temperatura anual en la geometria (4c) para cada uno de los meses.
+-   calcular el promedio de temperatura anual para cada pixel de la geometria (4c)
+-   calcular el máximo de la temperatura anual para cada pixel de la geometria (4c)
+-   calcular el promedio de temperatura anual en la geometria (4c) para cada uno de los meses.
 
 ```{r}
 
@@ -186,4 +193,3 @@ temp_anual
 
 plot(1:12,temp_anual$mean,type ='l')
 ```
-

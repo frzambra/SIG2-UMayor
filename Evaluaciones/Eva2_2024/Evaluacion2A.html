@@ -142,7 +142,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>cent_sfc_32719 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(cent_sfc,<span class="dv">32719</span>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#clacula el buffer de 30km</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>buf_30km <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(cent_sfc_32719,<span class="at">dist =</span> <span class="dv">30000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>buf_30km <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(cent_sfc_32719,<span class="at">dist =</span> <span class="dv">30000</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>poligono_sfc <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(poligono,<span class="at">crs=</span><span class="dv">4326</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>poligono_sfc_32719 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(poligono_sfc,<span class="dv">32719</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(poligono_sfc_32719)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(buf_30km,<span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Evaluacion2A_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="pregunta-3" class="level2">

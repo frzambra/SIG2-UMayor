@@ -47,6 +47,10 @@ cent_sfc_32719 <- st_transform(cent_sfc,32719)
 
 #clacula el buffer de 30km
 buf_30km <- st_buffer(cent_sfc_32719,dist = 30000)
+poligono_sfc <- st_sfc(poligono,crs=4326)
+poligono_sfc_32719 <- st_transform(poligono_sfc,32719)
+plot(poligono_sfc_32719)
+plot(buf_30km,add = TRUE)
 ```
 
 ## Pregunta 3

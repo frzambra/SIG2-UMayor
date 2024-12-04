@@ -45,6 +45,7 @@ II) Unidad 2: Manejo de datos espaciales en R
 7) [Taller 7: Operaciones geométricas con {sf}](Talleres/Taller7_2024/taller7.html)
 8) [Taller 8: Operaciones espaciales con datos raster {terra}](Talleres/taller8_2024/taller8.html)
 9) [Taller 9: Visualización de mapas con {tmap}](Talleres/taller9_2024/Taller9.html)
+10) [Taller 10: Recuperativo](Talleres/taller10_2024/taller10.html)
 
 ## Evaluaciones anteriores
 
